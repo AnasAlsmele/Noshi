@@ -1,4 +1,6 @@
-<img src="https://lh6.googleusercontent.com/OnKNjHP4aLbjjYMyllCAAJyqdv_dbiNVZL0ra3eY57-tHms-GQvTZ87PhVzyOQ15VBi3P0qiW8a70LgprELR=w1360-h657">
+<div style="display: flex; justify-content: center;">
+<img src="https://lh6.googleusercontent.com/OnKNjHP4aLbjjYMyllCAAJyqdv_dbiNVZL0ra3eY57-tHms-GQvTZ87PhVzyOQ15VBi3P0qiW8a70LgprELR=w1360-h657" style="width: 128px; height: 128px;" />
+</div>
 
 # Noshi
  lightweight framework to speed up building process
