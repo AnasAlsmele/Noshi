@@ -9,6 +9,7 @@
     url("fonts/noshi.svg#noshi") format("svg");
   font-weight: normal;
   font-style: normal;
+
 }
 
 [data-icon]:before {
@@ -216,4 +217,19 @@
 }
 .noshi-flag:before {
   content: "\37";
+}
+.noshi-arrow-up:before {
+  content: "\38";
+}
+.noshi-arrow-down:before {
+  content: "\39";
+}
+.noshi-list-up:before {
+  content: "\21";
+}
+.noshi-list-down:before {
+  content: "\22";
+}
+.noshi-bill:before {
+  content: "\23";
 }

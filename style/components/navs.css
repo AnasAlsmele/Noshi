@@ -51,18 +51,34 @@
 .nav .nav-logo:hover{background-color: #333333;}
 .nav-dark .nav-logo:hover{background-color: #e0e0e0;}
 
-/* nav item */
+/* nav item & menu*/
 .nav .nav-item,
-.nav-dark .nav-item{
+.nav-dark .nav-item,
+.nav .nav-item-head,
+.nav-dark .nav-item-head{
     display: flex;
     justify-content: center;
     align-items: center;
     padding: .75em 1em;
-    color: #666666;
+    color: #888888;
     text-decoration: none;
     font-size: .8em;
+    cursor: pointer;
     transition: color .25s;
 }
-.nav-dark .nav-item{color: #888888;}
-.nav .nav-item:hover{color: #222222;}
-.nav-dark .nav-item:hover{color: #f0f0f0;}
+.nav-dark .nav-item,
+.nav-dark .nav-item-head{color: #888888;}
+.nav .nav-item:hover,
+.nav .nav-item-head:hover{color: #222222;}
+.nav-dark .nav-item:hover,
+.nav-dark .nav-item-head:hover{color: #f0f0f0;}
+
+/* nav menu head extra */
+.nav .nav-item-head::after{
+    font-family: "noshi" !important;
+    content: "\22";
+    padding: 0 .3em;
+    font-size: .8em;
+    display: flex;
+    align-items: flex-end;
+}
