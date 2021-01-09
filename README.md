@@ -3,7 +3,7 @@
 </p>
 
 # Noshi
- lightweight framework to speed up building process
+ Noshi is a lightweight framework to speed up building process
 
 ---
 
