@@ -1,0 +1,36 @@
+/* inputs */
+.input, 
+.input:disabled, 
+.input-warning, 
+.input-placeholder{
+    flex: 1;
+    padding: .75em 1em;
+    border: 1px solid #e5e5e5;
+    outline: none;
+    color: #444444;
+    background-color: #ffffff;
+    margin: .2em 0;
+}
+.input:disabled{
+    background-color: #eeeeee;
+    border-color: #a9a9a9;
+}
+.input:focus, 
+.input-placeholder:focus{
+    outline: 1px solid #0077b6;
+}
+.input-placeholder::placeholder,
+::-webkit-input-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder,
+:-moz-placeholder{
+    color: #a9a9a9;
+    opacity: 1;
+    transition: opacity .25s;
+    -moz-transition: opacity .25s;
+    -o-transition: opacity .25s;
+    -webkit-transition: opacity .25s;
+}
+.input-placeholder:focus::placeholder{
+    opacity: .3;
+}

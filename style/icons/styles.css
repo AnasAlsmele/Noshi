@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "noshi";
+  src:url("fonts/noshi.eot");
+  src:url("fonts/noshi.eot?#iefix") format("embedded-opentype"),
+    url("fonts/noshi.woff") format("woff"),
+    url("fonts/noshi.ttf") format("truetype"),
+    url("fonts/noshi.svg#noshi") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+  font-family: "noshi" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="noshi-"]:before,
+[class*=" noshi-"]:before {
+  font-family: "noshi" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.noshi-logout:before {
+  content: "\61";
+}
+.noshi-star:before {
+  content: "\62";
+}
+.noshi-dolly:before {
+  content: "\63";
+}
+.noshi-list:before {
+  content: "\64";
+}
+.noshi-image:before {
+  content: "\65";
+}
+.noshi-control-panel:before {
+  content: "\66";
+}
+.noshi-cog:before {
+  content: "\67";
+}
+.noshi-file:before {
+  content: "\68";
+}
+.noshi-fingerprint:before {
+  content: "\69";
+}
+.noshi-settings:before {
+  content: "\6a";
+}
+.noshi-safety:before {
+  content: "\6b";
+}
+.noshi-edit:before {
+  content: "\6c";
+}
+.noshi-earth:before {
+  content: "\6d";
+}
+.noshi-plus:before {
+  content: "\6e";
+}
+.noshi-times:before {
+  content: "\6f";
+}
+.noshi-warning:before {
+  content: "\70";
+}
+.noshi-user:before {
+  content: "\71";
+}
+.noshi-phone:before {
+  content: "\72";
+}
+.noshi-delivery-man:before {
+  content: "\73";
+}
+.noshi-correct:before {
+  content: "\74";
+}
+.noshi-order:before {
+  content: "\75";
+}
+.noshi-truck:before {
+  content: "\76";
+}
+.noshi-trash:before {
+  content: "\77";
+}
+.noshi-open-folder:before {
+  content: "\78";
+}
+.noshi-calendar:before {
+  content: "\79";
+}
+.noshi-box:before {
+  content: "\7a";
+}
+.noshi-users:before {
+  content: "\41";
+}
+.noshi-time-is-money:before {
+  content: "\42";
+}
+.noshi-store:before {
+  content: "\43";
+}
+.noshi-location:before {
+  content: "\44";
+}
+.noshi-bag:before {
+  content: "\45";
+}
+.noshi-building:before {
+  content: "\46";
+}
+.noshi-mail:before {
+  content: "\47";
+}
+.noshi-statistics:before {
+  content: "\48";
+}
+.noshi-info:before {
+  content: "\49";
+}
+.noshi-switch:before {
+  content: "\4a";
+}
+.noshi-home:before {
+  content: "\4b";
+}
+.noshi-coupon:before {
+  content: "\4c";
+}
+.noshi-search:before {
+  content: "\4d";
+}
+.noshi-shirt:before {
+  content: "\4e";
+}
+.noshi-save:before {
+  content: "\4f";
+}
+.noshi-money:before {
+  content: "\50";
+}
+.noshi-new-window:before {
+  content: "\51";
+}
+.noshi-eye:before {
+  content: "\52";
+}
+.noshi-feed:before {
+  content: "\53";
+}
+.noshi-truck-time:before {
+  content: "\54";
+}
+.noshi-arrow-left:before {
+  content: "\55";
+}
+.noshi-arrow-right:before {
+  content: "\56";
+}
+.noshi-heart:before {
+  content: "\57";
+}
+.noshi-zoom-in:before {
+  content: "\58";
+}
+.noshi-link:before {
+  content: "\59";
+}
+.noshi-add-book:before {
+  content: "\5a";
+}
+.noshi-return:before {
+  content: "\30";
+}
+.noshi-youtube:before {
+  content: "\31";
+}
+.noshi-github:before {
+  content: "\32";
+}
+.noshi-facebook:before {
+  content: "\33";
+}
+.noshi-linkedin:before {
+  content: "\34";
+}
+.noshi-no-image:before {
+  content: "\35";
+}
+.noshi-signin:before {
+  content: "\36";
+}
+.noshi-flag:before {
+  content: "\37";
+}
