@@ -3,7 +3,7 @@
 </p>
 
 # Noshi
- Noshi is a lightweight framework to speed up building process
+ Noshi is a lightweight framework to speed up building process.
 
 ---
 
@@ -19,3 +19,7 @@
  ---
 
  ## Usage
+ you can use the CSS libraries that comes with <b>Noshi</b> by adding the appropriate class name to the item.
+
+ ### Tables
+ 
