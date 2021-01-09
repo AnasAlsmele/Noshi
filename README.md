@@ -7,7 +7,7 @@
 
 ---
 
- ## How to Install
+ ## Installation
  you can simply install <b>Noshi</b> by following the instructions below:
 
  <ol>
@@ -18,6 +18,4 @@
 
  ---
 
- ## How to Use
- ### Style
- ### Function
+ ## Usage
