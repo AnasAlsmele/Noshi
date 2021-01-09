@@ -1,9 +1,9 @@
-@import "./statics.css";
-@import "./components/tables.css";
-@import "./components/inputs.css";
-@import "./components/layouts.css";
-@import "./components/navs.css";
-@import "./icons/styles.css";
+@import "./style/statics.css";
+@import "./style/components/tables.css";
+@import "./style/components/inputs.css";
+@import "./style/components/layouts.css";
+@import "./style/components/navs.css";
+@import "./style/icons/styles.css";
 
 *{
     padding: 0;
