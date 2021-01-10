@@ -13,10 +13,10 @@
  <ol>
     <li>colne <b>Noshi</b> to your project folder.</li>
     <li>include <b>'noshi.css'</b> and <b>'noshi.js'</b> at the end of header section.
-    ```html
+    '''html
     <link rel="stylesheet" href="Noshi-main/noshi.css">
     <script src="Noshi-main/noshi.js" type="application/javascript"></script>
-    ```
+    '''
     </li>
     <li>enjoy</li>
  </ol>
