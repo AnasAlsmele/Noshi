@@ -10,18 +10,15 @@
  ## Installation
  you can simply install <b>Noshi</b> by following the instructions below:
 
- <ol>
-    <li>colne <b>Noshi</b> to your project folder.</li>
-    <li>include <b>'noshi.css'</b> and <b>'noshi.js'</b> at the end of header section.
+ 1. colne <b>Noshi</b> to your project folder.
+ 2. include <b>'noshi.css'</b> and <b>'noshi.js'</b> at the end of header section.
 
-        '''html
+    '''html
         <link rel="stylesheet" href="Noshi-main/noshi.css">
         <script src="Noshi-main/noshi.js" type="application/javascript"></script>
-        '''
-        
-    </li>
-    <li>enjoy</li>
- </ol>
+    '''
+
+ 3. enjoy.
 
  ---
 
