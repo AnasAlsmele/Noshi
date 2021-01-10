@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://lh6.googleusercontent.com/OnKNjHP4aLbjjYMyllCAAJyqdv_dbiNVZL0ra3eY57-tHms-GQvTZ87PhVzyOQ15VBi3P0qiW8a70LgprELR=w1360-h657" width="128" height="128" align="center" />
+<img src="./docs/Noshi.png" width="128" height="128" align="center" />
 </p>
 
 # Noshi
