@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./docs/Noshi.png" width="128" height="128" align="center" />
+<img src="./docs/imgs/Noshi.png" width="128" height="128" align="center" />
 </p>
 
 # Noshi
