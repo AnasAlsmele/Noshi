@@ -69,7 +69,8 @@ var _ = function (id, multi) {
             return document.getElementsByClassName(id)[0];
         }
     }
-    errorScreen(lang.errors.e + "'<b>" + id + "</b>' " + lang.errors.tnf);
+    // errorScreen(lang.errors.e+"'<b>"+id+"</b>' "+lang.errors.tnf);
+    errorScreen("Error: '<b>" + id + "</b>' id and/or class name not found.");
 };
 // error on screen
 var errorScreen = function (msg) {
@@ -82,7 +83,7 @@ var errorScreen = function (msg) {
 };
 // navbars
 var _activeNavs = function () {
-    var navs = _("nav-menu-heads", true);
+    var navs = _("nav-menu-head", true);
     console.log(navs);
 };
 // initilize Noshi
@@ -104,6 +105,5 @@ var startNoshi = function (funcs) {
         }
     });
 };
-var aws = function () { console.log("dd"); };
 // run Noshi
-startNoshi([_setLang, _activeNavs, aws]);
+startNoshi([_setLang, _activeNavs]);
