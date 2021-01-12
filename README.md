@@ -18,7 +18,7 @@
     <script src="Noshi-main/noshi.js" type="application/javascript"></script>
     ```
 
- 3. enjoy.
+ 3. enjoy Samaa.
 
  ---
 
