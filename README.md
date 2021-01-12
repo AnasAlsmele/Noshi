@@ -3,7 +3,7 @@
 <p align="center">
 <img src="./docs/imgs/Noshi.png" width="128" height="128" align="center" />
 </p>
-<p align="center">Noshi is a lightweight open source front-end toolkit.</p>
+<p align="center">Noshi is a lightweight open source front-end toolkit</p>
 
 ---
 
