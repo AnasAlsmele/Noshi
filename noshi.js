@@ -98,18 +98,16 @@ var _activeNavs = function () {
             var target = navs[i].getAttribute("data-target");
             var status = navs[i].getAttribute("data-status");
             if (status != "true") {
-                _(target).style.display = "flex";
-                navs[i].setAttribute("data-status", true);
                 if (noshi.activeNavs.target != "") {
                     _(noshi.activeNavs.target).style.display = "none";
                     noshi.activeNavs.state.setAttribute("data-status", false);
                     noshi.activeNavs.target = "";
                     noshi.activeNavs.state = "";
                 }
-                else {
-                    noshi.activeNavs.target = target;
-                    noshi.activeNavs.state = navs[i];
-                }
+                _(target).style.display = "flex";
+                navs[i].setAttribute("data-status", true);
+                noshi.activeNavs.target = target;
+                noshi.activeNavs.state = navs[i];
             }
             else {
                 _(target).style.display = "none";
@@ -152,4 +150,4 @@ var startNoshi = function (funcs) {
     });
 };
 // run Noshi
-startNoshi([_setLang, _activeNavs]);
+startNoshi([_setLang, _activeNavs, _hideNavs]);
