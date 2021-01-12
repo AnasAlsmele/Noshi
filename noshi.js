@@ -1,4 +1,8 @@
 var _this = this;
+// Noshi general variable 
+var noshi = {
+    "activeNavs": { "target": "", "state": "" }
+};
 // general creator 
 var CE = /** @class */ (function () {
     function CE(props) {
@@ -49,11 +53,16 @@ var ajax = function (type, link, state, data) {
 // set language 
 var _setLang = function () {
     var folderLang = "en";
+    var docLang = document.documentElement.getAttribute("lang");
+    if (docLang != null) {
+        folderLang = docLang;
+    }
     document.head.prepend(new CE({
         "tag": "script",
         "src": "./lang/" + folderLang + ".js",
         "type": "application/javascript"
     }).tag);
+    // document.body.setAttribute("lang", folderLang);
 };
 // general finder
 var _ = function (id, multi) {
@@ -84,7 +93,44 @@ var errorScreen = function (msg) {
 // navbars
 var _activeNavs = function () {
     var navs = _("nav-menu-head", true);
-    console.log(navs);
+    var _loop_1 = function (i) {
+        navs[i].addEventListener("click", function () {
+            var target = navs[i].getAttribute("data-target");
+            var status = navs[i].getAttribute("data-status");
+            if (status != "true") {
+                _(target).style.display = "flex";
+                navs[i].setAttribute("data-status", true);
+                if (noshi.activeNavs.target != "") {
+                    _(noshi.activeNavs.target).style.display = "none";
+                    noshi.activeNavs.state.setAttribute("data-status", false);
+                    noshi.activeNavs.target = "";
+                    noshi.activeNavs.state = "";
+                }
+                else {
+                    noshi.activeNavs.target = target;
+                    noshi.activeNavs.state = navs[i];
+                }
+            }
+            else {
+                _(target).style.display = "none";
+                navs[i].setAttribute("data-status", false);
+            }
+        });
+    };
+    for (var i = 0; i < Object.keys(navs).length; i++) {
+        _loop_1(i);
+    }
+};
+// hide navs
+var _hideNavs = function () {
+    window.onclick = function (e) {
+        if (e.srcElement.className != "nav-menu-head") {
+            if (noshi.activeNavs.target != "") {
+                _(noshi.activeNavs.target).style.display = "none";
+                noshi.activeNavs.state.setAttribute("data-status", false);
+            }
+        }
+    };
 };
 // initilize Noshi
 var startNoshi = function (funcs) {
