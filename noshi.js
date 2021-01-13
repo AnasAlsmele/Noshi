@@ -62,7 +62,7 @@ var _setLang = function () {
         "src": "./lang/" + folderLang + ".js",
         "type": "application/javascript"
     }).tag);
-    // document.body.setAttribute("lang", folderLang);
+    document.body.setAttribute("lang", folderLang);
 };
 // general finder
 var _ = function (id, multi) {
