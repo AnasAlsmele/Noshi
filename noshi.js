@@ -1,4 +1,3 @@
-var _this = this;
 var noshi = {
     "activeNavs": {
         "target": "",
@@ -57,7 +56,7 @@ var ajax = function (type, link, state, data) {
     if (data === void 0) { data = ""; }
     var x = new XMLHttpRequest();
     x.onreadystatechange = function () {
-        if (_this.readyState == '4' && _this.status == '200') {
+        if (x.readyState == 4 && x.status == 200) {
             return x.responseText;
         }
     };
