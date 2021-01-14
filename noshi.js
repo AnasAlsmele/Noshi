@@ -1,12 +1,29 @@
 var _this = this;
 // Noshi general variable 
 var noshi = {
-    "activeNavs": { "target": "", "state": "" }
+    "activeNavs": {
+        "target": "",
+        "state": HTMLElement
+    }
 };
 // general creator 
 var CE = /** @class */ (function () {
     function CE(props) {
         var _this = this;
+        this.props = {
+            'tag': "",
+            'id': "",
+            'name': "",
+            'style': "",
+            'class': "",
+            'disabled': false,
+            'text': "",
+            'html': HTMLElement,
+            "src": "",
+            "child": Node,
+            "placeholder": "",
+            "type": ""
+        };
         this.propsNames = {
             "id": "id",
             "name": "name",
@@ -20,7 +37,7 @@ var CE = /** @class */ (function () {
         };
         var propsKeys = Object.keys(props);
         this.props = props;
-        var tag = document.createElement(this.props.tag);
+        var tag = document.createElement(props.tag);
         propsKeys.forEach(function (element) {
             if (element === "child") {
                 tag.appendChild(_this.props.child);
@@ -130,6 +147,7 @@ var _hideNavs = function () {
         }
     };
 };
+// test 
 // initilize Noshi
 var startNoshi = function (funcs) {
     funcs.forEach(function (func) {
