@@ -1,13 +1,11 @@
 var _this = this;
-// Noshi general variable 
 var noshi = {
     "activeNavs": {
         "target": "",
         "state": HTMLElement
     }
 };
-// general creator 
-var CE = /** @class */ (function () {
+var CE = (function () {
     function CE(props) {
         var _this = this;
         this.props = {
@@ -53,7 +51,6 @@ var CE = /** @class */ (function () {
     }
     return CE;
 }());
-// AJAX request
 var ajax = function (type, link, state, data) {
     if (type === void 0) { type = "GET"; }
     if (state === void 0) { state = true; }
@@ -67,7 +64,6 @@ var ajax = function (type, link, state, data) {
     x.open(type, link, state);
     x.send(data);
 };
-// set language 
 var _setLang = function () {
     var folderLang = "en";
     var docLang = document.documentElement.getAttribute("lang");
@@ -81,7 +77,6 @@ var _setLang = function () {
     }).tag);
     document.body.setAttribute("lang", folderLang);
 };
-// general finder
 var _ = function (id, multi) {
     if (multi === void 0) { multi = false; }
     if (document.getElementById(id) != null) {
@@ -95,10 +90,8 @@ var _ = function (id, multi) {
             return document.getElementsByClassName(id)[0];
         }
     }
-    // errorScreen(lang.errors.e+"'<b>"+id+"</b>' "+lang.errors.tnf);
     errorScreen("Error: '<b>" + id + "</b>' id and/or class name not found.");
 };
-// error on screen
 var errorScreen = function (msg) {
     document.body.innerHTML = "";
     document.body.appendChild(new CE({
@@ -107,28 +100,30 @@ var errorScreen = function (msg) {
         "class": "error-screen"
     }).tag);
 };
-// navbars
 var _activeNavs = function () {
     var navs = _("nav-menu-head", true);
     var _loop_1 = function (i) {
-        navs[i].addEventListener("click", function () {
-            var target = navs[i].getAttribute("data-target");
-            var status = navs[i].getAttribute("data-status");
+        var nav = navs[i];
+        nav.addEventListener("click", function () {
+            var target = nav.getAttribute("data-target");
+            var status = nav.getAttribute("data-status");
+            var t = _(target);
             if (status != "true") {
                 if (noshi.activeNavs.target != "") {
-                    _(noshi.activeNavs.target).style.display = "none";
+                    var cc = _(noshi.activeNavs.target);
+                    cc.style.display = "none";
                     noshi.activeNavs.state.setAttribute("data-status", false);
                     noshi.activeNavs.target = "";
                     noshi.activeNavs.state = "";
                 }
-                _(target).style.display = "flex";
-                navs[i].setAttribute("data-status", true);
+                t.style.display = "flex";
+                nav.setAttribute("data-status", "true");
                 noshi.activeNavs.target = target;
-                noshi.activeNavs.state = navs[i];
+                noshi.activeNavs.state = nav;
             }
             else {
-                _(target).style.display = "none";
-                navs[i].setAttribute("data-status", false);
+                t.style.display = "none";
+                nav.setAttribute("data-status", "false");
             }
         });
     };
@@ -136,19 +131,17 @@ var _activeNavs = function () {
         _loop_1(i);
     }
 };
-// hide navs
 var _hideNavs = function () {
     window.onclick = function (e) {
         if (e.srcElement.className != "nav-menu-head") {
             if (noshi.activeNavs.target != "") {
-                _(noshi.activeNavs.target).style.display = "none";
+                var t = _(noshi.activeNavs.target);
+                t.style.display = "none";
                 noshi.activeNavs.state.setAttribute("data-status", false);
             }
         }
     };
 };
-// test 
-// initilize Noshi
 var startNoshi = function (funcs) {
     funcs.forEach(function (func) {
         var start = window.onload;
@@ -167,5 +160,4 @@ var startNoshi = function (funcs) {
         }
     });
 };
-// run Noshi
 startNoshi([_setLang, _activeNavs, _hideNavs]);
