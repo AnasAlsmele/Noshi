@@ -4,51 +4,37 @@ var noshi = {
         "state": HTMLElement
     }
 };
-var CE = (function () {
-    function CE(props) {
-        var _this = this;
-        this.props = {
-            'tag': "",
-            'id': "",
-            'name': "",
-            'style': "",
-            'class': "",
-            'disabled': false,
-            'text': "",
-            'html': HTMLElement,
-            "src": "",
-            "child": Node,
-            "placeholder": "",
-            "type": ""
-        };
-        this.propsNames = {
-            "id": "id",
-            "name": "name",
-            "style": "style",
-            "class": "className",
-            "disabled": "disabled",
-            "text": "innerText",
-            "html": "innerHTML",
-            "placeholder": "placeholder",
-            "type": "type"
-        };
+var NoshiCE = (function () {
+    function NoshiCE(props) {
         var propsKeys = Object.keys(props);
-        this.props = props;
         var tag = document.createElement(props.tag);
-        propsKeys.forEach(function (element) {
-            if (element === "child") {
-                tag.appendChild(_this.props.child);
-            }
-            else {
-                tag[_this.propsNames[element]] = _this.props[element];
+        propsKeys.forEach(function (prop) {
+            switch (prop) {
+                case "child":
+                    tag.appendChild(props.child);
+                    break;
+                case "text":
+                    tag.innerText = props.text;
+                    break;
+                case "src":
+                    if (props.tag === "script" || props.tag === "img") {
+                        tag.setAttribute("src", props.src);
+                    }
+                    break;
+                case "click":
+                    tag.addEventListener("click", props[prop]);
+                    break;
+                case "dbclick":
+                    tag.addEventListener("dblclick", props[prop]);
+                    break;
+                default:
+                    tag.setAttribute(prop, props[prop]);
+                    break;
             }
         });
-        if (props.tag === "script" || props.tag === "img") {
-            tag.setAttribute("src", this.props.src);
-        }
         this.tag = tag;
     }
-    return CE;
+    return NoshiCE;
 }());
 var ajax = function (type, link, state, data) {
     if (type === void 0) { type = "GET"; }
@@ -69,7 +55,7 @@ var _setLang = function () {
     if (docLang != null) {
         folderLang = docLang;
     }
-    document.head.prepend(new CE({
+    document.head.prepend(new NoshiCE({
         "tag": "script",
         "src": "./lang/" + folderLang + ".js",
         "type": "application/javascript"
@@ -93,9 +79,9 @@ var _ = function (id, multi) {
 };
 var errorScreen = function (msg) {
     document.body.innerHTML = "";
-    document.body.appendChild(new CE({
+    document.body.appendChild(new NoshiCE({
         "tag": "code",
-        "html": msg,
+        "child": msg,
         "class": "error-screen"
     }).tag);
 };
@@ -140,6 +126,13 @@ var _hideNavs = function () {
             }
         }
     };
+};
+var navbar = function (navInfo) {
+    var nav = new NoshiCE({
+        "tag": navInfo.tag,
+        "id": navInfo.id
+    });
+    return nav.tag;
 };
 var startNoshi = function (funcs) {
     funcs.forEach(function (func) {
