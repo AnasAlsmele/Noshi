@@ -11,7 +11,11 @@ var NoshiCE = (function () {
         propsKeys.forEach(function (prop) {
             switch (prop) {
                 case "child":
-                    tag.appendChild(props.child);
+                    var c = props.child;
+                    for (var i = 0; i < c.length; i++) {
+                        tag.appendChild(c[i]);
+                        console.log(c[i]);
+                    }
                     break;
                 case "text":
                     tag.innerText = props.text;
@@ -128,11 +132,9 @@ var _hideNavs = function () {
     };
 };
 var navbar = function (navInfo) {
-    var nav = new NoshiCE({
-        "tag": navInfo.tag,
-        "id": navInfo.id
+    var navKeys = Object.keys(navInfo);
+    navKeys.forEach(function (nInfo) {
     });
-    return nav.tag;
 };
 var startNoshi = function (funcs) {
     funcs.forEach(function (func) {
