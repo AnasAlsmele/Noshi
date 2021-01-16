@@ -59,10 +59,10 @@ var _setLang = function () {
     if (docLang != null) {
         folderLang = docLang;
     }
-    document.head.prepend(new NoshiCE({
-        "tag": "script",
-        "src": "./lang/" + folderLang + ".js",
-        "type": "application/javascript"
+    document.head.appendChild(new NoshiCE({
+        tag: "script",
+        src: "./lang/" + folderLang + ".js",
+        type: "application/javascript"
     }).tag);
     document.body.setAttribute("lang", folderLang);
 };
