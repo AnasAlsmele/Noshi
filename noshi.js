@@ -14,8 +14,10 @@ var NoshiCE = (function () {
                     var c = props.child;
                     for (var i = 0; i < c.length; i++) {
                         tag.appendChild(c[i]);
-                        console.log(c[i]);
                     }
+                    break;
+                case "html":
+                    tag.innerHTML = props.html;
                     break;
                 case "text":
                     tag.innerText = props.text;
@@ -31,6 +33,8 @@ var NoshiCE = (function () {
                 case "dbclick":
                     tag.addEventListener("dblclick", props[prop]);
                     break;
+                case "tag":
+                case "options": break;
                 default:
                     tag.setAttribute(prop, props[prop]);
                     break;
@@ -39,6 +43,35 @@ var NoshiCE = (function () {
         this.tag = tag;
     }
     return NoshiCE;
+}());
+var NoshiBuilder = (function () {
+    function NoshiBuilder() {
+        this.select = function (info) {
+            console.log(info.options);
+            if (info.options === undefined || info.options.length === 0) {
+                errorScreen("Error: select <b>options</b> can't be empty.");
+            }
+            else {
+                var o = [];
+                for (var i = 0; i < info.options.length; i++) {
+                    var v = info.options[i];
+                    if (info.mode === "index") {
+                        v = i.toString();
+                    }
+                    o.push(new NoshiCE({
+                        "tag": "option",
+                        "value": v,
+                        "text": info.options[i]
+                    }).tag);
+                }
+                info.tag = "select";
+                info["class"] = "select";
+                info.child = o;
+                return new NoshiCE(info).tag;
+            }
+        };
+    }
+    return NoshiBuilder;
 }());
 var ajax = function (type, link, state, data) {
     if (type === void 0) { type = "GET"; }
@@ -82,10 +115,10 @@ var _ = function (id, multi) {
     errorScreen("Error: '<b>" + id + "</b>' id and/or class name not found.");
 };
 var errorScreen = function (msg) {
-    document.body.innerHTML = "";
+    console.log(document.body.childNodes);
     document.body.appendChild(new NoshiCE({
-        "tag": "code",
-        "child": msg,
+        tag: "code",
+        html: msg,
         "class": "error-screen"
     }).tag);
 };
@@ -130,11 +163,6 @@ var _hideNavs = function () {
             }
         }
     };
-};
-var navbar = function (navInfo) {
-    var navKeys = Object.keys(navInfo);
-    navKeys.forEach(function (nInfo) {
-    });
 };
 var startNoshi = function (funcs) {
     funcs.forEach(function (func) {
