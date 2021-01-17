@@ -44,7 +44,9 @@ var NoshiCE = (function () {
                     tag.addEventListener("dblclick", props[prop]);
                     break;
                 case "tag":
-                case "options": break;
+                case "options":
+                case "sort":
+                    break;
                 default:
                     tag.setAttribute(prop, props[prop]);
                     break;
@@ -61,6 +63,13 @@ var NoshiBuilder = (function () {
                 errorScreen("Error: select <b>options</b> can't be empty.");
             }
             else {
+                if (info.sort == "az") {
+                    info.options.sort();
+                }
+                if (info.sort == "za") {
+                    info.options.sort();
+                    info.options.reverse();
+                }
                 var o = [];
                 for (var i = 0; i < info.options.length; i++) {
                     var optionValue = info.options[i];
@@ -79,8 +88,10 @@ var NoshiBuilder = (function () {
                     }).tag);
                 }
                 info.tag = "select";
-                info["class"] = "select";
                 info.child = o;
+                if (info["class"] != undefined && info["class"] != "") {
+                    info["class"] = "select " + info["class"];
+                }
                 return new NoshiCE(info).tag;
             }
         };
