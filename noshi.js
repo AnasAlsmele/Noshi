@@ -27,6 +27,16 @@ var NoshiCE = (function () {
                         tag.setAttribute("src", props.src);
                     }
                     break;
+                case "select":
+                    if (props.select != "") {
+                        tag.setAttribute("selected", "selected");
+                    }
+                    break;
+                case "disabled":
+                    if (props.disabled != "") {
+                        tag.setAttribute("disabled", "disabled");
+                    }
+                    break;
                 case "click":
                     tag.addEventListener("click", props[prop]);
                     break;
@@ -53,14 +63,19 @@ var NoshiBuilder = (function () {
             else {
                 var o = [];
                 for (var i = 0; i < info.options.length; i++) {
-                    var v = info.options[i];
+                    var optionValue = info.options[i];
                     if (info.mode === "index") {
-                        v = i.toString();
+                        optionValue = i.toString();
+                    }
+                    var selectOption = "";
+                    if (info.value === info.options[i]) {
+                        selectOption = "selected";
                     }
                     o.push(new NoshiCE({
                         "tag": "option",
-                        "value": v,
-                        "text": info.options[i]
+                        "value": optionValue,
+                        "text": info.options[i],
+                        "select": selectOption
                     }).tag);
                 }
                 info.tag = "select";
