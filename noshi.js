@@ -47,7 +47,6 @@ var NoshiCE = (function () {
 var NoshiBuilder = (function () {
     function NoshiBuilder() {
         this.select = function (info) {
-            console.log(info.options);
             if (info.options === undefined || info.options.length === 0) {
                 errorScreen("Error: select <b>options</b> can't be empty.");
             }
