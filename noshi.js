@@ -28,13 +28,19 @@ var NoshiCE = (function () {
                     }
                     break;
                 case "select":
-                    if (props.select != "") {
+                    if (props.select) {
                         tag.setAttribute("selected", "selected");
                     }
                     break;
                 case "disabled":
-                    if (props.disabled != "") {
+                    if (props.disabled) {
                         tag.setAttribute("disabled", "disabled");
+                    }
+                    break;
+                case "required":
+                    console.log(props.required);
+                    if (props.required) {
+                        tag.setAttribute("required", "required");
                     }
                     break;
                 case "click":
@@ -76,9 +82,9 @@ var NoshiBuilder = (function () {
                     if (info.mode === "index") {
                         optionValue = i.toString();
                     }
-                    var selectOption = "";
+                    var selectOption = false;
                     if (info.value === info.options[i]) {
-                        selectOption = "selected";
+                        selectOption = true;
                     }
                     o.push(new NoshiCE({
                         "tag": "option",
@@ -92,7 +98,40 @@ var NoshiBuilder = (function () {
                 if (info["class"] != undefined && info["class"] != "") {
                     info["class"] = "select " + info["class"];
                 }
+                else {
+                    info["class"] = "select";
+                }
                 return new NoshiCE(info).tag;
+            }
+        };
+        this.input = function (info) {
+            info.tag = "input";
+            switch (info.type) {
+                case "radio":
+                    info["class"] = "input-radio";
+                    return new NoshiCE({
+                        tag: "div",
+                        "class": "input-radio-holder",
+                        child: [
+                            new NoshiCE({
+                                tag: "label",
+                                "for": info.id,
+                                "class": "input-radio-label",
+                                text: info.text
+                            }).tag,
+                            new NoshiCE(info).tag
+                        ]
+                    }).tag;
+                    break;
+                default:
+                    if (info["class"] != undefined && info["class"] != "") {
+                        info["class"] = "input " + info["class"];
+                    }
+                    else {
+                        info["class"] = "input";
+                    }
+                    return new NoshiCE(info).tag;
+                    break;
             }
         };
     }
