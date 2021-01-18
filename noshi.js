@@ -124,8 +124,9 @@ var _setLang = function () {
     }).tag);
     document.body.setAttribute("lang", folderLang);
 };
-var _ = function (id, multi) {
+var _ = function (id, multi, err) {
     if (multi === void 0) { multi = false; }
+    if (err === void 0) { err = true; }
     if (document.getElementById(id) != null) {
         return document.getElementById(id);
     }
@@ -137,10 +138,11 @@ var _ = function (id, multi) {
             return document.getElementsByClassName(id)[0];
         }
     }
-    errorScreen("Error: '<b>" + id + "</b>' id and/or class name not found.");
+    if (err) {
+        errorScreen("Error: '<b>" + id + "</b>' id and/or class name not found.");
+    }
 };
 var errorScreen = function (msg) {
-    console.log(document.body.childNodes);
     document.body.appendChild(new NoshiCE({
         tag: "code",
         html: msg,
@@ -148,34 +150,36 @@ var errorScreen = function (msg) {
     }).tag);
 };
 var _activeNavs = function () {
-    var navs = _("nav-menu-head", true);
-    var _loop_1 = function (i) {
-        var nav = navs[i];
-        nav.addEventListener("click", function () {
-            var target = nav.getAttribute("data-target");
-            var status = nav.getAttribute("data-status");
-            var t = _(target);
-            if (status != "true") {
-                if (noshi.activeNavs.target != "") {
-                    var cc = _(noshi.activeNavs.target);
-                    cc.style.display = "none";
-                    noshi.activeNavs.state.setAttribute("data-status", false);
-                    noshi.activeNavs.target = "";
-                    noshi.activeNavs.state = "";
+    if (_("nav-menu-head", true, false) !== undefined) {
+        var navs = _("nav-menu-head", true);
+        var _loop_1 = function (i) {
+            var nav = navs[i];
+            nav.addEventListener("click", function () {
+                var target = nav.getAttribute("data-target");
+                var status = nav.getAttribute("data-status");
+                var t = _(target);
+                if (status != "true") {
+                    if (noshi.activeNavs.target != "") {
+                        var cc = _(noshi.activeNavs.target);
+                        cc.style.display = "none";
+                        noshi.activeNavs.state.setAttribute("data-status", false);
+                        noshi.activeNavs.target = "";
+                        noshi.activeNavs.state = "";
+                    }
+                    t.style.display = "flex";
+                    nav.setAttribute("data-status", "true");
+                    noshi.activeNavs.target = target;
+                    noshi.activeNavs.state = nav;
                 }
-                t.style.display = "flex";
-                nav.setAttribute("data-status", "true");
-                noshi.activeNavs.target = target;
-                noshi.activeNavs.state = nav;
-            }
-            else {
-                t.style.display = "none";
-                nav.setAttribute("data-status", "false");
-            }
-        });
-    };
-    for (var i = 0; i < Object.keys(navs).length; i++) {
-        _loop_1(i);
+                else {
+                    t.style.display = "none";
+                    nav.setAttribute("data-status", "false");
+                }
+            });
+        };
+        for (var i = 0; i < Object.keys(navs).length; i++) {
+            _loop_1(i);
+        }
     }
 };
 var _hideNavs = function () {
