@@ -95,10 +95,19 @@
     align-items: center;
 }
 
+.nav .nav-left .nav-menu-list,
+.nav-dark .nav-left .nav-menu-list{
+    left: 0;
+}
+
+.nav .nav-right .nav-menu-list,
+.nav-dark .nav-right .nav-menu-list{
+    right: 0;
+}
+
 .nav .nav-menu-list,
 .nav-dark .nav-menu-list{
     position: absolute;
-    left: 0;
     top: 2.2em;
     display: none;
     flex-direction: column;
