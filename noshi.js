@@ -111,12 +111,28 @@ var NoshiBuilder = (function () {
                     info["class"] = "input-radio";
                     return new NoshiCE({
                         tag: "div",
-                        "class": "input-radio-holder",
+                        "class": "input-holder",
                         child: [
                             new NoshiCE({
                                 tag: "label",
                                 "for": info.id,
-                                "class": "input-radio-label",
+                                "class": "input-label",
+                                text: info.text
+                            }).tag,
+                            new NoshiCE(info).tag
+                        ]
+                    }).tag;
+                    break;
+                case "checkbox":
+                    info["class"] = "input-checkbox";
+                    return new NoshiCE({
+                        tag: "div",
+                        "class": "input-holder",
+                        child: [
+                            new NoshiCE({
+                                tag: "label",
+                                "for": info.id,
+                                "class": "input-label",
                                 text: info.text
                             }).tag,
                             new NoshiCE(info).tag

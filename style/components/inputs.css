@@ -30,7 +30,7 @@
 }
 
 /* radio input */
-.input-radio-holder{
+.input-holder{
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -41,7 +41,7 @@
     border-radius: 3px;
     padding: 0 1em;
 }
-.input-radio-label{
+.input-label{
     cursor: pointer;
     color: #444444;
     font-size: .9em;
