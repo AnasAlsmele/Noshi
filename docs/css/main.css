@@ -1,0 +1,30 @@
+.head-div{
+    display: flex;
+    background-color: #f0f0f0;
+    background-image: url(../imgs/head-bg.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1em 2em;
+}
+.head-left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.head-logo{
+    width: 7vw;
+}
+.head-txt-holder{
+    color: #222222;
+    padding: 0 .5em;
+}
+.head-txt{
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1em;
+}
+.head-txt-moto{
+    font-size: .7em;
+    line-height: 1em;
+}
