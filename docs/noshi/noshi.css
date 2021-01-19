@@ -1,0 +1,31 @@
+@import "./style/statics.css";
+@import "./style/components/tables.css";
+@import "./style/components/inputs.css";
+@import "./style/components/layouts.css";
+@import "./style/components/navs.css";
+@import "./style/components/selects.css";
+@import "./style/icons/styles.css";
+
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.error-screen{
+    padding: 1em;
+    margin: 2em 1em;
+    background-color: #fdfdfd;
+    border: 1px solid #e5e5e5;
+    color: #666666;
+    display: block;
+}
+.error-screen b{
+    color: #444444;
+}
+

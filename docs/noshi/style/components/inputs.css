@@ -1,0 +1,58 @@
+/* inputs */
+.input, 
+.input:disabled, 
+.input-warning, 
+.input-placeholder{
+    flex: 1;
+    padding: .866em 1em;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    outline: none;
+    color: #444444;
+    background-color: #ffffff;
+    margin: .15em .3em;
+    font-size: .9em;
+}
+.input:focus{
+    outline: 1px solid #0077b6;
+}
+.input::placeholder{
+    color: #a9a9a9;
+    opacity: 1;
+    transition: opacity .25s;
+}
+.input:focus::placeholder{
+    opacity: .3;
+}
+.input:disabled{
+    background-color: #f5f5f5;
+    color: #bbbbbb;
+}
+
+/* radio input */
+.input-holder{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin: .15em .3em;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    padding: 0 1em;
+}
+.input-holder:hover{
+    background-color: #f0f0f0;
+}
+.input-label{
+    cursor: pointer;
+    color: #444444;
+    font-size: .9em;
+    flex: 1;
+    padding: .866em .5em;
+}
+.input-radio{
+    cursor: pointer;
+    padding: 0 2em;
+    outline: none;
+}
