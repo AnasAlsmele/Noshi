@@ -40,6 +40,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    flex: 1;
 }
 .body-left-head-a,
 .body-left-head-a-active,
@@ -85,12 +86,12 @@
 
 .body-mid{
     padding: 2em;
-    flex: 1;
+    flex: 5;
     border-left: 1px solid #e5e5e5;
 }
 .body-right{
     padding: 2em .5em;
-    width: 15vw;
+    flex: 1;
 }
 .body-right-head-holder{
     padding: .5em;
@@ -171,8 +172,8 @@ h1, h2, h3{
     font-size: 2em;
     border-bottom: 1px solid #e5e5e5;
 }
-h2{font-size: 1.8em;}
-h3{font-size: 1.5em;}
+h2{font-size: 1.5em;}
+h3{font-size: 1.2em;}
 .np{
     font-size: 1em;
     padding: .5em 0;
@@ -191,4 +192,49 @@ h3{font-size: 1.5em;}
     color: #bbbbbb;
     background-color: #f9f9f9;
     padding: 1em;
+}
+.np-note-green{
+    font-size: .9em;
+    background-color: #f0f0f0;
+    color: #222222;
+    padding: 1.5em 2em;
+    border-left: 5px solid darkseagreen;
+}
+.np-note-green a{
+    color: green;
+    text-decoration: none;
+}
+.np-note-green a:hover{
+    text-decoration: underline;
+}
+.nl{
+    padding: 0 2em;
+}
+.ncode{
+    display: block;
+    margin: .5em 0;
+    padding: 1.5em 2em;
+    background-color: #1a1a1a;
+    color: #fdfdfd;
+    font-size: .9em;
+    font-family: monospace;
+}
+code-line{
+    display: block;
+    font-family: monospace;
+}
+html-tag-border{
+    color: lightslategrey;
+    font-size: .9em;
+    font-family: monospace;
+}
+html-tag-attr{
+    color: lightslategrey;
+    font-size: .9em;
+    font-family: monospace;
+}
+html-tag-attr-val{
+    color: darkseagreen;
+    font-size: .9em;
+    font-family: monospace;
 }

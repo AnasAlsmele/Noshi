@@ -79,6 +79,7 @@ window.onload = function () {
             var xr = x.responseText;
             _("body-mid").innerHTML = xr;
             genRightSide();
+            styleCode();
         }
         else if (x.status == 404) {
             _("body-mid").innerHTML = "<p class='np-note' align='center'>documents not available now</p>";
@@ -87,14 +88,40 @@ window.onload = function () {
     x.open("GET", "./pages/" + page + ".noshipage", true);
     x.send();
     var genRightSide = function () {
-        var rLink = function (id) {
-            console.log(id);
-        };
         var c = _("body-mid").children;
         for (var i = 0; i < c.length; i++) {
             var n = c[i].nodeName;
             if (n === "H1" || n === "H2" || n === "H3") {
                 _("body-right-head-holder").appendChild(f(c[i].innerText, page + "#" + c[i].getAttribute("id"), "body-right-head"));
+            }
+        }
+    };
+    var styleCode = function () {
+        var styleUp = function (target, code) {
+            var c = "";
+            switch (target) {
+                case "html":
+                    var rg = new RegExp("<|>", "g");
+                    c = code.replace(rg, function (x) { return "<html-tag-border>" + x + "</html-tag-border>"; });
+                    c = c.replace(/\s[a-z]+/gi, function (x) { return "<html-tag-attr>" + x + "</html-tag-attr>"; });
+                    c = c.replace(/=["'][a-z/.-]+['"]/gi, function (x) { return "<html-tag-attr-val>" + x + "</html-tag-attr-val>"; });
+                    c = c.replace(/^.+.$/gim, function (x) {
+                        return "<code-line>" + x + "</code-line";
+                    });
+                    break;
+                case "css":
+                    break;
+                default:
+                    break;
+            }
+            return c;
+        };
+        var c = document.getElementsByTagName("code");
+        for (var i = 0; i < c.length; i++) {
+            var target = c[i].getAttribute("data-target");
+            if (target != null) {
+                var code = c[i].getAttribute("data-code");
+                c[i].innerHTML = styleUp(target, code);
             }
         }
     };
