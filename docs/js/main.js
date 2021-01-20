@@ -37,7 +37,8 @@ window.onload = function () {
                         ["Radio", "_radio", null],
                         ["Checkbox", "_checkbox", null]
                     ]]
-            ]]
+            ]],
+        ["Icons", "icons", null]
     ];
     var f = function (txt, href, style) {
         if (href == page) {
@@ -68,4 +69,29 @@ window.onload = function () {
             }
         }
     }
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function () {
+        if (x.readyState == 4 && x.status == 200) {
+            var xr = x.responseText;
+            _("body-mid").innerHTML = xr;
+            genRightSide();
+        }
+        else if (x.status == 404) {
+            _("body-mid").innerHTML = "<p class='np' align='center'>documents not available now</p>";
+        }
+    };
+    x.open("GET", "./pages/" + page + ".noshipage", true);
+    x.send();
+    var genRightSide = function () {
+        var rLink = function (id) {
+            console.log(id);
+        };
+        var c = _("body-mid").children;
+        for (var i = 0; i < c.length; i++) {
+            var n = c[i].nodeName;
+            if (n === "H1" || n === "H2" || n === "H3") {
+                _("body-right-head-holder").appendChild(f(c[i].innerText, page + "#" + c[i].getAttribute("id"), "body-right-head"));
+            }
+        }
+    };
 };
