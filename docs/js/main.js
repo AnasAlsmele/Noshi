@@ -14,6 +14,9 @@ window.onload = function () {
         case "components_inputs":
             page = "components_inputs";
             break;
+        case "components_inputs_navbar":
+            page = "components_inputs_navbar";
+            break;
         case "components_inputs_text":
             page = "components_inputs_text";
             break;
@@ -33,6 +36,7 @@ window.onload = function () {
         ["Components", "components", [
                 ["Tables", "_tables", null],
                 ["Inputs", "_inputs", [
+                        ["Navbar", "_navbar", null],
                         ["Text", "_text", null],
                         ["Radio", "_radio", null],
                         ["Checkbox", "_checkbox", null]
@@ -77,7 +81,7 @@ window.onload = function () {
             genRightSide();
         }
         else if (x.status == 404) {
-            _("body-mid").innerHTML = "<p class='np' align='center'>documents not available now</p>";
+            _("body-mid").innerHTML = "<p class='np-note' align='center'>documents not available now</p>";
         }
     };
     x.open("GET", "./pages/" + page + ".noshipage", true);

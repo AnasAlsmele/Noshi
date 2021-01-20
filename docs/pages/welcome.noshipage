@@ -1,5 +1,8 @@
 <h1 id="welcome">Welcome</h1>
 <p class="np">This page has been made to show and describe all the functionallities of <b>Noshi</b> toolkit.</p>
-<p class="np"></p>
-<h1 id="why_noshi">Why Noshi?</h1>
+<space></space>
+<h1 id="why_noshi">Why Noshi</h1>
 <p class="np">Noshi is an opensource free toolkit that's come with tons of prewritten styles and handy Javascript functions, which can help you to implement and design your website as fast as you can. It's also provide each component style speratly so you can use it alone instedof having all styles togother (large design).</p>
+<space></space>
+<h1 id="how_to_use">How To Use</h1>
+<p class="np">To learn how to install and use <b>Noshi</b>, please click <a href="index.html?page=install" target="_self">here</a>.</p>

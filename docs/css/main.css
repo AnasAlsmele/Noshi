@@ -59,13 +59,23 @@
 .body-left-branch-a-active{
     color: green;
 }
+.body-left-sub-a,
+.body-left-sub-a-active{
+    font-size: .8em;
+    padding-left: .75em;
+}
 .body-left-sub-a::before,
 .body-left-sub-a-active::before{
     content: " - ";
 }
+.body-left-branch-a,
+.body-left-branch-a-active{
+    font-size: .7em;
+    padding-left: 2.5em;
+}
 .body-left-branch-a::before,
 .body-left-branch-a-active::before{
-    content: " -- ";
+    content: " - ";
 }
 .body-left-head-a:hover,
 .body-left-sub-a:hover,
@@ -91,9 +101,12 @@
     position: sticky;
     top: .2em;
 }
+.body-right-head-holder:empty{
+    padding: 0; 
+    border-bottom: 0;
+}
 .body-right-head,
 .body-right-head:active{
-    /* border-left: 3px solid green; */
     padding: 0 .5em;
     color: #a9a9a9;
     font-size: .7em;
@@ -149,9 +162,14 @@
 }
 
 /* pages style */
+space{
+    margin: 2em 0;
+    display: block;
+}
 h1, h2, h3{
     color: #1a1a1a;
     font-size: 2em;
+    border-bottom: 1px solid #e5e5e5;
 }
 h2{font-size: 1.8em;}
 h3{font-size: 1.5em;}
@@ -160,4 +178,17 @@ h3{font-size: 1.5em;}
     padding: .5em 0;
     color: #1a1a1a;
     text-align: justify;
+}
+.np a{
+    color: green;
+    text-decoration: none;
+}
+.np a:hover{
+    text-decoration: underline;
+}
+.np-note{
+    font-size: .8em;
+    color: #bbbbbb;
+    background-color: #f9f9f9;
+    padding: 1em;
 }
