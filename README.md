@@ -23,4 +23,4 @@
  ---
 
  ## Usage
- you can use the CSS libraries that comes with <b>Noshi</b> by adding the appropriate class name to the item.
+ you can find all documents that explain the usage and functionallity of <b>Noshi</b> <a href="https://anasmusic.github.io/Noshi/" target="_blank">here</a>.
