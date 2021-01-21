@@ -1,1 +1,19 @@
 <h1 id="components">Components</h1>
+<p class="np">Before starting with this section, we need to understand the meaning of component, how to use it, and which style is available to each one. The component is a HTML tag or a group of tags wraped togethor using <b>Javascript</b>. To make a component simply write HTML tag and pass one of <b>Noshi</b> styles for it e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <input type='password' class='input' placeholder='write your password' />
+</div>
+"></code>
+<p class="np">Which will display as shown below.</p>
+<div class="row">
+    <input type='text' class='input' placeholder='testing an input tag' />
+</div>
+<space></space>
+<h1 id="list_of_components">List Of Components</h1>
+<ul class="nl">
+    <li><p class="np"><a href="" target="_self">Navbar</a></p></li>
+    <li><p class="np"><a href="" target="_self">Table</a></p></li>
+    <li><p class="np"><a href="" target="_self">Input</a></p></li>
+    <li><p class="np"><a href="" target="_self">Select</a></p></li>
+</ul>

@@ -34,13 +34,15 @@ window.onload = function () {
         ["Welcome", "welcome", null],
         ["Installation", "install", null],
         ["Components", "components", [
+                ["Layout", "_layout", null],
+                ["Navbar", "_navbar", null],
                 ["Tables", "_tables", null],
                 ["Inputs", "_inputs", [
-                        ["Navbar", "_navbar", null],
-                        ["Text", "_text", null],
+                        ["Text / Password", "_text", null],
                         ["Radio", "_radio", null],
                         ["Checkbox", "_checkbox", null]
-                    ]]
+                    ]],
+                ["Select", "_select", null],
             ]],
         ["Icons", "icons", null]
     ];
@@ -101,17 +103,21 @@ window.onload = function () {
             var c = "";
             switch (target) {
                 case "html":
+                    c = code.replace(/    /gim, function (x) {
+                        return "&nbsp;&nbsp;" + x;
+                    });
                     var rg = new RegExp("<|>", "g");
-                    c = code.replace(rg, function (x) { return "<html-tag-border>" + x + "</html-tag-border>"; });
-                    c = c.replace(/\s[a-z]+/gi, function (x) { return "<html-tag-attr>" + x + "</html-tag-attr>"; });
-                    c = c.replace(/=["'][a-z/.-]+['"]/gi, function (x) { return "<html-tag-attr-val>" + x + "</html-tag-attr-val>"; });
+                    c = c.replace(rg, function (x) { return "<html-tag-border>" + x + "</html-tag-border>"; });
+                    c = c.replace(/\s[a-z]+=/gi, function (x) { return "<html-tag-attr>" + x + "</html-tag-attr>"; });
+                    c = c.replace(/["'][\sa-z/.-]+['"]/gi, function (x) { return "<html-tag-attr-val>" + x + "</html-tag-attr-val>"; });
                     c = c.replace(/^.+.$/gim, function (x) {
-                        return "<code-line>" + x + "</code-line";
+                        return "<code-line>" + x + "</code-line>";
                     });
                     break;
                 case "css":
                     break;
                 default:
+                    c = code.replace(/<|>/g, function (x) { console.log(x); return "<span>" + x + "</span>"; });
                     break;
             }
             return c;
@@ -119,10 +125,8 @@ window.onload = function () {
         var c = document.getElementsByTagName("code");
         for (var i = 0; i < c.length; i++) {
             var target = c[i].getAttribute("data-target");
-            if (target != null) {
-                var code = c[i].getAttribute("data-code");
-                c[i].innerHTML = styleUp(target, code);
-            }
+            var code = c[i].getAttribute("data-code");
+            c[i].innerHTML = styleUp(target, code);
         }
     };
 };

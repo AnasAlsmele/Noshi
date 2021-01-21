@@ -1,16 +1,20 @@
 <h1 id="installation">Installation</h1>
 <p class="np">To install <b>Noshi</b> follow the steps below.</p>
 <ul class="nl">
-    <li><p class="np">Download and extract <a href="https://github.com/AnasMusic/Noshi/archive/main.zip" target="_blank">Noshi</a> inside your project.</p></li>
-    <li>
-        <p class="np">Include '<b>noshi.css</b>' and '<b>noshi.js</b>' at the end of header section.</p>
-        <code class="ncode" data-target="html" data-code="
-            <link rel='stylesheet' href='Noshi-main/noshi.css'>
-            <script src='Noshi-main/noshi.js' type='application/javascript'></script>
-        ">
-        </code>
-    </li>
-    <li><p class="np">Enjoy.</p></li>
+<li><p class="np">Download and extract <a href="https://github.com/AnasMusic/Noshi/archive/main.zip" target="_blank">Noshi</a> inside your project.</p></li>
+<li>
+<p class="np">Include '<b>noshi.css</b>' and '<b>noshi.js</b>' at the end of header section.</p>
+<code class="ncode" data-target="html" data-code="
+<head>
+    other links and scripts
+    ...
+    ...
+    <link rel='stylesheet' href='Noshi-main/noshi.css'>
+    <script src='Noshi-main/noshi.js' type='application/javascript'></script>
+</head>">
+</code>
+</li>
+<li><p class="np">Enjoy.</p></li>
 </ul>
 <space></space>
 <h1 id="what_next">What's Next</h1>
