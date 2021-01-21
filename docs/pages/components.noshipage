@@ -12,8 +12,8 @@
 <space></space>
 <h1 id="list_of_components">List Of Components</h1>
 <ul class="nl">
-    <li><p class="np"><a href="" target="_self">Navbar</a></p></li>
-    <li><p class="np"><a href="" target="_self">Table</a></p></li>
-    <li><p class="np"><a href="" target="_self">Input</a></p></li>
-    <li><p class="np"><a href="" target="_self">Select</a></p></li>
+    <li class="nli"><a href="" target="_self">Navbar</a></li>
+    <li class="nli"><a href="" target="_self">Table</a></li>
+    <li class="nli"><a href="" target="_self">Input</a></li>
+    <li class="nli"><a href="" target="_self">Select</a></li>
 </ul>

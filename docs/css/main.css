@@ -208,7 +208,14 @@ h3{font-size: 1.2em;}
     text-decoration: underline;
 }
 .nl{
-    padding: 0 2em;
+    padding: 1em 2em;
+}
+.nli a{
+    color: green;
+    text-decoration: none;
+}
+.nli a:hover{
+    text-decoration: underline;
 }
 .ncode{
     display: block;
