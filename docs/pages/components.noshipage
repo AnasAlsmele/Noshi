@@ -1,19 +1,31 @@
 <h1 id="components">Components</h1>
-<p class="np">Before starting with this section, we need to understand the meaning of component, how to use it, and which style is available to each one. The component is a HTML tag or a group of tags wraped togethor using <b>Javascript</b>. To make a component simply write HTML tag and pass one of <b>Noshi</b> styles for it e.g.</p>
+<p class="np">Before starting with this section, we need to understand the meaning of component, how to use it, and which style is available to each one. The component is an HTML tag or a group of tags wrapped together using <b>Noshi Builder</b>. To make a component simply write HTML tag and pass one of <b>Noshi</b> styles for it e.g.</p>
 <code class="ncode" data-target="html" data-code="
 <div class='row'>
-    <input type='password' class='input' placeholder='write your password' />
+    <input type='text' class='input' placeholder='testing an input tag' />
 </div>
 "></code>
 <p class="np">Which will display as shown below.</p>
+<div class="dcode">
 <div class="row">
     <input type='text' class='input' placeholder='testing an input tag' />
 </div>
+</div>
+<p class="np">Or you can call <b>Noshi Builder</b> to generate the tag e.g.</p>
+<code class="ncode" data-target="js" data-code="
+var noshi = new NoshiBuilder();
+var inputTag = noshi.input({
+    type: 'text',
+    placeholder: 'testing an input tag'
+});
+"></code>
+<p class="np">Where <b>inputTag</b> contents the same code above but without the <b>div tag</b>, which used to make it full (we will learn this in <b>Layout</b> section).</p>
 <space></space>
 <h1 id="list_of_components">List Of Components</h1>
 <ul class="nl">
-    <li class="nli"><a href="" target="_self">Navbar</a></li>
-    <li class="nli"><a href="" target="_self">Table</a></li>
-    <li class="nli"><a href="" target="_self">Input</a></li>
-    <li class="nli"><a href="" target="_self">Select</a></li>
+    <li class="nli"><a href="index.html?page=components_layout" target="_self">Layout</a></li>
+    <li class="nli"><a href="index.html?page=components_navbar" target="_self">Navbar</a></li>
+    <li class="nli"><a href="index.html?page=components_table" target="_self">Table</a></li>
+    <li class="nli"><a href="index.html?page=components_input" target="_self">Input</a></li>
+    <li class="nli"><a href="index.html?page=components_select" target="_self">Select</a></li>
 </ul>

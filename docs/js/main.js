@@ -1,34 +1,8 @@
 window.onload = function () {
     var url = new URL(window.location.href).searchParams;
     var page = "welcome";
-    switch (url.get("page")) {
-        case "install":
-            page = "install";
-            break;
-        case "components":
-            page = "components";
-            break;
-        case "components_tables":
-            page = "components_tables";
-            break;
-        case "components_inputs":
-            page = "components_inputs";
-            break;
-        case "components_inputs_navbar":
-            page = "components_inputs_navbar";
-            break;
-        case "components_inputs_text":
-            page = "components_inputs_text";
-            break;
-        case "components_inputs_radio":
-            page = "components_inputs_radio";
-            break;
-        case "components_inputs_checkbox":
-            page = "components_inputs_checkbox";
-            break;
-        default:
-            page = "welcome";
-            break;
+    if (url.get("page") != "" && url.get("page") != null) {
+        page = url.get("page");
     }
     var pages = [
         ["Welcome", "welcome", null],
@@ -36,15 +10,19 @@ window.onload = function () {
         ["Components", "components", [
                 ["Layout", "_layout", null],
                 ["Navbar", "_navbar", null],
-                ["Tables", "_tables", null],
-                ["Inputs", "_inputs", [
+                ["Table", "_table", null],
+                ["Input", "_input", [
                         ["Text / Password", "_text", null],
                         ["Radio", "_radio", null],
                         ["Checkbox", "_checkbox", null]
                     ]],
                 ["Select", "_select", null],
             ]],
-        ["Icons", "icons", null]
+        ["Icons", "icons", null],
+        ["Functions", "functions", [
+                ["Noshi Create Element", "_noshicreateelement", null],
+                ["Noshi Builder", "_noshibuilder", null]
+            ]]
     ];
     var f = function (txt, href, style) {
         if (href == page) {
@@ -101,11 +79,11 @@ window.onload = function () {
     var styleCode = function () {
         var styleUp = function (target, code) {
             var c = "";
+            c = code.replace(/    /gim, function (x) {
+                return "&nbsp;&nbsp;&nbsp;&nbsp;";
+            });
             switch (target) {
                 case "html":
-                    c = code.replace(/    /gim, function (x) {
-                        return "&nbsp;&nbsp;" + x;
-                    });
                     var rg = new RegExp("<|>", "g");
                     c = c.replace(rg, function (x) { return "<html-tag-border>" + x + "</html-tag-border>"; });
                     c = c.replace(/\s[a-z]+=/gi, function (x) { return "<html-tag-attr>" + x + "</html-tag-attr>"; });
@@ -116,8 +94,28 @@ window.onload = function () {
                     break;
                 case "css":
                     break;
+                case "js":
+                    c = c.replace(/var|let|const|new/gi, function (x) {
+                        return "<js-var>" + x + "</js-var>";
+                    });
+                    c = c.replace(/['"][a-z0-9-/()\s]+['"]/gi, function (x) {
+                        return "<js-txt>" + x + "</js-txt>";
+                    });
+                    c = c.replace(/{|}/gi, function (x) {
+                        return "<js-bracket>" + x + "</js-bracket>";
+                    });
+                    c = c.replace(/[a-z]+:/gi, function (x) {
+                        return "<js-obj-key>" + x + "</js-obj-key>";
+                    });
+                    c = c.replace(/[a-z]+\(\)|[a-z]+\(|\)/gi, function (x) {
+                        return "<js-func>" + x + "</js-func>";
+                    });
+                    c = c.replace(/^.+.$/gim, function (x) {
+                        return "<code-line>" + x + "</code-line>";
+                    });
+                    break;
                 default:
-                    c = code.replace(/<|>/g, function (x) { console.log(x); return "<span>" + x + "</span>"; });
+                    c = code.replace(/<|>/g, function (x) { return "<span>" + x + "</span>"; });
                     break;
             }
             return c;

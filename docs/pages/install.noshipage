@@ -3,7 +3,7 @@
 <ul class="nl">
 <li><p class="np">Download and extract <a href="https://github.com/AnasMusic/Noshi/archive/main.zip" target="_blank">Noshi</a> inside your project.</p></li>
 <li>
-<p class="np">Include '<b>noshi.css</b>' and '<b>noshi.js</b>' at the end of header section.</p>
+<p class="np">Include '<b>noshi.css</b>' and '<b>noshi.js</b>' at the end of the header section.</p>
 <code class="ncode" data-target="html" data-code="
 <head>
     other links and scripts
@@ -20,4 +20,4 @@
 <h1 id="what_next">What's Next</h1>
 <p class="np">After ensuring that <b>Noshi</b> is connected to your website, you can now move to learn each component and how it looks like.</p>
 <space></space>
-<p class="np-note-green">Components <a href="index.html?page=components" target="_self">learn more</a>.</p>
+<p class="np-note-green">Components, <a href="index.html?page=components" target="_self">learn more</a>.</p>

@@ -1,16 +1,16 @@
 <h1 id="welcome">Welcome</h1>
-<p class="np">This page has been made to show and describe all the functionallities of <b>Noshi</b> toolkit.</p>
+<p class="np">This page has been made to show and describe all the functionalities of <b>Noshi</b> toolkit.</p>
 <space></space>
 <h1 id="noshi_made_from">Noshi Made From</h1>
 <p class="np">Noshi has been built from scratch using pure <b>CSS</b> and <b>Typescript</b>. However, the only <b>Javascript</b> output file ships with name <b>noshi.js</b> inside <b>Noshi</b> project folder.</p>
 <space></space>
 <h1 id="noshi_for">Noshi For</h1>
-<p class="np">This toolkit has been made to speed up the website building process. So, if you want to build a website as fast as you can with responsive design, multiple mode for each stye, dynamic components, and tons of other features, <b>Noshi</b> will be suitable for you.</p>
+<p class="np">This toolkit has been made to speed up the website building process. So, if you want to build a website as fast as you can with responsive design, multiple modes for each stye, dynamic components, and tons of other features, <b>Noshi</b> will be suitable for you.</p>
 <space></space>
 <h1 id="why_noshi">Why Noshi</h1>
-<p class="np">Noshi is an opensource free toolkit that's come with tons of prewritten styles and handy Javascript functions, which can help you to implement and design your website as fast as you can. It's also provide each component style speratly so you can use it alone instedof having all styles togother (large design).</p>
+<p class="np">Noshi is an opensource free toolkit that's come with tons of prewritten styles and handy Javascript functions, which can help you to implement and design your website as fast as you can. It also provides each component style separately so you can use it alone instead of having all styles together (large size).</p>
 <space></space>
 <h1 id="how_to_use">How To Use</h1>
 <p class="np">To install and use <b>Noshi</b>, please click <a href="index.html?page=install" target="_self">here</a>.</p>
 <space></space>
-<p class="np-note-green">Installation <a href="index.html?page=install" target="_self">learn more</a>.</p>
+<p class="np-note-green">Installation, <a href="index.html?page=install" target="_self">learn more</a>.</p>
