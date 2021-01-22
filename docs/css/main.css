@@ -207,6 +207,32 @@ h3{font-size: 1.2em;}
 .np-note-green a:hover{
     text-decoration: underline;
 }
+.np-file-dir{
+    color: #666666;
+    background-color: #f5f5f5;
+    font-size: .9em;
+    margin: 1em 0;
+    font-family: monospace;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.np-file-dir::before{
+    content: "x";
+    top: -.4em;
+    left: 1em;
+    font-size: .8em;
+    color: #f0f0f0;
+    padding: 0 .5em;
+    font-family: noshi;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    margin-right: 1em;
+    background-color: darkseagreen;
+    height: 100%;
+}
 .nl{
     padding: 1em 2em;
 }
@@ -216,6 +242,14 @@ h3{font-size: 1.2em;}
 }
 .nli a:hover{
     text-decoration: underline;
+}
+code{
+    color: #1a1a1a;
+    background-color: #e5e5e5;
+    padding: .2em .5em;
+    font-family: monospace;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .ncode{
     display: block;
@@ -228,6 +262,7 @@ h3{font-size: 1.2em;}
 }
 .dcode{
     padding: 1em;
+    margin: 1em 0;
     border: 1px solid #e5e5e5;
 }
 code-line{

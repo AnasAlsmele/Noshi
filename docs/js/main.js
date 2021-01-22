@@ -87,7 +87,7 @@ window.onload = function () {
                     var rg = new RegExp("<|>", "g");
                     c = c.replace(rg, function (x) { return "<html-tag-border>" + x + "</html-tag-border>"; });
                     c = c.replace(/\s[a-z]+=/gi, function (x) { return "<html-tag-attr>" + x + "</html-tag-attr>"; });
-                    c = c.replace(/["'][\sa-z/.-]+['"]/gi, function (x) { return "<html-tag-attr-val>" + x + "</html-tag-attr-val>"; });
+                    c = c.replace(/["'][\s0-9a-z/.-]+['"]/gi, function (x) { return "<html-tag-attr-val>" + x + "</html-tag-attr-val>"; });
                     c = c.replace(/^.+.$/gim, function (x) {
                         return "<code-line>" + x + "</code-line>";
                     });
@@ -115,16 +115,17 @@ window.onload = function () {
                     });
                     break;
                 default:
-                    c = code.replace(/<|>/g, function (x) { return "<span>" + x + "</span>"; });
                     break;
             }
             return c;
         };
         var c = document.getElementsByTagName("code");
         for (var i = 0; i < c.length; i++) {
-            var target = c[i].getAttribute("data-target");
-            var code = c[i].getAttribute("data-code");
-            c[i].innerHTML = styleUp(target, code);
+            if (c[i].getAttribute("data-target") != null) {
+                var target = c[i].getAttribute("data-target");
+                var code = c[i].getAttribute("data-code");
+                c[i].innerHTML = styleUp(target, code);
+            }
         }
     };
 };

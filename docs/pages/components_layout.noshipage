@@ -1,0 +1,62 @@
+<h1 id="layout">Layout</h1>
+<p class="np-file-dir">noshi/style/components/layouts.css</p>
+<p class="np"><b>Noshi</b> toolkit has designed based on flex-box <b>CSS</b> layout.</p>
+<space></space>
+<h3 id="rows">Rows</h3>
+<p class="np">To make a row layout, you will need to pass <code>row</code> class to your element e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <div class='w10 center'>1</div>
+    <div class='w20 center'>2</div>
+    <div class='w30 center'>3</div>
+    <div class='w40 center'>4</div>
+</div>
+"></code>
+<div class="dcode">
+    <div class="row">
+        <div class="w10 center">1</div>
+        <div class="w20 center">2</div>
+        <div class="w30 center">3</div>
+        <div class="w40 center">4</div>
+    </div>
+</div>
+<p class="np">The example above, shows how other tags will appear inside <b>Row</b> layout. The next style is <code>row-reverse</code> which will reverse the inside components like shown below.</p>
+<div class="dcode">
+    <div class="row-reverse">
+        <div class="w10 center">1</div>
+        <div class="w20 center">2</div>
+        <div class="w30 center">3</div>
+        <div class="w40 center">4</div>
+    </div>
+</div>
+<p class="np">Both styles are wrapped, in csse you don't want to unwrap inside components you will need to use <code>row-nowrap</code> and <code>row-nowrap-reverse</code></p>.
+<space></space>
+<h3 id="columns">Columns</h3>
+<p class="np">To make a column layout, you will need to pass <code>column</code> class to your element e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='column'>
+    <div class='w20 bgred'>HTML</div>
+    <div class='w90 bggreen'>CSS</div>
+    <div class='w70 bgyellow'>Javascript</div>
+    <div class='w40 bgblue'>Other</div>
+</div>
+"></code>
+<div class="dcode">
+    <div class="column">
+        <div class="w20 bgred">HTML</div>
+        <div class="w90 bggreen">CSS</div>
+        <div class="w70 bgyellow">Javascript</div>
+        <div class="w40 bgblue">Other</div>
+    </div>
+</div>
+<p class="np">However, to reverse the contents you can pass <code>column-reverse</code>.</p>
+<div class="dcode">
+    <div class="column-reverse">
+        <div class="w20 bgred">HTML</div>
+        <div class="w90 bggreen">CSS</div>
+        <div class="w70 bgyellow">Javascript</div>
+        <div class="w40 bgblue">Other</div>
+    </div>
+</div>
+<p class="np">To use unwrap class, you can pass either <code>column-nowrap</code> or <code>column-nowrap-reverse</code> depending on the way you want to show the design with.</p>
+<space></space>
