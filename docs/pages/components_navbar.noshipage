@@ -1,0 +1,243 @@
+<h1 id="navbar">Navbar</h1>
+<p class="np-file-dir">noshi/style/components/navs.css</p>
+<p class="np">The <b>Navbar</b> includes multiple section that can be display or not depending on user design. In this page, we will explain each section and how to use it.</p>
+<space></space>
+<h3 id="nav">nav</h3>
+<p class="np">The <code>nav</code> class is the main container which is used to specify, the tag is a <b>Navbar</b>. This class can be use with <code>nav</code> or <code>div</code> tags.</p>
+<code class="ncode" data-target="html" data-code="
+<nav class='nav'>
+    ...
+    rest of the code
+    ...
+</nav>
+"></code>
+<code class="ncode" data-target="html" data-code="
+<div class='nav'>
+    ...
+    rest of the code
+    ...
+</div>
+"></code>
+<space></space>
+<h3 id="nav_left_right">nav-left / nav-right</h3>
+<p class="np">The <code>nav</code> class contains two parts, <code>nav-left</code> and <code>nav-right</code>, where each one shows the side of the design.</p>
+<code class="ncode" data-target="html" data-code="
+<nav class='nav'>
+    <div class='nav-left'>
+        left contains
+        ...
+    </div>
+    <div class='nav-right'>
+        right contains
+        ...
+    </div>
+</nav>
+"></code>
+<space></space>
+<h3 id="nav_logo">nav-logo</h3>
+<p class="np">The <code>nav-logo</code> class used to show the web site logo inside one of the classes <code>nav-left</code> or <code>nav-right</code> of the <b>Navbar</b> e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<nav class='nav'>
+    <div class='nav-left'>
+        <a href='#' target='_self' class='nav-logo'>Noshi</a>
+    </div>
+</nav>
+"></code>
+<p class="np">The above example will be displayed as shown below.</p>
+<div class="dcode">
+    <nav class='nav'>
+        <div class='nav-left'>
+            <a href='#' target='_self' class='nav-logo'>Noshi</a>
+        </div>
+    </nav>
+</div>
+<space></space>
+<h3 id="nav_item">nav-item</h3>
+<p class="np">This class is using to display a single item inside the <b>Navbar</b>, which could be a text or an icon. However, it should be included inside <code>nav-left</code> or <code>nav-right</code> e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<nav class='nav'>
+    <div class='nav-left'>
+        <a href='#' target='_self' class='nav-logo'>Noshi</a>
+        <a href='#' target='_self' class='nav-item'>left item</a>
+    </div>
+    <div class='nav-right'>
+        <a href='#' target='_blank' class='nav-item noshi-github'></a>
+    </div>
+</nav>
+"></code>
+<p class="np">The above example will be displayed as shown below.</p>
+<div class="dcode">
+    <nav class='nav'>
+        <div class='nav-left'>
+            <a href="#" target="_self" class="nav-logo">Noshi</a>
+            <a href='#' target='_self' class='nav-item'>nav item</a>
+        </div>
+        <div class='nav-right'>
+            <a href='https://github.com/AnasMusic/Noshi' target='_blank' class='nav-item noshi-github'></a>
+        </div>
+    </nav>
+</div>
+<space></space>
+<h3 id="nav-menu">nav-menu</h3>
+<p class="np">This class can be used to hold and display multiple items together (list of items) under one single item. Also, it includes other several classes to help building the menu as show in the table below.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w20">Class Name</th>
+            <th class="w20">Required  Attributes</th>
+            <th class="w50">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>nav-menu-head</code></td>
+            <td><code>data-target</code></td>
+            <td>used to display the main item of the menu (similar to <code>nav-item</code> but with down arrow icon)</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>nav-menu-list</code></td>
+            <td><code>id</code></td>
+            <td>a holder for other items, usually used with <code>div</code> tag</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>nav-menu-row</code></td>
+            <td>-</td>
+            <td>a holder for sub item, usually used with <code>a</code> tag</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>nav-menu-text</code></td>
+            <td>-</td>
+            <td>sub item text, usually used with <code>p</code> tag</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>nav-menu-icon</code></td>
+            <td>-</td>
+            <td>sub item icon, usually used with <code>i</code> tag</td>
+        </tr>
+    </table>
+</div>
+<p class="np">The example below will show how to use <code>nav-menu</code>.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='nav'>
+    <div class='nav-left'>
+        <a href='#' target='_self' class='nav-logo'>Noshi</a>
+        <div class='nav-menu'>
+            <p class='nav-menu-head' data-target='list-id'>nav menu</p>
+            <div id='list-id' class='nav-menu-list'>
+                <a href='#' target='_self' class='nav-menu-row'>
+                    <p class='nav-menu-text'>sub item text1</p>
+                    <i class='nav-menu-icon'></i>
+                </a>
+                <a href='#' target='_self' class='nav-menu-row'>
+                    <p class='nav-menu-text'>sub item text2</p>
+                    <i class='nav-menu-icon noshi-user'></i>
+                </a>
+                <a href='#' target='_self' class='nav-menu-row'>
+                    <p class='nav-menu-text'>sub item text3</p>
+                    <i class='nav-menu-icon noshi-cogs'></i>
+                </a>
+            </div>
+        </div>
+    </div>
+"></code>
+<p class="np">Which will give the result below.</p>
+<div class="dcode">
+    <div class='nav'>
+        <div class='nav-left'>
+            <a href='#' target='_self' class='nav-logo'>Noshi</a>
+            <div class='nav-menu'>
+                <p class='nav-menu-head' data-target='list-id'>nav menu</p>
+                <div id='list-id' class='nav-menu-list'>
+                    <a href='#' target='_self' class='nav-menu-row'>
+                        <p class='nav-menu-text'>sub item text</p>
+                        <i class='nav-menu-icon noshi-item'></i>
+                    </a>
+                    <a href='#' target='_self' class='nav-menu-row'>
+                        <p class='nav-menu-text'>sub item text2</p>
+                        <i class='nav-menu-icon noshi-user'></i>
+                    </a>
+                    <a href='#' target='_self' class='nav-menu-row'>
+                        <p class='nav-menu-text'>sub item text3</p>
+                        <i class='nav-menu-icon noshi-settings'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="np">Moreover, we can build a light mode navbar (like we did before), or make it dark by passing <code>nav-dark</code> to the main nav tag and it will look like</p>
+<div class="dcode">
+    <div class='nav-dark'>
+        <div class='nav-left'>
+            <a href='#' target='_self' class='nav-logo'>Noshi</a>
+            <div class='nav-menu'>
+                <p class='nav-menu-head' data-target='list-id-dark'>nav menu</p>
+                <div id='list-id-dark' class='nav-menu-list'>
+                    <a href='#' target='_self' class='nav-menu-row'>
+                        <p class='nav-menu-text'>sub item text</p>
+                        <i class='nav-menu-icon noshi-item'></i>
+                    </a>
+                    <a href='#' target='_self' class='nav-menu-row'>
+                        <p class='nav-menu-text'>sub item text2</p>
+                        <i class='nav-menu-icon noshi-user'></i>
+                    </a>
+                    <a href='#' target='_self' class='nav-menu-row'>
+                        <p class='nav-menu-text'>sub item text3</p>
+                        <i class='nav-menu-icon noshi-settings'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<space></space>
+<h1 id="summary">Summary</h1>
+<div class="dcode">
+    <table class="table-head">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w20">Class Name</th>
+            <th class="w70">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>nav</code></td>
+            <td>a holder of the <b>Navbar</b>, usually used with <code>nav</code> or <code>div</code> tags</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>nav-dark</code></td>
+            <td>similar to <code>nav</code> but in dark mode</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>nav-left</code></td>
+            <td>left items holder</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>nav-right</code></td>
+            <td>right items holder</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>nav-logo</code></td>
+            <td>to display the logo of the website</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>nav-item</code></td>
+            <td>to show item inside the <b>Navbar</b></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>nav-menu</code></td>
+            <td>a holder for list of items</td>
+        </tr>
+    </table>
+</div>
+<p class="np-note-green">Table, <a href="index.html?page=components_table" target="_self">learn more</a></p>

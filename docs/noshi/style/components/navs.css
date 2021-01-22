@@ -76,7 +76,8 @@
 .nav-dark .nav-menu-head:hover{color: #f0f0f0;}
 
 /* nav menu head extra */
-.nav .nav-menu-head::after{
+.nav .nav-menu-head::after,
+.nav-dark .nav-menu-head::after{
     font-family: "noshi" !important;
     content: "\22";
     padding: 0 .3em;
@@ -116,6 +117,10 @@
     border: 1px solid #e5e5e5;
     padding: .5em;
 }
+.nav-dark .nav-menu-list{
+    background-color: #222222;
+    border-color: #444444;
+}
 
 .nav .nav-menu-row,
 .nav-dark .nav-menu-row{
@@ -130,13 +135,19 @@
     cursor: pointer;
     transition: color .25s, background-color .25s;
 }
-.nav .nav-menu-row:nth-last-child(n+2),
-.nav-dark .nav-menu-row:nth-last-child(n+2){
+.nav .nav-menu-row:nth-last-child(n+2){
     border-bottom: 1px solid #e5e5e5;
+}
+.nav-dark .nav-menu-row:nth-last-child(n+2){
+    border-bottom: 1px solid #444444;
 }
 .nav .nav-menu-row:hover{
     color: #222222;
     background-color: #fdfdfd;
+}
+.nav-dark .nav-menu-row:hover{
+    color: #fdfdfd;
+    background-color: #111111;
 }
 
 .nav .nav-menu-text,

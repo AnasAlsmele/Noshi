@@ -1,6 +1,6 @@
 <h1 id="layout">Layout</h1>
 <p class="np-file-dir">noshi/style/components/layouts.css</p>
-<p class="np"><b>Noshi</b> toolkit has designed based on flex-box <b>CSS</b> layout.</p>
+<p class="np"><b>Noshi</b> toolkit has designed based on flex-box <b>CSS</b> layout, in this page we will explain how to display your page in appropriate way fit to your required.</p>
 <space></space>
 <h3 id="rows">Rows</h3>
 <p class="np">To make a row layout, you will need to pass <code>row</code> class to your element e.g.</p>
@@ -60,3 +60,64 @@
 </div>
 <p class="np">To use unwrap class, you can pass either <code>column-nowrap</code> or <code>column-nowrap-reverse</code> depending on the way you want to show the design with.</p>
 <space></space>
+<h1 id="summery">Summary</h1>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w30">Class Name</th>
+            <th class="w10">Wrapped</th>
+            <th class="w50">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>row</code></td>
+            <td>Yes</td>
+            <td>used to display the contents in row</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>row-reverse</code></td>
+            <td>Yes</td>
+            <td>used to display the contents in reverse row</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>row-nowrap</code></td>
+            <td>No</td>
+            <td>used to display the contents in row</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>row-nowrap-reverse</code></td>
+            <td>No</td>
+            <td>used to display the contents in reverse row</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>column</code></td>
+            <td>Yes</td>
+            <td>used to display the contents in column</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>column-reverse</code></td>
+            <td>Yes</td>
+            <td>used to display the contents in reverse column</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>column-nowrap</code></td>
+            <td>No</td>
+            <td>used to display the contents in column</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><code>column-nowrap-reverse</code></td>
+            <td>No</td>
+            <td>used to display the contents in reverse column</td>
+        </tr>
+    </table>
+</div>
+<span></span>
+<p class="np-note-green">Navbar, <a href="index.html?page=components_navbar" target="_self">learn more</a>.</p>

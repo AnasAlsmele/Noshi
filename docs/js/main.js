@@ -60,6 +60,7 @@ window.onload = function () {
             _("body-mid").innerHTML = xr;
             genRightSide();
             styleCode();
+            _activeNavs();
         }
         else if (x.status == 404) {
             _("body-mid").innerHTML = "<p class='np-note' align='center'>documents not available now</p>";
