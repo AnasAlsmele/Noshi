@@ -1,0 +1,195 @@
+<h1 id="icons">Icons</h1>
+<p class="np"><b>Noshi</b> includes a list of icons that can be used inside paragraphs, links, list, and almost everywhere. In this page, we will show you available icons and how to display them inside the tags.</p>
+<space></space>
+<h1 id="how-to-use">How To Use The Icons</h1>
+<p class="np">Usually, you can use <code>i</code> tag as a holder for your icon, and to add an icon, you can simply pass <code>noshi-</code> followed by the icon name as a class inside the tag e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<p>I <i class='noshi-correct'></i> Noshi</p>
+"></code>
+<p class="np">Which will be display as show below.</p>
+<div class="dcode">
+    <p>I <i class='noshi-heart'></i> Noshi</p>
+</div>
+<h1 class="icons-list">Icons List</h1>
+<div class="dcode">
+    <table class="table-grid-head center">
+        <tr>
+            <th class="w15">Name</th>
+            <th class="w10">Icon</th>
+            <th class="w15">Name</th>
+            <th class="w10">Icon</th>
+            <th class="w15">Name</th>
+            <th class="w10">Icon</th>
+            <th class="w15">Name</th>
+            <th class="w10">Icon</th>
+        </tr>
+        <tr>
+            <td><code>bill</code></td>
+            <td><i class="noshi-bill"></i></td>
+            <td><code>signin</code></td>
+            <td><i class="noshi-signin"></i></td>
+            <td><code>flag</code></td>
+            <td><i class="noshi-flag"></i></td>
+            <td><code>no-image</code></td>
+            <td><i class="noshi-no-image"></i></td>
+        </tr>
+        <tr>
+            <td><code>list-down</code></td>
+            <td><i class="noshi-list-down"></i></td>
+            <td><code>list-up</code></td>
+            <td><i class="noshi-list-up"></i></td>
+            <td><code>return</code></td>
+            <td><i class="noshi-return"></i></td>
+            <td><code>add-book</code></td>
+            <td><i class="noshi-add-book"></i></td>
+        </tr>
+        <tr>
+            <td><code>arrow-up</code></td>
+            <td><i class="noshi-arrow-up"></i></td>
+            <td><code>arrow-down</code></td>
+            <td><i class="noshi-arrow-down"></i></td>
+            <td><code>arrow-left</code></td>
+            <td><i class="noshi-arrow-left"></i></td>
+            <td><code>arrow-right</code></td>
+            <td><i class="noshi-arrow-right"></i></td>
+        </tr>
+        <tr>
+            <td><code>linkedin</code></td>
+            <td><i class="noshi-linkedin"></i></td>
+            <td><code>facebook</code></td>
+            <td><i class="noshi-facebook"></i></td>
+            <td><code>github</code></td>
+            <td><i class="noshi-github"></i></td>
+            <td><code>youtube</code></td>
+            <td><i class="noshi-youtube"></i></td>
+        </tr>
+        <tr>
+            <td><code>link</code></td>
+            <td><i class="noshi-link"></i></td>
+            <td><code>zoom-in</code></td>
+            <td><i class="noshi-zoom-in"></i></td>
+            <td><code>heart</code></td>
+            <td><i class="noshi-heart"></i></td>
+            <td><code>truck-time</code></td>
+            <td><i class="noshi-truck-time"></i></td>
+        </tr>
+        <tr>
+            <td><code>feed</code></td>
+            <td><i class="noshi-feed"></i></td>
+            <td><code>eye</code></td>
+            <td><i class="noshi-eye"></i></td>
+            <td><code>new-window</code></td>
+            <td><i class="noshi-new-window"></i></td>
+            <td><code>money</code></td>
+            <td><i class="noshi-money"></i></td>
+        </tr>
+        <tr>
+            <td><code>save</code></td>
+            <td><i class="noshi-save"></i></td>
+            <td><code>shirt</code></td>
+            <td><i class="noshi-shirt"></i></td>
+            <td><code>search</code></td>
+            <td><i class="noshi-search"></i></td>
+            <td><code>coupon</code></td>
+            <td><i class="noshi-coupon"></i></td>
+        </tr>
+        <tr>
+            <td><code>home</code></td>
+            <td><i class="noshi-home"></i></td>
+            <td><code>switch</code></td>
+            <td><i class="noshi-switch"></i></td>
+            <td><code>info</code></td>
+            <td><i class="noshi-info"></i></td>
+            <td><code>statistics</code></td>
+            <td><i class="noshi-statistics"></i></td>
+        </tr>
+        <tr>
+            <td><code>mail</code></td>
+            <td><i class="noshi-mail"></i></td>
+            <td><code>building</code></td>
+            <td><i class="noshi-building"></i></td>
+            <td><code>bag</code></td>
+            <td><i class="noshi-bag"></i></td>
+            <td><code>location</code></td>
+            <td><i class="noshi-location"></i></td>
+        </tr>
+        <tr>
+            <td><code>store</code></td>
+            <td><i class="noshi-store"></i></td>
+            <td><code>time-is-money</code></td>
+            <td><i class="noshi-time-is-money"></i></td>
+            <td><code>users</code></td>
+            <td><i class="noshi-users"></i></td>
+            <td><code>user</code></td>
+            <td><i class="noshi-user"></i></td>
+        </tr>
+        <tr>
+            <td><code>box</code></td>
+            <td><i class="noshi-box"></i></td>
+            <td><code>calendar</code></td>
+            <td><i class="noshi-calendar"></i></td>
+            <td><code>open-folder</code></td>
+            <td><i class="noshi-open-folder"></i></td>
+            <td><code>trash</code></td>
+            <td><i class="noshi-trash"></i></td>
+        </tr>
+        <tr>
+            <td><code>truck</code></td>
+            <td><i class="noshi-truck"></i></td>
+            <td><code>order</code></td>
+            <td><i class="noshi-order"></i></td>
+            <td><code>correct</code></td>
+            <td><i class="noshi-correct"></i></td>
+            <td><code>delivery-man</code></td>
+            <td><i class="noshi-delivery-man"></i></td>
+        </tr>
+        <tr>
+            <td><code>phone</code></td>
+            <td><i class="noshi-phone"></i></td>
+            <td><code>warning</code></td>
+            <td><i class="noshi-warning"></i></td>
+            <td><code>times</code></td>
+            <td><i class="noshi-times"></i></td>
+            <td><code>plus</code></td>
+            <td><i class="noshi-plus"></i></td>
+        </tr>
+        <tr>
+            <td><code>earth</code></td>
+            <td><i class="noshi-earth"></i></td>
+            <td><code>edit</code></td>
+            <td><i class="noshi-edit"></i></td>
+            <td><code>safety</code></td>
+            <td><i class="noshi-safety"></i></td>
+            <td><code>settings</code></td>
+            <td><i class="noshi-settings"></i></td>
+        </tr>
+        <tr>
+            <td><code>fingerprint</code></td>
+            <td><i class="noshi-fingerprint"></i></td>
+            <td><code>file</code></td>
+            <td><i class="noshi-file"></i></td>
+            <td><code>cog</code></td>
+            <td><i class="noshi-cog"></i></td>
+            <td><code>control-panel</code></td>
+            <td><i class="noshi-control-panel"></i></td>
+        </tr>
+        <tr>
+            <td><code>image</code></td>
+            <td><i class="noshi-image"></i></td>
+            <td><code>list</code></td>
+            <td><i class="noshi-list"></i></td>
+            <td><code>dolly</code></td>
+            <td><i class="noshi-dolly"></i></td>
+            <td><code>star</code></td>
+            <td><i class="noshi-star"></i></td>
+        </tr>
+        <tr>
+            <td><code>logout</code></td>
+            <td><i class="noshi-logout"></i></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div><p class="np-note-green">Functions, <a href="index.html?page=functions" target="_self">learn more</a></p>
