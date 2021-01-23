@@ -1,0 +1,551 @@
+<h1 id="table">Table</h1>
+<p class="np-file-dir">noshi/style/components/tables.css</p>
+<p class="np">In this page we will show all available styles that can be used with <code>table</code> tag with examples.</p>
+<space></space>
+<h3 id="def-style">Default Style</h3>
+<p class="np">The default style of the <code>table</code> tag that can we pass is <code>table</code> as show in the example below.</p>
+<code class="ncode" data-target="html" data-code="
+<table class='table'>
+    <tr>
+        <th>Head 1</th>
+        <th>Head 2</th>
+    </tr>
+    <tr>
+        <td>Row 1 Cell 1</td>
+        <td>Row 1 Cell 2</td>
+    </tr>
+    <tr>
+        <td>Row 2 Cell 1</td>
+        <td>Row 2 Cell 2</td>
+    </tr>
+</table>
+"></code>
+<p class="np">Which will be</p>
+<div class="dcode">
+    <table class='table'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<p class="np">However, you can use the dark style with the default table by adding the term <code>-dark</code> at the end of the class name e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<table class='table-dark'>
+    <tr>
+        <th>Head 1</th>
+        <th>Head 2</th>
+    </tr>
+    <tr>
+        <td>Row 1 Cell 1</td>
+        <td>Row 1 Cell 2</td>
+    </tr>
+    <tr>
+        <td>Row 2 Cell 1</td>
+        <td>Row 2 Cell 2</td>
+    </tr>
+</table>
+"></code>
+<p class="np">Which will be</p>
+<div class="dcode">
+    <table class='table-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-border">table-border</h3>
+<p class="np">To apply this style you should pass <code>table-border</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-border'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-border-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-head">table-head</h3>
+<p class="np">To apply this style you should pass <code>table-head</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-head'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-head-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-border-head">table-border-head</h3>
+<p class="np">To apply this style you should pass <code>table-border-head</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-border-head'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-border-head-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-grid">table-grid</h3>
+<p class="np">To apply this style you should pass <code>table-grid</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-grid'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-grid-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-grid-head">table-grid-head</h3>
+<p class="np">To apply this style you should pass <code>table-grid-head</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-grid-head'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-grid-head-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-hover">table-hover</h3>
+<p class="np">To apply this style you should pass <code>table-hover</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-hover'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-hover-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-hover-head">table-hover-head</h3>
+<p class="np">To apply this style you should pass <code>table-hover-head</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-hover-head'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-hover-head-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-head">table-head</h3>
+<p class="np">To apply this style you should pass <code>table-head</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-head'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-head-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-strips">table-strips</h3>
+<p class="np">To apply this style you should pass <code>table-strips</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-strips'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 3 Cell 1</td>
+            <td>Row 3 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 4 Cell 1</td>
+            <td>Row 4 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-strips-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 3 Cell 1</td>
+            <td>Row 3 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 4 Cell 1</td>
+            <td>Row 4 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="table-borderless">table-borderless</h3>
+<p class="np">To apply this style you should pass <code>table-borderless</code> as a class name to your table.</p>
+<div class="dcode">
+    <table class='table-borderless'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<div class="dcode">
+    <table class='table-borderless-dark'>
+        <tr>
+            <th>Head 1</th>
+            <th>Head 2</th>
+        </tr>
+        <tr>
+            <td>Row 1 Cell 1</td>
+            <td>Row 1 Cell 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Cell 1</td>
+            <td>Row 2 Cell 2</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h1 id="summary">Summary</h1>
+<dic class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w50">Class Name</th>
+            <th class="w40">Mode</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>table</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>table-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>table-border</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>table-border-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>table-head</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>table-head-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>table-border-head</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><code>table-border-head-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td><code>table-grid</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td><code>table-grid-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td><code>table-gird-head</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td><code>table-grid-head-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td><code>table-hover</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td><code>table-hover-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td><code>table-hover-head</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td><code>table-hover-head-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td><code>table-strips</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td><code>table-strips-dark</code></td>
+            <td>dark</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td><code>table-borderless</code></td>
+            <td>light</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td><code>table-borderless-dark</code></td>
+            <td>dark</td>
+        </tr>
+    </table>
+</dic>
+<p class="np-note-green">Input, <a href="index.html?page=components_input" target="_self">learn more</a></p>
