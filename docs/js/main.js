@@ -11,11 +11,7 @@ window.onload = function () {
                 ["Layout", "_layout", null],
                 ["Navbar", "_navbar", null],
                 ["Table", "_table", null],
-                ["Input", "_input", [
-                        ["Text / Password", "_text", null],
-                        ["Radio", "_radio", null],
-                        ["Checkbox", "_checkbox", null]
-                    ]],
+                ["Input", "_input", null],
                 ["Select", "_select", null],
             ]],
         ["Icons", "icons", null],

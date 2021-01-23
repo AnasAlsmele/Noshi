@@ -1,0 +1,34 @@
+<h1 id="input">Input</h1>
+<p class="np-file-dir">noshi/style/components/inputs.css</p>
+<p class="np">The <code>input</code> tag includes multiple types which can be a text, password, checkbox, file, etc. We can apply the normal style by passing <code>input</code> as a class name inside the tag as show in the example below.</p>
+<code class="ncode" data-target="html" data-code="
+<input type='text' class='input' placeholder='input tag with type text' />
+"></code>
+<p class="np">Which will give us</p>
+<div class="dcode">
+    <input type='text' class='input' placeholder='input tag with type text' />
+</div>
+<p class="np">To make the <code>input</code> tag stretch on the screen, we must wrap it inside a <code>div</code> tag with <code>row</code> or <code>column</code> class as show in the example below.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <input type='text' class='input' placeholder='stretched input tag' />
+</div>
+"></code>
+<div class="dcode">
+    <div class='row'>
+        <input type='text' class='input' placeholder='stretched input tag' />
+    </div>
+</div>
+<p class="np">Also, we can use <code>disabled</code> as an attribute inside the tag to disable typing process e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <input type='text' class='input' placeholder='disabled input tag' disabled='disabled' />
+</div>
+"></code>
+<p class="np">And it will be</p>
+<div class="dcode">
+    <div class='row'>
+        <input type='text' class='input' placeholder='disabled input tag' disabled='disabled' />
+    </div>
+</div>
+<p class="np-note-green">Select, <a href="index.html?page=components_select" target="_self">learn more</a></p>
