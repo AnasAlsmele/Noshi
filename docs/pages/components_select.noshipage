@@ -1,0 +1,77 @@
+<h1 id="select">Select</h1>
+<p class="np-file-dir">noshi/style/components/selects.css</p>
+<p class="np">The <code>select</code> tag comes with two styles (light and dark). In this page we will show to they look like.</p>
+<space></space>
+<h3 id="light-select">Light Mode</h3>
+<p class="np">To style up a <code>select</code> tag, you should pass <code>select</code> class as show in the example below.</p>
+<code class="ncode" data-target="html" data-code="
+<select class='select'>
+    <option value='1'>option 1</option>
+    <option value='2'>option 2</option>
+    <option value='3'>option 3</option>
+</select>
+"></code>
+<p class="np">Which will be</p>
+<div class="dcode">
+    <select class='select'>
+        <option value='1'>option 1</option>
+        <option value='2'>option 2</option>
+        <option value='3'>option 3</option>
+    </select>
+</div>
+<p class="np">Also, we can stretch it on the screen by wrapping it inside a div e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <select class='select'>
+        <option value='1'>option 1</option>
+        <option value='2'>option 2</option>
+        <option value='3'>option 3</option>
+    </select>
+</div>
+"></code>
+<div class="dcode">
+    <div class='row'>
+        <select class='select'>
+            <option value='1'>option 1</option>
+            <option value='2'>option 2</option>
+            <option value='3'>option 3</option>
+        </select>
+    </div>
+</div>
+<space></space>
+<h3 id="dark-select">Dark Mode</h3>
+<p class="np">The dark mode can be applied by passing <code>select-dark</code> to the tag as a class name.</p>
+<code class="ncode" data-target="html" data-code="
+<select class='select-dark'>
+    <option value='1'>option 1</option>
+    <option value='2'>option 2</option>
+    <option value='3'>option 3</option>
+</select>
+"></code>
+<div class="dcode">
+    <select class='select-dark'>
+        <option value='1'>option 1</option>
+        <option value='2'>option 2</option>
+        <option value='3'>option 3</option>
+    </select>
+</div>
+<p class="np">And of course it could be stretch on the screen by wrapping it inside a <code>div</code>.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <select class='select-dark'>
+        <option value='1'>option 1</option>
+        <option value='2'>option 2</option>
+        <option value='3'>option 3</option>
+    </select>
+</div>
+"></code>
+<div class="dcode">
+    <div class='row'>
+        <select class='select-dark'>
+            <option value='1'>option 1</option>
+            <option value='2'>option 2</option>
+            <option value='3'>option 3</option>
+        </select>
+    </div>
+</div>
+<p class="np-note-green">Icons, <a href="index.html?page=icons" target="_self">learn more</a></p>
