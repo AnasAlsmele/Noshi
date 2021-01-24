@@ -244,7 +244,39 @@
     <p class='underline'>this is a underline paragraph</p>
 </div>
 <space></space>
-<h1 id="background-colors">Background Colors</h1>
+<h3 id="font-size">Font Size</h3>
+<p class="np">A multi class can be apply to effect on the size of text and/or size of the element. The table below shows a list of embedded class that can be use for this purpose.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w30">Class Name</th>
+            <th class="w60">Example</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>xsmall</code></td>
+            <td><p class="xsmall">this is an xsmall text</p></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>small</code></td>
+            <td><p class="small">this is a small text</p></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>large</code></td>
+            <td><p class="large">this is a large text</p></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>xlarge</code></td>
+            <td><p class="large">this is an xlarge text</p></td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="background-colors">Background Colors</h3>
 <p class="np">We provide a variety of background colors that can be use with any tag. To apply this class, you need to pass one of the class in the table below.</p>
 <div class="dcode">
     <table class="table-head center">
