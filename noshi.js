@@ -38,7 +38,6 @@ var NoshiCE = (function () {
                     }
                     break;
                 case "required":
-                    console.log(props.required);
                     if (props.required) {
                         tag.setAttribute("required", "required");
                     }
