@@ -1,0 +1,288 @@
+<h1 id="statics">Statics</h1>
+<p class="np-file-dir">noshi/style/statics.css</p>
+<p class="np">The statics are a group of prewritten class which are used to adjust, style, and arrange page elements. This group devided into multi sections. In this page we will try to explain and give an example of each section.</p>
+<space></space>
+<h3 id="width">Widths</h3>
+<p class="np">As a toolkit based on flex-box layout, we used a percentage width value as a static one e.g.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w30">Class Name</th>
+            <th class="w60">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>w5</code></td>
+            <td>give a width of 5%</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>w10</code></td>
+            <td>give a width of 10%</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>w15</code></td>
+            <td>give a width of 15%</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>w20</code></td>
+            <td>give a width of 20%</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>w25</code></td>
+            <td>give a width of 25%</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>w30</code></td>
+            <td>give a width of 30%</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>w35</code></td>
+            <td>give a width of 35%</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><code>w40</code></td>
+            <td>give a width of 40%</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td><code>w45</code></td>
+            <td>give a width of 45%</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td><code>w50</code></td>
+            <td>give a width of 50%</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td><code>w55</code></td>
+            <td>give a width of 55%</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td><code>w60</code></td>
+            <td>give a width of 60%</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td><code>w65</code></td>
+            <td>give a width of 65%</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td><code>w70</code></td>
+            <td>give a width of 70%</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td><code>w75</code></td>
+            <td>give a width of 75%</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td><code>w80</code></td>
+            <td>give a width of 80%</td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td><code>w85</code></td>
+            <td>give a width of 85%</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td><code>w90</code></td>
+            <td>give a width of 90%</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td><code>w95</code></td>
+            <td>give a width of 95%</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td><code>w100</code></td>
+            <td>give a width of 100%</td>
+        </tr>
+    </table>
+</div>
+<p class="np">The example below show a <code>div</code> tag with two tags inside it with different width.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <p class='w30 bggreen'>this is a 30% width paragraph</p>
+    <p class='w70 bgblue'>this is a 70% width paragraph</p>
+</div>
+"></code>
+<div class="dcode">
+    <div class='row'>
+        <p class='w30 bggreen'>this is a 30% width paragraph</p>
+        <p class='w70 bgblue'>this is a 70% width paragraph</p>
+    </div>
+</div>
+<space></space>
+<h3 id="heights">Heights</h3>
+<p class="np">The height of the element measured depending on the height of the page so, we used <code>vh</code> as a unit. Furthermore, <b>Noshi</b> includes the same range of width class to height value (ranged from 5 to 100). To add a height value, you need to pass <code>h</code> followed by the value as show in the example below.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <div class='h20 bgyellow'>h20</div>
+    <div class='h80 bggreen'>h80</div>
+    <div class='h50 bgred'>h50</div>
+    <div class='h35 bgblue'>h35</div>
+</div>
+"></code>
+<div class="dcode">
+    <div class='row'>
+        <div class='h20 bgyellow'>h20</div>
+        <div class='h80 bggreen'>h80</div>
+        <div class='h50 bgred'>h50</div>
+        <div class='h35 bgblue'>h35</div>
+    </div>
+</div>
+<p class="np">Also, we can mix both together to give a specific width and height to the element e.g.</p>
+<code class="ncode" data-target="html" data-code="
+<div class='row'>
+    <div class='h20 w30 bgyellow'>h20</div>
+    <div class='h80 w50 bggreen'>h80</div>
+    <div class='h50 w5 bgred'>h50</div>
+    <div class='h35 w15 bgblue'>h35</div>
+</div>
+"></code>
+<div class="dcode">
+    <div class='row'>
+        <div class='h20 w30 bgyellow'>h20</div>
+        <div class='h80 w50 bggreen'>h80</div>
+        <div class='h50 w5 bgred'>h50</div>
+        <div class='h35 w15 bgblue'>h35</div>
+    </div>
+</div>
+<space></space>
+<h3 id="alignments">Alignments</h3>
+<p class="np">The alignments are usually used with the paragraph tag to align the content of it in the way that we want.</p>
+<div class="dcoe">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w30">Class Name</th>
+            <th class="w60">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>left</code></td>
+            <td>to align the contents to the left</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>right</code></td>
+            <td>to align the contents to the right</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>center</code></td>
+            <td>to align the contents to the center</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>justify</code></td>
+            <td>to make the contents justified</td>
+        </tr>
+    </table>
+</div>
+<code class="ncode" data-target="html" data-code="
+<p class='w100 left'>left align</p>
+<p class='w100 right'>right align</p>
+<p class='w100 center'>center align</p>
+<p class='w100 justify'>justify align</p>
+"></code>
+<div class="dcode">
+    <p class='w100 left'>left align</p>
+    <p class='w100 right'>right align</p>
+    <p class='w100 center'>center align</p>
+    <p class='w100 justify'>justify align</p>
+</div>
+<space></space>
+<h3 id="font-style">Font Style</h3>
+<p class="np">Three types of font styles are provided to style up the paragraph as show in the table below.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w30">Class Name</th>
+            <th class="w60">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>bold</code></td>
+            <td>to make the effected tag font style become bold</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>italic</code></td>
+            <td>to make the effected tag font style became italic</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>underline</code></td>
+            <td>to make the effected tag font style become underline</td>
+        </tr>
+    </table>
+</div>
+<code class="ncode" data-target="html" data-code="
+<p class='bold'>this is a bold paragraph</p>
+<p class='italic'>this is a italic paragraph</p>
+<p class='underline'>this is a underline paragraph</p>
+"></code>
+<div class="dcode">
+    <p class='bold'>this is a bold paragraph</p>
+    <p class='italic'>this is a italic paragraph</p>
+    <p class='underline'>this is a underline paragraph</p>
+</div>
+<space></space>
+<h1 id="background-colors">Background Colors</h1>
+<p class="np">We provide a variety of background colors that can be use with any tag. To apply this class, you need to pass one of the class in the table below.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w30">Class Name</th>
+            <th class="w20">Example</th>
+            <th class="w30">Class Name</th>
+            <th class="w20">Example</th>
+        </tr>
+        <tr>
+            <td><code>bgred</code></td>
+            <td><div class="row w100 h5 bgred"></div></td>
+            <td><code>bgorange</code></td>
+            <td><div class="row w100 h5 bgorange"></div></td>
+        </tr>
+        <tr>
+            <td><code>bgyellow</code></td>
+            <td><div class="row w100 h5 bgyellow"></div></td>
+            <td><code>bggreen</code></td>
+            <td><div class="row w100 h5 bggreen"></div></td>
+        </tr>
+        <tr>
+            <td><code>bgblue</code></td>
+            <td><div class="row w100 h5 bgblue"></div></td>
+            <td><code>bgpruple</code></td>
+            <td><div class="row w100 h5 bgpurple"></div></td>
+        </tr>
+        <tr>
+            <td><code>bgpink</code></td>
+            <td><div class="row w100 h5 bgpink"></div></td>
+            <td><code>bgblack</code></td>
+            <td><div class="row w100 h5 bgblack"></div></td>
+        </tr>
+        <tr>
+            <td><code>bgwhite</code></td>
+            <td><div class="row w100 h5 bgwhite"></div></td>
+            <td><code>bggray</code></td>
+            <td><div class="row w100 h5 bggray"></div></td>
+        </tr>
+    </table>
+</div>

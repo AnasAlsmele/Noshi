@@ -10,7 +10,7 @@
 <div class="dcode">
     <p>I <i class='noshi-heart'></i> Noshi</p>
 </div>
-<h1 class="icons-list">Icons List</h1>
+<h1 id="icons-list">Icons List</h1>
 <div class="dcode">
     <table class="table-grid-head center">
         <tr>
