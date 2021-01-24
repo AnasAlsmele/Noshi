@@ -17,7 +17,6 @@ window.onload = function () {
         ["Icons", "icons", null],
         ["Statics", "statics", null],
         ["Functions", "functions", [
-                ["Noshi Create Element", "_noshicreateelement", null],
                 ["Noshi Builder", "_noshibuilder", null]
             ]]
     ];
