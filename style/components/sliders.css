@@ -4,6 +4,7 @@
     width: 100%;
     display: flex;
     overflow: hidden;
+    background-color: var(--u-c-e5);
 }
 .slider-img{
     position: absolute;
@@ -11,5 +12,6 @@
     top: 50%;
     left: 50%;
     z-index: -1;
+    opacity: 0;
     transition: z-index .25s, opacity .25s;
 }

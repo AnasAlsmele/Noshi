@@ -214,6 +214,7 @@ var NoshiBuilder = (function () {
                 }
                 if (info.slideTime !== undefined) {
                     if (typeof info.slideTime === "number" && info.slideTime > 0) {
+                        info["data-slide-time"] = info.slideTime;
                     }
                     else {
                         errorScreen("Error: <b>slideTime</b> get only numerical values larger than 0");
@@ -241,6 +242,36 @@ var NoshiBuilder = (function () {
     return NoshiBuilder;
 }());
 var _sliders = function () {
+    var sliders = _("slider", true, false);
+    if (sliders !== undefined) {
+        var _loop_1 = function (i) {
+            var c = sliders[i].childNodes;
+            var t = sliders[i].getAttribute("type");
+            var m = Number(sliders[i].getAttribute("data-slide-time"));
+            if (m < 1) {
+                m = 5;
+            }
+            var p = 0;
+            var oldP = 0;
+            var tvl = window.setInterval(function () {
+                var img = c[p];
+                var imgo = c[oldP];
+                img.style.opacity = "1";
+                imgo.style.opacity = "0";
+                if (p < c.length - 1) {
+                    oldP = p;
+                    p++;
+                }
+                else {
+                    oldP = c.length - 1;
+                    p = 0;
+                }
+            }, m * 1000);
+        };
+        for (var i = 0; i < sliders.length; i++) {
+            _loop_1(i);
+        }
+    }
 };
 var ajax = function (type, link, state, data) {
     if (type === void 0) { type = "GET"; }
@@ -296,7 +327,7 @@ var errorScreen = function (msg) {
 var _activeNavs = function () {
     if (_("nav-menu-head", true, false) !== undefined) {
         var navs = _("nav-menu-head", true);
-        var _loop_1 = function (i) {
+        var _loop_2 = function (i) {
             var nav = navs[i];
             nav.addEventListener("click", function () {
                 var target = nav.getAttribute("data-target");
@@ -322,7 +353,7 @@ var _activeNavs = function () {
             });
         };
         for (var i = 0; i < Object.keys(navs).length; i++) {
-            _loop_1(i);
+            _loop_2(i);
         }
     }
 };
