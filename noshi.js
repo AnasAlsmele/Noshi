@@ -51,6 +51,11 @@ var NoshiCE = (function () {
                 case "tag":
                 case "options":
                 case "sort":
+                case "images":
+                case "slideTime":
+                case "imageWidth":
+                case "imageHeight":
+                case "imagePos":
                     break;
                 default:
                     tag.setAttribute(prop, props[prop]);
@@ -163,26 +168,80 @@ var NoshiBuilder = (function () {
                 errorScreen("Error: you should pass at least 1 image to slider");
             }
             else {
+                var imgStyle_1 = "";
+                if (info.imageWidth !== undefined && info.imageWidth !== "") {
+                    if (typeof info.imageWidth === "string") {
+                        imgStyle_1 += "width: " + info.imageWidth + ";";
+                    }
+                    else if (typeof info.imageWidth === "number") {
+                        imgStyle_1 += "width: " + info.imageWidth + "px;";
+                    }
+                    else {
+                        errorScreen("Error: <b>imageWidth</b> can be only string or number");
+                        return 0;
+                    }
+                }
+                if (info.imageHeight !== undefined && info.imageHeight !== "") {
+                    if (typeof info.imageHeight === "string") {
+                        imgStyle_1 += "height: " + info.imageHeight + ";";
+                    }
+                    else if (typeof info.imageHeight === "number") {
+                        imgStyle_1 += "height: " + info.imageHeight + "px;";
+                    }
+                    else {
+                        errorScreen("Error: <b>imageHeight</b> can be only string or number");
+                        return 0;
+                    }
+                }
+                if (info.imagePos !== undefined && info.imagePos !== "") {
+                    if (typeof info.imagePos === "string") {
+                        if (info.imagePos === "top") {
+                            imgStyle_1 += "transform: none; top: 0; left: unset;";
+                        }
+                        else if (info.imagePos === "bottom") {
+                            imgStyle_1 += "transform: none; bottom: 0; top: unset; left: unset;";
+                        }
+                        else if (info.imagePos === "center") {
+                        }
+                        else {
+                            errorScreen("Error: " + info.imagePos + " not defined as a value of <b>imagePos</b>");
+                        }
+                    }
+                    else {
+                        errorScreen("Error: <b>imagePos</b> value should be only center, top, or bottom");
+                        return 0;
+                    }
+                }
+                if (info.slideTime !== undefined) {
+                    if (typeof info.slideTime === "number" && info.slideTime > 0) {
+                    }
+                    else {
+                        errorScreen("Error: <b>slideTime</b> get only numerical values larger than 0");
+                        return 0;
+                    }
+                }
                 var images_1 = [];
                 info.images.forEach(function (img) {
                     images_1.push(new NoshiCE({
                         tag: "img",
                         alt: img,
                         src: img,
-                        "class": "slider-img"
+                        "class": "slider-img",
+                        style: imgStyle_1
                     }).tag);
                 });
-                return new NoshiCE({
-                    tag: "div",
-                    "class": "slider",
-                    child: images_1
-                }).tag;
+                info.tag = "div";
+                info["class"] = "slider";
+                info.child = images_1;
+                return new NoshiCE(info).tag;
             }
             return new NoshiCE({}).tag;
         };
     }
     return NoshiBuilder;
 }());
+var _sliders = function () {
+};
 var ajax = function (type, link, state, data) {
     if (type === void 0) { type = "GET"; }
     if (state === void 0) { state = true; }
@@ -296,4 +355,4 @@ var startNoshi = function (funcs) {
         }
     });
 };
-startNoshi([_setLang, _activeNavs, _hideNavs]);
+startNoshi([_setLang, _activeNavs, _hideNavs, _sliders]);

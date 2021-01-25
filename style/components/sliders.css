@@ -1,3 +1,15 @@
 .slider{
-    
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+.slider-img{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transition: z-index .25s, opacity .25s;
 }
