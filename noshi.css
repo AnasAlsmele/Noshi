@@ -4,6 +4,7 @@
 @import "./style/components/layouts.css";
 @import "./style/components/navs.css";
 @import "./style/components/selects.css";
+@import "./style/components/sliders.css";
 @import "./style/icons/styles.css";
 
 *{

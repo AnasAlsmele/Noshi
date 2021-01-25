@@ -149,6 +149,37 @@ var NoshiBuilder = (function () {
                     break;
             }
         };
+        this.slider = function (info) {
+            if (info === undefined) {
+                errorScreen("Error: no information have been passed");
+            }
+            else if (info.images === undefined) {
+                errorScreen("Error: <b>images</b> property not set");
+            }
+            else if (typeof info.images !== "object") {
+                errorScreen("Error: <b>images</b> property should be an array");
+            }
+            else if (info.images.length === 0) {
+                errorScreen("Error: you should pass at least 1 image to slider");
+            }
+            else {
+                var images_1 = [];
+                info.images.forEach(function (img) {
+                    images_1.push(new NoshiCE({
+                        tag: "img",
+                        alt: img,
+                        src: img,
+                        "class": "slider-img"
+                    }).tag);
+                });
+                return new NoshiCE({
+                    tag: "div",
+                    "class": "slider",
+                    child: images_1
+                }).tag;
+            }
+            return new NoshiCE({}).tag;
+        };
     }
     return NoshiBuilder;
 }());
