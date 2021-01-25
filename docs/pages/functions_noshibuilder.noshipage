@@ -51,6 +51,13 @@ var nb = new NoshiBuilder();
             <td>optional</td>
         </tr>
         <tr>
+            <td><code>mode</code></td>
+            <td>string</td>
+            <td>"", "index"</td>
+            <td>empty</td>
+            <td>optional (return options with value equal to index)</td>
+        </tr>
+        <tr>
             <td><code>value</code></td>
             <td>string</td>
             <td>"", string of the selected value</td>
