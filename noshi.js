@@ -281,6 +281,22 @@ var _sliders = function () {
                             img.style.opacity = "1";
                         }
                         slideFunction = function () {
+                            var img = c[imagePointer];
+                            var oimg = c[oimagePointer];
+                            img.style.zIndex = "0";
+                            oimg.style.left = "-150%";
+                            window.setTimeout(function () {
+                                oimg.style.zIndex = "-1";
+                                oimg.style.left = "50%";
+                            }, 1000);
+                            if (imagePointer < c.length - 1) {
+                                oimagePointer = imagePointer;
+                                imagePointer++;
+                            }
+                            else {
+                                imagePointer = 0;
+                                oimagePointer = c.length - 1;
+                            }
                         };
                         break;
                     default:
