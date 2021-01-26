@@ -248,38 +248,70 @@ var _sliders = function () {
             var c = sliders[i].childNodes;
             var t = sliders[i].getAttribute("type");
             var m = Number(sliders[i].getAttribute("data-slide-time"));
-            if (m < 1) {
+            if (m <= 0) {
                 m = 5;
             }
             var oimagePointer = c.length - 1;
             var imagePointer = 0;
+            var setFirstImg = true;
             var slideFunction = function () { };
-            switch (t) {
-                case "flash":
-                    slideFunction = function () {
-                        var img = c[imagePointer];
-                        var oimg = c[oimagePointer];
-                        img.style.opacity = "1";
-                        img.style.zIndex = "1";
-                        oimg.style.opacity = "0";
-                        oimg.style.zIndex = "-1";
-                        if (imagePointer < c.length - 1) {
-                            oimagePointer = imagePointer;
-                            imagePointer++;
+            if (c.length > 1) {
+                switch (t) {
+                    case "flash":
+                        slideFunction = function () {
+                            var img = c[imagePointer];
+                            var oimg = c[oimagePointer];
+                            img.style.opacity = "1";
+                            img.style.zIndex = "1";
+                            oimg.style.opacity = "0";
+                            oimg.style.zIndex = "-1";
+                            if (imagePointer < c.length - 1) {
+                                oimagePointer = imagePointer;
+                                imagePointer++;
+                            }
+                            else {
+                                imagePointer = 0;
+                                oimagePointer = c.length - 1;
+                            }
+                        };
+                        break;
+                    case "toleft":
+                        for (var i_1 = 0; i_1 < c.length; i_1++) {
+                            var img = c[i_1];
+                            img.style.opacity = "1";
                         }
-                        else {
-                            imagePointer = 0;
-                            oimagePointer = c.length - 1;
+                        slideFunction = function () {
+                        };
+                        break;
+                    default:
+                        for (var i_2 = 0; i_2 < c.length - 1; i_2++) {
+                            var img = c[i_2];
+                            img.style.opacity = "1";
+                            img.style.zIndex = "initial";
+                            img.style.visibility = "hidden";
                         }
-                    };
-                    break;
-                default:
-                    slideFunction = function () { };
-                    break;
+                        slideFunction = function () {
+                            var img = c[imagePointer];
+                            var oimg = c[oimagePointer];
+                            img.style.visibility = "visible";
+                            oimg.style.visibility = "hidden";
+                            if (imagePointer < c.length - 1) {
+                                oimagePointer = imagePointer;
+                                imagePointer++;
+                            }
+                            else {
+                                imagePointer = 0;
+                                oimagePointer = c.length - 1;
+                            }
+                        };
+                        break;
+                }
             }
-            var firstImg = c[c.length - 1];
-            firstImg.style.opacity = "1";
-            firstImg.style.zIndex = "1";
+            if (setFirstImg) {
+                var firstImg = c[c.length - 1];
+                firstImg.style.opacity = "1";
+                firstImg.style.zIndex = "1";
+            }
             var tvl = window.setInterval(slideFunction, m * 1000);
         };
         for (var i = 0; i < sliders.length; i++) {
