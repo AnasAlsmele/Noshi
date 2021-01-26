@@ -4,9 +4,22 @@
     width: 100%;
     display: flex;
     overflow: hidden;
-    background-color: var(--u-c-e5);
+    background-color: #f0f0f0;
+}
+.slider::after{
+    content: "\24";
+    font-family: noshi;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    font-size: 2em;
+    z-index: 0;
+    color: #cccccc;
+    animation: rotate360 4s linear infinite;
 }
 .slider-img{
+    display: flex;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;

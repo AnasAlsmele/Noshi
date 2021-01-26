@@ -251,22 +251,36 @@ var _sliders = function () {
             if (m < 1) {
                 m = 5;
             }
-            var p = 0;
-            var oldP = 0;
-            var tvl = window.setInterval(function () {
-                var img = c[p];
-                var imgo = c[oldP];
-                img.style.opacity = "1";
-                imgo.style.opacity = "0";
-                if (p < c.length - 1) {
-                    oldP = p;
-                    p++;
-                }
-                else {
-                    oldP = c.length - 1;
-                    p = 0;
-                }
-            }, m * 1000);
+            var oimagePointer = c.length - 1;
+            var imagePointer = 0;
+            var slideFunction = function () { };
+            switch (t) {
+                case "flash":
+                    slideFunction = function () {
+                        var img = c[imagePointer];
+                        var oimg = c[oimagePointer];
+                        img.style.opacity = "1";
+                        img.style.zIndex = "1";
+                        oimg.style.opacity = "0";
+                        oimg.style.zIndex = "-1";
+                        if (imagePointer < c.length - 1) {
+                            oimagePointer = imagePointer;
+                            imagePointer++;
+                        }
+                        else {
+                            imagePointer = 0;
+                            oimagePointer = c.length - 1;
+                        }
+                    };
+                    break;
+                default:
+                    slideFunction = function () { };
+                    break;
+            }
+            var firstImg = c[c.length - 1];
+            firstImg.style.opacity = "1";
+            firstImg.style.zIndex = "1";
+            var tvl = window.setInterval(slideFunction, m * 1000);
         };
         for (var i = 0; i < sliders.length; i++) {
             _loop_1(i);

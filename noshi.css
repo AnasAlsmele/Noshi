@@ -6,6 +6,7 @@
 @import "./style/components/selects.css";
 @import "./style/components/sliders.css";
 @import "./style/icons/styles.css";
+@import "./style/animations.css";
 
 *{
     padding: 0;

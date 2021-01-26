@@ -186,6 +186,14 @@
         <tr>
             <td><code>logout</code></td>
             <td><i class="noshi-logout"></i></td>
+            <td><code>loading</code></td>
+            <td><i class="noshi-loading"></i></td>
+            <td><code>redo</code></td>
+            <td><i class="noshi-redo"></i></td>
+        </tr>
+        <tr>
+            <td><code>undo</code></td>
+            <td><i class="noshi-undo"></i></td>
             <td></td>
             <td></td>
             <td></td>
