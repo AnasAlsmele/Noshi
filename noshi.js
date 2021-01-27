@@ -56,6 +56,9 @@ var NoshiCE = (function () {
                 case "imageWidth":
                 case "imageHeight":
                 case "imagePos":
+                case "cardTitle":
+                case "cardText":
+                case "image":
                     break;
                 default:
                     tag.setAttribute(prop, props[prop]);
@@ -237,6 +240,87 @@ var NoshiBuilder = (function () {
                 return new NoshiCE(info).tag;
             }
             return new NoshiCE({}).tag;
+        };
+        this.form = function (info) {
+            info.tag = "form";
+            if (info.method === undefined || info.method == "") {
+                info.method = "POST";
+            }
+            if (info.action === undefined || info.action == "") {
+                info.action = "#";
+            }
+        };
+        this.card = function (info) {
+            if (info.title === undefined || info.title == "") {
+                info.cardTitle = "Untitled";
+            }
+            else {
+                info.cardTitle = info.title;
+            }
+            if (info.text === undefined || info.text == "") {
+                info.cardText = "no text";
+            }
+            else {
+                info.cardText = info.text;
+            }
+            var cardClass = "card-holder";
+            var cardLink = "#";
+            if (info.link !== undefined && info.link != "") {
+                info.cardLink = info.link;
+                cardClass += "-hover";
+                cardLink = info.link;
+            }
+            if (info.target !== undefined && info.target == "blank") {
+                info.target = "_blank";
+            }
+            else {
+                if (cardLink != "#") {
+                    info.target = "_self";
+                }
+                else {
+                    delete info.target;
+                }
+            }
+            if (info.size !== undefined && info.size == "fit") {
+                info.style = "align-self: flex-start;" + info.style;
+            }
+            var cardImage;
+            if (info.image !== undefined && info.image != "") {
+                cardImage = new NoshiCE({
+                    tag: "img",
+                    src: info.image,
+                    alt: info.image,
+                    "class": "card-image"
+                }).tag;
+            }
+            else {
+                cardImage = new NoshiCE({}).tag;
+            }
+            delete info.image;
+            delete info.title;
+            delete info.text;
+            delete info.link;
+            delete info.size;
+            var cardTitle = new NoshiCE({
+                tag: "p",
+                text: info.cardTitle,
+                "class": "card-title"
+            });
+            var cardText = new NoshiCE({
+                tag: "p",
+                text: info.cardText,
+                "class": "card-text"
+            });
+            var txtHolder = new NoshiCE({
+                tag: "div",
+                "class": "card-txt-holder",
+                child: [cardTitle.tag, cardText.tag]
+            }).tag;
+            info.tag = "a";
+            info.href = cardLink;
+            info["class"] = cardClass;
+            info.child = [cardImage, txtHolder];
+            return new NoshiCE(info).tag;
         };
     }
     return NoshiBuilder;
