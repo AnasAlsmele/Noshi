@@ -275,20 +275,46 @@ var _sliders = function () {
                             }
                         };
                         break;
-                    case "toleft":
+                    case "zoomin":
                         for (var i_1 = 0; i_1 < c.length; i_1++) {
-                            var img = c[i_1];
-                            img.style.opacity = "1";
+                            var img_1 = c[i_1];
+                            img_1.style.opacity = "1";
+                            img_1.style.width = "0";
+                            img_1.style.zIndex = "1";
+                            img_1.style.visibility = "hidden";
                         }
+                        var img = c[0];
+                        img.style.width = "100%";
+                        img.style.visibility = "visible";
                         slideFunction = function () {
                             var img = c[imagePointer];
-                            var oimg = c[oimagePointer];
-                            img.style.zIndex = "0";
-                            oimg.style.left = "-150%";
+                            img.style.width = "100%";
+                            img.style.zIndex = "1";
+                            img.style.visibility = "visible";
                             window.setTimeout(function () {
-                                oimg.style.zIndex = "-1";
-                                oimg.style.left = "50%";
-                            }, 1000);
+                                img.style.width = "0";
+                                img.style.zIndex = "0";
+                                img.style.visibility = "hidden";
+                            }, m * 1000);
+                            if (imagePointer < c.length - 1) {
+                                imagePointer++;
+                            }
+                            else {
+                                imagePointer = 0;
+                            }
+                        };
+                        break;
+                    case "toleft":
+                        for (var i_2 = 0; i_2 < c.length - 1; i_2++) {
+                            var img_2 = c[i_2];
+                            img_2.style.position = "unset";
+                            img_2.style.opacity = "1";
+                            img_2.style.zIndex = "1";
+                            img_2.style.width = "100%";
+                        }
+                        slideFunction = function () {
+                            var oimg = c[oimagePointer];
+                            oimg.style.left = "-100%";
                             if (imagePointer < c.length - 1) {
                                 oimagePointer = imagePointer;
                                 imagePointer++;
@@ -300,11 +326,11 @@ var _sliders = function () {
                         };
                         break;
                     default:
-                        for (var i_2 = 0; i_2 < c.length - 1; i_2++) {
-                            var img = c[i_2];
-                            img.style.opacity = "1";
-                            img.style.zIndex = "initial";
-                            img.style.visibility = "hidden";
+                        for (var i_3 = 0; i_3 < c.length - 1; i_3++) {
+                            var img_3 = c[i_3];
+                            img_3.style.opacity = "1";
+                            img_3.style.zIndex = "initial";
+                            img_3.style.visibility = "hidden";
                         }
                         slideFunction = function () {
                             var img = c[imagePointer];
@@ -324,7 +350,7 @@ var _sliders = function () {
                 }
             }
             if (setFirstImg) {
-                var firstImg = c[c.length - 1];
+                var firstImg = c[0];
                 firstImg.style.opacity = "1";
                 firstImg.style.zIndex = "1";
             }

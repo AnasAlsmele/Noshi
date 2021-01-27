@@ -14,5 +14,5 @@
     left: 50%;
     z-index: -1;
     opacity: 0;
-    transition: z-index .25s, opacity .25s, left 1s;
+    transition: z-index .25s, opacity .25s, left 1s, width .25s, height .25s, transform .25s;
 }
