@@ -39,9 +39,13 @@
     flex-direction: column;
 }
 .card-holder .card-title,
+.card-holder-hover .card-title,
 .card-holder .card-title:visited,
+.card-holder-hover .card-title:visited,
 .card-holder-dark .card-title,
-.card-holder-dark .card-title:visited{
+.card-holder-dark-hover .card-title,
+.card-holder-dark .card-title:visited,
+.card-holder-dark-hover .card-title:visited{
     font-size: 1.2em;
     color: #222222;
     padding-bottom: .3em;
