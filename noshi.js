@@ -264,6 +264,9 @@ var NoshiBuilder = (function () {
                 info.cardText = info.text;
             }
             var cardClass = "card-holder";
+            if (info.mode !== undefined && info.mode === "dark") {
+                cardClass += "-dark";
+            }
             var cardLink = "#";
             if (info.link !== undefined && info.link != "") {
                 info.cardLink = info.link;
@@ -282,7 +285,20 @@ var NoshiBuilder = (function () {
                 }
             }
             if (info.size !== undefined && info.size == "fit") {
-                info.style = "align-self: flex-start;" + info.style;
+                if (info.style !== undefined && info.style != "") {
+                    info.style = "align-self: flex-start;" + info.style;
+                }
+                else {
+                    info.style = "align-self: flex-start;";
+                }
+            }
+            var imageHeight = "auto";
+            var imageWidth = "100%";
+            if (info.imageHeight !== undefined) {
+                imageHeight = info.imageHeight;
+            }
+            if (info.imageWidth !== undefined) {
+                imageWidth = info.imageWidth;
             }
             var cardImage;
             if (info.image !== undefined && info.image != "") {
@@ -290,17 +306,58 @@ var NoshiBuilder = (function () {
                     tag: "img",
                     src: info.image,
                     alt: info.image,
+                    style: "height: " + imageHeight + "; width: " + imageWidth + ";",
                     "class": "card-image"
                 }).tag;
             }
             else {
                 cardImage = new NoshiCE({}).tag;
             }
+            var cardButton;
+            if (info.button !== undefined) {
+                if (typeof info.button === "object") {
+                    var btnText = "unknown";
+                    var btnTextPos = "flex-start";
+                    var btnFunc = function () { };
+                    if (info.button.text !== undefined && info.button.text != "") {
+                        btnText = info.button.text;
+                    }
+                    if (info.button.action !== undefined && typeof info.button.action === "function") {
+                        btnFunc = info.button.action;
+                    }
+                    if (info.button.position !== undefined && info.button.position != "") {
+                        if (info.button.position === "center") {
+                            btnTextPos = "center";
+                        }
+                        else if (info.button.position === "end") {
+                            btnTextPos = "flex-end";
+                        }
+                    }
+                    cardButton = new NoshiCE({
+                        tag: "div",
+                        "class": "card-btn-holder",
+                        style: "justify-content:" + btnTextPos + ";",
+                        child: [new NoshiCE({
+                                tag: "button",
+                                "class": "card-btn",
+                                text: btnText,
+                                click: btnFunc
+                            }).tag]
+                    }).tag;
+                }
+                else {
+                    errorScreen("Error: <b>button</b> must be an object");
+                    return 0;
+                }
+            }
             delete info.image;
             delete info.title;
             delete info.text;
             delete info.link;
             delete info.size;
+            delete info.imageHeight;
+            delete info.imageWidth;
+            delete info.button;
             var cardTitle = new NoshiCE({
                 tag: "p",
                 text: info.cardTitle,
@@ -319,7 +376,7 @@ var NoshiBuilder = (function () {
             info.tag = "a";
             info.href = cardLink;
             info["class"] = cardClass;
-            info.child = [cardImage, txtHolder];
+            info.child = [cardImage, txtHolder, cardButton];
             return new NoshiCE(info).tag;
         };
     }
