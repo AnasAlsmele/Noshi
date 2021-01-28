@@ -28,5 +28,5 @@
 ---
 
  ### Why I Made Noshi
- I do coding every day, trying to make or learn something new, and as a person who loves to create his own stuff, I decided to build Noshi and share it with all. Also, to practis with Typescript and improve my skill in Javascript.
+ I do coding every day, trying to make or learn something new, and as a person who loves to create his own stuff, I decided to build Noshi and share it with all. Also, to practise with Typescript and improve my skill in Javascript.
  Join me on this long journey to create a useful toolkit which can speed up the building process...
