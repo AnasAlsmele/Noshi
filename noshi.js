@@ -71,9 +71,12 @@ var NoshiCE = (function () {
 }());
 var NoshiBuilder = (function () {
     function NoshiBuilder() {
+        var _this = this;
+        this.et = new NoshiCE({ tag: "div" }).tag;
         this.select = function (info) {
             if (info.options === undefined || info.options.length === 0) {
                 errorScreen("Error: select <b>options</b> can't be empty.");
+                return _this.et;
             }
             else {
                 if (info.sort == "az") {
@@ -242,12 +245,70 @@ var NoshiBuilder = (function () {
             return new NoshiCE({}).tag;
         };
         this.form = function (info) {
-            info.tag = "form";
-            if (info.method === undefined || info.method == "") {
-                info.method = "POST";
+            if (Object.keys(info).length !== 0) {
+                var nInfo = {
+                    tag: "form",
+                    "class": "form-holder"
+                };
+                var formTitle = _this.et;
+                var formFields = [];
+                nInfo.method = "POST";
+                if (info.method !== undefined) {
+                    if (info.method != "") {
+                        nInfo.method = info.method;
+                    }
+                }
+                if (info.action !== undefined && info.action != "") {
+                    nInfo.action = info.action;
+                }
+                if (info.title !== undefined && info.title != "") {
+                    formTitle = new NoshiCE({
+                        tag: "p",
+                        "class": "form-title",
+                        text: info.title
+                    }).tag;
+                }
+                if (info.fields !== undefined) {
+                    if (typeof info.fields === "object" && Object.keys(info.fields).length > 0) {
+                        for (var i = 0; i < Object.keys(info.fields).length; i++) {
+                            var fi = info.fields[i];
+                            var fieldRow = {
+                                tag: "div",
+                                "class": "form-field-row"
+                            };
+                            switch (fi.type) {
+                                case "select":
+                                    break;
+                                case "calendar":
+                                    break;
+                                default:
+                                    fieldRow.child = [
+                                        _this.input({
+                                            type: fi.type,
+                                            placeholder: fi.placeholder,
+                                            title: fi.title,
+                                            text: fi.text,
+                                            name: fi.name,
+                                            id: fi.id
+                                        })
+                                    ];
+                                    break;
+                            }
+                            formFields.push(new NoshiCE(fieldRow).tag);
+                        }
+                    }
+                    else {
+                        errorScreen("Error: <b>fields</b> must be an object with at least length 1");
+                        return _this.et;
+                    }
+                }
+                formFields.unshift(formTitle);
+                nInfo.child = formFields;
+                return new NoshiCE(nInfo).tag;
             }
-            if (info.action === undefined || info.action == "") {
-                info.action = "#";
+            else {
+                errorScreen("Error: no information has been passed to <b>form</b>");
+                return _this.et;
             }
         };
         this.card = function (info) {
@@ -347,7 +408,7 @@ var NoshiBuilder = (function () {
                 }
                 else {
                     errorScreen("Error: <b>button</b> must be an object");
-                    return 0;
+                    return _this.et;
                 }
             }
             delete info.image;
