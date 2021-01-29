@@ -1,3 +1,14 @@
 .form-holder{
     margin: .2em;
+    background-color: #f5f5f5;
+}
+.form-title{
+    font-size: 1.3em;
+    padding: .5em;
+    color: #222222;
+}
+.form-field-row{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
 }

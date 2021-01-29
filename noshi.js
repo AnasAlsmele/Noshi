@@ -268,6 +268,9 @@ var NoshiBuilder = (function () {
                         text: info.title
                     }).tag;
                 }
+                if (info.formWidth !== undefined && info.formWidth != "") {
+                    nInfo.style = "width:" + info.formWidth + ";";
+                }
                 if (info.fields !== undefined) {
                     if (typeof info.fields === "object" && Object.keys(info.fields).length > 0) {
                         for (var i = 0; i < Object.keys(info.fields).length; i++) {
@@ -278,6 +281,14 @@ var NoshiBuilder = (function () {
                             };
                             switch (fi.type) {
                                 case "select":
+                                    fieldRow.child = [
+                                        _this.select({
+                                            name: fi.name,
+                                            id: fi.id,
+                                            options: fi.options,
+                                            sort: fi.sort
+                                        })
+                                    ];
                                     break;
                                 case "calendar":
                                     break;
