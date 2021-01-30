@@ -287,7 +287,8 @@ var NoshiBuilder = (function () {
                                             name: fi.name,
                                             id: fi.id,
                                             options: fi.options,
-                                            sort: fi.sort
+                                            sort: fi.sort,
+                                            value: fi.value
                                         })
                                     ];
                                     break;
@@ -301,7 +302,8 @@ var NoshiBuilder = (function () {
                                             title: fi.title,
                                             text: fi.text,
                                             name: fi.name,
-                                            id: fi.id
+                                            id: fi.id,
+                                            value: fi.value
                                         })
                                     ];
                                     break;
