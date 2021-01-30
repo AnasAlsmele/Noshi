@@ -329,14 +329,14 @@ var NoshiBuilder = (function () {
                                 bi.click = info.buttons[i]["function"];
                             }
                             bi["class"] = "form-btn";
-                            if (info.active === true) {
+                            if (info.buttons[i].active === true) {
                                 bi["class"] += "-active";
                             }
                             btns.push(new NoshiCE(bi).tag);
                         }
                         formButtons = new NoshiCE({
                             tag: "div",
-                            "class": "form-buts-holder",
+                            "class": "form-btns-holder",
                             child: btns
                         }).tag;
                     }
