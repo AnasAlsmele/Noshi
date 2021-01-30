@@ -286,20 +286,20 @@ var NoshiBuilder = (function () {
                             if (fi.id !== undefined) {
                                 inpInfo.id = fi.id;
                             }
-                            else {
-                                delete inpInfo.id;
-                            }
                             if (fi.name !== undefined) {
                                 inpInfo.name = fi.name;
-                            }
-                            else {
-                                delete inpInfo.name;
                             }
                             if (fi.value !== undefined) {
                                 inpInfo.value = fi.value;
                             }
-                            else {
-                                delete inpInfo.value;
+                            if (fi.required !== undefined) {
+                                inpInfo.required = fi.required;
+                            }
+                            if (fi["class"] !== undefined) {
+                                inpInfo["class"] = fi["class"];
+                            }
+                            if (fi.style !== undefined) {
+                                inpInfo.style = fi.style;
                             }
                             switch (fi.type) {
                                 case "select":

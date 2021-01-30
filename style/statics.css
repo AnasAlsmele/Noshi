@@ -47,6 +47,15 @@
 .right{text-align: right;}
 .center{text-align: center;}
 .justify{text-align: justify;}
+.jc-center{justify-content: center;}
+.jc-start{justify-content: flex-start;}
+.jc-end{justify-content: flex-end;}
+.jc-s-around{justify-content: space-around;}
+.js-s-between{justify-content: space-between;}
+.js-s-evenly{justify-content: space-evenly;}
+.ai-center{align-items: center;}
+.ai-start{align-items: flex-start;}
+.ai-end{align-items: flex-end;}
 
 /* font type */
 .bold{font-weight: bold;}
