@@ -32,8 +32,8 @@
 }
 .form-btn-active{
     color: #fdfdfd;
-    background-color: #0077b6;    
+    background-color: #222222;    
 }
 .form-btn-active:hover{
-    background-color: rgba(0, 119, 182, .8);
+    background-color: rgba(34, 34, 34, .9);
 }
