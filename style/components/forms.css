@@ -14,7 +14,7 @@
 }
 .form-btns-holder{
     display: flex;
-    padding: 0 .5em .5em .5em;
+    padding: .5em;
 }
 .form-btn,
 .form-btn-active{

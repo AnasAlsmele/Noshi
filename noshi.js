@@ -280,31 +280,69 @@ var NoshiBuilder = (function () {
                                 tag: "div",
                                 "class": "form-field-row"
                             };
+                            var inpInfo = {
+                                tag: "noshi"
+                            };
+                            if (fi.id !== undefined) {
+                                inpInfo.id = fi.id;
+                            }
+                            else {
+                                delete inpInfo.id;
+                            }
+                            if (fi.name !== undefined) {
+                                inpInfo.name = fi.name;
+                            }
+                            else {
+                                delete inpInfo.name;
+                            }
+                            if (fi.value !== undefined) {
+                                inpInfo.value = fi.value;
+                            }
+                            else {
+                                delete inpInfo.value;
+                            }
                             switch (fi.type) {
                                 case "select":
+                                    if (fi.sort !== undefined) {
+                                        inpInfo.sort = fi.sort;
+                                    }
+                                    else {
+                                        delete inpInfo.sort;
+                                    }
+                                    inpInfo.options = fi.options;
                                     fieldRow.child = [
-                                        _this.select({
-                                            name: fi.name,
-                                            id: fi.id,
-                                            options: fi.options,
-                                            sort: fi.sort,
-                                            value: fi.value
-                                        })
+                                        _this.select(inpInfo)
                                     ];
                                     break;
                                 case "calendar":
                                     break;
                                 default:
+                                    if (fi.type !== undefined) {
+                                        inpInfo.type = fi.type;
+                                    }
+                                    else {
+                                        delete inpInfo.type;
+                                    }
+                                    if (fi.placeholder !== undefined) {
+                                        inpInfo.placeholder = fi.placeholder;
+                                    }
+                                    else {
+                                        delete inpInfo.placeholder;
+                                    }
+                                    if (fi.title !== undefined) {
+                                        inpInfo.title = fi.title;
+                                    }
+                                    else {
+                                        delete inpInfo.title;
+                                    }
+                                    if (fi.text !== undefined) {
+                                        inpInfo.text = fi.text;
+                                    }
+                                    else {
+                                        delete inpInfo.text;
+                                    }
                                     fieldRow.child = [
-                                        _this.input({
-                                            type: fi.type,
-                                            placeholder: fi.placeholder,
-                                            title: fi.title,
-                                            text: fi.text,
-                                            name: fi.name,
-                                            id: fi.id,
-                                            value: fi.value
-                                        })
+                                        _this.input(inpInfo)
                                     ];
                                     break;
                             }
