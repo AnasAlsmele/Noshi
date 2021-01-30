@@ -252,6 +252,7 @@ var NoshiBuilder = (function () {
                 };
                 var formTitle = _this.et;
                 var formFields = [];
+                var formButtons = [];
                 nInfo.method = "POST";
                 if (info.method !== undefined) {
                     if (info.method != "") {
@@ -310,6 +311,28 @@ var NoshiBuilder = (function () {
                     }
                     else {
                         errorScreen("Error: <b>fields</b> must be an object with at least length 1");
+                        return _this.et;
+                    }
+                }
+                if (info.buttons !== undefined) {
+                    if (typeof info.buttons === "object" && Object.keys(info.buttons).length > 0) {
+                        var buttons = info.buttons;
+                        for (var i = 0; i < buttons.length; i++) {
+                            var bi = {
+                                tag: "button"
+                            };
+                            if (info.buttons[i].text !== undefined) {
+                                bi.text = info.buttons[i].text;
+                            }
+                            if (info.buttons[i]["function"] !== undefined) {
+                                bi.click = info.buttons[i]["function"];
+                            }
+                            bi["class"] = "form-btn";
+                            formButtons.push(new NoshiCE(bi).tag);
+                        }
+                    }
+                    else {
+                        errorScreen("Error: <b>buttons</b> must be an object with at least length 1");
                         return _this.et;
                     }
                 }
