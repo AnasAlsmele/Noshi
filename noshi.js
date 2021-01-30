@@ -252,7 +252,7 @@ var NoshiBuilder = (function () {
                 };
                 var formTitle = _this.et;
                 var formFields = [];
-                var formButtons = [];
+                var formButtons = _this.et;
                 nInfo.method = "POST";
                 if (info.method !== undefined) {
                     if (info.method != "") {
@@ -317,6 +317,7 @@ var NoshiBuilder = (function () {
                 if (info.buttons !== undefined) {
                     if (typeof info.buttons === "object" && Object.keys(info.buttons).length > 0) {
                         var buttons = info.buttons;
+                        var btns = [];
                         for (var i = 0; i < buttons.length; i++) {
                             var bi = {
                                 tag: "button"
@@ -328,8 +329,16 @@ var NoshiBuilder = (function () {
                                 bi.click = info.buttons[i]["function"];
                             }
                             bi["class"] = "form-btn";
-                            formButtons.push(new NoshiCE(bi).tag);
+                            if (info.active === true) {
+                                bi["class"] += "-active";
+                            }
+                            btns.push(new NoshiCE(bi).tag);
                         }
+                        formButtons = new NoshiCE({
+                            tag: "div",
+                            "class": "form-buts-holder",
+                            child: btns
+                        }).tag;
                     }
                     else {
                         errorScreen("Error: <b>buttons</b> must be an object with at least length 1");
@@ -337,6 +346,7 @@ var NoshiBuilder = (function () {
                     }
                 }
                 formFields.unshift(formTitle);
+                formFields.push(formButtons);
                 nInfo.child = formFields;
                 return new NoshiCE(nInfo).tag;
             }
