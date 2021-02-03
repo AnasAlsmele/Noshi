@@ -524,6 +524,47 @@ var NoshiBuilder = (function () {
             info.child = [cardImage, txtHolder, cardButton];
             return new NoshiCE(info).tag;
         };
+        this.note = function (info) {
+            if (info.text !== undefined && info.text !== "") {
+                var className = "";
+                switch (info["class"]) {
+                    case "warning":
+                        className = "-warning";
+                        break;
+                    case "wrong":
+                        className = "-wrong";
+                        break;
+                    case "correct":
+                        className = "-correct";
+                        break;
+                    default:
+                        className = "";
+                        break;
+                }
+                var txt = new NoshiCE({
+                    tag: "p",
+                    "class": "note-text",
+                    text: info.text
+                }).tag;
+                var ico = _this.et;
+                if (info.icon !== undefined && info.icon !== "") {
+                    ico = new NoshiCE({
+                        tag: "i",
+                        "class": "note-icon " + info.icon
+                    }).tag;
+                }
+                var note = {
+                    tag: "div",
+                    "class": "note-holder" + className,
+                    child: [txt, ico]
+                };
+                return new NoshiCE(note).tag;
+            }
+            else {
+                errorScreen("Error: you must set <b>text</b> property");
+                return _this.et;
+            }
+        };
     }
     return NoshiBuilder;
 }());
