@@ -531,8 +531,8 @@ var NoshiBuilder = (function () {
                     case "warning":
                         className = "-warning";
                         break;
-                    case "wrong":
-                        className = "-wrong";
+                    case "error":
+                        className = "-error";
                         break;
                     case "correct":
                         className = "-correct";
@@ -543,20 +543,20 @@ var NoshiBuilder = (function () {
                 }
                 var txt = new NoshiCE({
                     tag: "p",
-                    "class": "note-text",
+                    "class": "note-text" + className,
                     text: info.text
                 }).tag;
                 var ico = _this.et;
                 if (info.icon !== undefined && info.icon !== "") {
                     ico = new NoshiCE({
                         tag: "i",
-                        "class": "note-icon " + info.icon
+                        "class": "note-icon" + className + " " + info.icon
                     }).tag;
                 }
                 var note = {
                     tag: "div",
                     "class": "note-holder" + className,
-                    child: [txt, ico]
+                    child: [ico, txt]
                 };
                 return new NoshiCE(note).tag;
             }
