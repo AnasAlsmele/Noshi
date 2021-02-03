@@ -34,9 +34,10 @@
 .note-text-error,
 .note-text-correct{
     font-size: .9em;
-    padding: 1em 1.5em;
+    padding: 1.5em;
     color: #444444;
     text-align: justify;
+    flex: 1;
 }
 .note-text-warning{
     background-color: rgba(255, 165, 0, .1);
