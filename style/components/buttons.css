@@ -1,5 +1,7 @@
 .btn-holder,
-.btn-holder-active{
+.btn-holder-error,
+.btn-holder-warning,
+.btn-holder-correct{
     margin: .2em;
     border: 1px solid #e5e5e5;
     outline: none;
@@ -9,10 +11,16 @@
     flex-direction: row;
     padding: 0 .5em;
 }
-.btn-holder-active{
-    background-color: #0077b6;
+.btn-holder-error{
+    background-color: #9e2a2b;
 }
-.btn-holder:disabled{
+.btn-holder-warning{
+    background-color: orange;
+}
+.btn-holder:disabled,
+.btn-holder-error:disabled,
+.btn-holder-warning:disabled,
+.btn-holder-correct:disabled{
     background-color: #f0f0f0;
     color: #bbbbbb;
     cursor: default;

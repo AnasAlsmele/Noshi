@@ -568,6 +568,7 @@ var NoshiBuilder = (function () {
         this.button = function (info) {
             if (info.text !== undefined || info.icon !== undefined) {
                 var btnText = _this.et;
+                var btnChild = [];
                 if (info.text !== undefined && info.text !== "") {
                     btnText = new NoshiCE({
                         tag: "p",
@@ -582,20 +583,40 @@ var NoshiBuilder = (function () {
                         "class": "btn-holder-icon " + info.icon
                     }).tag;
                 }
+                btnChild = [btnIcon, btnText];
+                if (info.iconPos !== undefined && info.iconPos === "right") {
+                    btnChild = [btnText, btnIcon];
+                }
+                var btnClass = "btn-holder";
+                switch (info["class"]) {
+                    case "warning":
+                        btnClass += "-warning";
+                        break;
+                    case "error":
+                        btnClass += "-error";
+                        break;
+                    case "correct":
+                        btnClass += "-correct";
+                        break;
+                    default:
+                        break;
+                }
                 var btnInfo = {
                     tag: "button",
-                    "class": "btn-holder",
-                    child: [btnIcon, btnText]
+                    "class": btnClass,
+                    child: btnChild
                 };
                 if (info.disabled !== undefined && info.disabled === true) {
                     btnInfo.disabled = true;
                 }
-                if (info.click !== undefined && typeof info.click === "function") {
-                    btnInfo.click = info.click;
-                }
-                else {
-                    errorScreen("Error: <b>click</b> property must be a function");
-                    return _this.et;
+                if (info.click !== undefined) {
+                    if (typeof info.click === "function") {
+                        btnInfo.click = info.click;
+                    }
+                    else {
+                        errorScreen("Error: <b>click</b> property must be a function");
+                        return _this.et;
+                    }
                 }
                 return new NoshiCE(btnInfo).tag;
             }
