@@ -598,6 +598,12 @@ var NoshiBuilder = (function () {
                     case "correct":
                         btnClass += "-correct";
                         break;
+                    case "active":
+                        btnClass += "-active";
+                        break;
+                    case "dark":
+                        btnClass += "-dark";
+                        break;
                     default:
                         break;
                 }
