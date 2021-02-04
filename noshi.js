@@ -571,7 +571,7 @@ var NoshiBuilder = (function () {
                 if (info.text !== undefined && info.text !== "") {
                     btnText = new NoshiCE({
                         tag: "p",
-                        "class": "btn-text",
+                        "class": "btn-holder-text",
                         text: info.text
                     }).tag;
                 }
@@ -579,13 +579,13 @@ var NoshiBuilder = (function () {
                 if (info.icon !== undefined && info.icon !== "") {
                     btnIcon = new NoshiCE({
                         tag: "i",
-                        "class": "btn-icon " + info.icon
+                        "class": "btn-holder-icon " + info.icon
                     }).tag;
                 }
                 var btnInfo = {
                     tag: "button",
                     "class": "btn-holder",
-                    child: [btnText, btnIcon]
+                    child: [btnIcon, btnText]
                 };
                 if (info.disabled !== undefined && info.disabled === true) {
                     btnInfo.disabled = true;
