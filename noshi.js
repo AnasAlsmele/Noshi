@@ -565,6 +565,45 @@ var NoshiBuilder = (function () {
                 return _this.et;
             }
         };
+        this.button = function (info) {
+            if (info.text !== undefined || info.icon !== undefined) {
+                var btnText = _this.et;
+                if (info.text !== undefined && info.text !== "") {
+                    btnText = new NoshiCE({
+                        tag: "p",
+                        "class": "btn-text",
+                        text: info.text
+                    }).tag;
+                }
+                var btnIcon = _this.et;
+                if (info.icon !== undefined && info.icon !== "") {
+                    btnIcon = new NoshiCE({
+                        tag: "i",
+                        "class": "btn-icon " + info.icon
+                    }).tag;
+                }
+                var btnInfo = {
+                    tag: "button",
+                    "class": "btn-holder",
+                    child: [btnText, btnIcon]
+                };
+                if (info.disabled !== undefined && info.disabled === true) {
+                    btnInfo.disabled = true;
+                }
+                if (info.click !== undefined && typeof info.click === "function") {
+                    btnInfo.click = info.click;
+                }
+                else {
+                    errorScreen("Error: <b>click</b> property must be a function");
+                    return _this.et;
+                }
+                return new NoshiCE(btnInfo).tag;
+            }
+            else {
+                errorScreen("Error: you have to set <b>text</b> and/or <b>icon</b> property");
+                return _this.et;
+            }
+        };
     }
     return NoshiBuilder;
 }());
