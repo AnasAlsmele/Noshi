@@ -668,7 +668,7 @@ var NoshiBuilder = (function () {
                     c = c.replace(/[a-z]+:/gi, function (x) {
                         return "<js-obj-key>" + x + "</js-obj-key>";
                     });
-                    c = c.replace(/[a-z]+\(\)|[a-z]+\(|\)/gi, function (x) {
+                    c = c.replace(/[a-z]+\(\)|[a-z]+\(|\)|\(/gi, function (x) {
                         return "<js-func>" + x + "</js-func>";
                     });
                     c = c.replace(/^.+.$/gim, function (x) {
