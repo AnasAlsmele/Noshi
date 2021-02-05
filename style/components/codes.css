@@ -45,3 +45,23 @@ js-obj-key{
     font-size: .9em;
     font-family: monospace;
 }
+css-brackets{
+    color: lightsteelblue;
+    font-size: .9em;
+    font-family: monospace;
+}
+css-head{
+    color: lightslategrey;
+    font-size: .9em;
+    font-family: monospace;
+}
+css-property{
+    color: peachpuff;
+    font-size: .9em;
+    font-family: monospace;
+}
+css-value{
+    color: darkseagreen;
+    font-size: .9em;
+    font-family: monospace;
+}

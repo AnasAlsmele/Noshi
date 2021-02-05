@@ -654,6 +654,21 @@ var NoshiBuilder = (function () {
                     });
                     break;
                 case "css":
+                    c = c.replace(/{|}/g, function (x) {
+                        return "<css-brackets>" + x + "</css-brackets>";
+                    });
+                    c = c.replace(/@[a-zA-Z0-9-"'\(\)\.\s]+;/g, function (x) {
+                        return "<css-head>" + x + "</css-head>";
+                    });
+                    c = c.replace(/[a-zA-Z0-9-]+:/g, function (x) {
+                        return "<css-property>" + x.slice(0, x.length - 1) + "</css-property>:";
+                    });
+                    c = c.replace(/:[a-zA-Z0-9-\s\(\)\.]+/g, function (x) {
+                        return "<css-value>" + x + "</css-value>";
+                    });
+                    c = c.replace(/^.+.$/gim, function (x) {
+                        return "<code-line>" + x + "</code-line>";
+                    });
                     break;
                 case "js":
                     c = c.replace(/var|let|const|new/gi, function (x) {
