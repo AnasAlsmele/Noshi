@@ -654,11 +654,11 @@ var NoshiBuilder = (function () {
                     });
                     break;
                 case "css":
+                    c = c.replace(/@[a-zA-Z0-9-"'\(\)\.\s]+;|@[a-zA-Z0-9-\s]+/g, function (x) {
+                        return "<css-head>" + x + "</css-head>";
+                    });
                     c = c.replace(/{|}/g, function (x) {
                         return "<css-brackets>" + x + "</css-brackets>";
-                    });
-                    c = c.replace(/@[a-zA-Z0-9-"'\(\)\.\s]+;/g, function (x) {
-                        return "<css-head>" + x + "</css-head>";
                     });
                     c = c.replace(/[a-zA-Z0-9-]+:/g, function (x) {
                         return "<css-property>" + x.slice(0, x.length - 1) + "</css-property>:";
