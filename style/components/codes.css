@@ -1,0 +1,47 @@
+.normal-code-holder{
+    color: #1a1a1a;
+    background-color: #e5e5e5;
+    padding: .2em .5em;
+    font-family: monospace;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.noshi-code{
+    display: block;
+    margin: .5em;
+    padding: 1.5em 2em;
+    background-color: #1a1a1a;
+    color: #fdfdfd;
+    font-size: .9em;
+    font-family: monospace;
+    flex: 1;
+}
+code-line{
+    display: block;
+    font-family: monospace;
+}
+html-tag-border, js-var, js-bracket{
+    color: lightslategrey;
+    font-size: .9em;
+    font-family: monospace;
+}
+html-tag-attr{
+    color: lightslategrey;
+    font-size: .9em;
+    font-family: monospace;
+}
+html-tag-attr-val, js-txt{
+    color: darkseagreen;
+    font-size: .9em;
+    font-family: monospace;
+}
+js-func{
+    color: lightsteelblue;
+    font-size: .9em;
+    font-family: monospace;
+}
+js-obj-key{
+    color: peachpuff;
+    font-size: .9em;
+    font-family: monospace;
+}

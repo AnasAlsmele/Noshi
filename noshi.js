@@ -631,6 +631,59 @@ var NoshiBuilder = (function () {
                 return _this.et;
             }
         };
+        this.code = function (info) {
+            if (info.code === undefined || info.code === "") {
+                errorScreen("Error: you have to set <b>code</b> property");
+                return _this.et;
+            }
+            var c = "";
+            c = info.code.replace(/    /gim, function (x) {
+                return "&nbsp;&nbsp;&nbsp;&nbsp;";
+            });
+            if (info.target !== undefined && info.target !== "") {
+                info.target = info.target.toLowerCase();
+            }
+            switch (info.target) {
+                case "html":
+                    var rg = new RegExp("<|>", "g");
+                    c = c.replace(rg, function (x) { return "<html-tag-border>" + x + "</html-tag-border>"; });
+                    c = c.replace(/\s[a-z]+=/gi, function (x) { return "<html-tag-attr>" + x + "</html-tag-attr>"; });
+                    c = c.replace(/["'][\s0-9a-z/.-]+['"]/gi, function (x) { return "<html-tag-attr-val>" + x + "</html-tag-attr-val>"; });
+                    c = c.replace(/^.+.$/gim, function (x) {
+                        return "<code-line>" + x + "</code-line>";
+                    });
+                    break;
+                case "css":
+                    break;
+                case "js":
+                    c = c.replace(/var|let|const|new/gi, function (x) {
+                        return "<js-var>" + x + "</js-var>";
+                    });
+                    c = c.replace(/['"][a-z0-9-/()\s]+['"]/gi, function (x) {
+                        return "<js-txt>" + x + "</js-txt>";
+                    });
+                    c = c.replace(/{|}/gi, function (x) {
+                        return "<js-bracket>" + x + "</js-bracket>";
+                    });
+                    c = c.replace(/[a-z]+:/gi, function (x) {
+                        return "<js-obj-key>" + x + "</js-obj-key>";
+                    });
+                    c = c.replace(/[a-z]+\(\)|[a-z]+\(|\)/gi, function (x) {
+                        return "<js-func>" + x + "</js-func>";
+                    });
+                    c = c.replace(/^.+.$/gim, function (x) {
+                        return "<code-line>" + x + "</code-line>";
+                    });
+                    break;
+                default:
+                    break;
+            }
+            return new NoshiCE({
+                tag: "code",
+                "class": "noshi-code",
+                html: c
+            }).tag;
+        };
     }
     return NoshiBuilder;
 }());
