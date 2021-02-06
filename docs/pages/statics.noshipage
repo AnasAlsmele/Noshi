@@ -192,6 +192,51 @@
             <td><code>justify</code></td>
             <td>to make the contents justified</td>
         </tr>
+        <tr>
+            <td>5</td>
+            <td><code>jc-center</code></td>
+            <td>justify content to center (used to align content of tag)</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>jc-start</code></td>
+            <td>justify content to start of the tag</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>jc-end</code></td>
+            <td>justify content to end of the tag</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><code>jc-s-around</code></td>
+            <td>adjust the extra space around the tag</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td><code>jc-s-between</code></td>
+            <td>adjust space between tags</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td><code>jc-s-evenly</code></td>
+            <td>adjust space evenly to all tags</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td><code>ai-center</code></td>
+            <td>align items to center</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td><code>ai-start</code></td>
+            <td>align items to start of the tag</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td><code>ai-end</code></td>
+            <td>align items to end of the tag</td>
+        </tr>
     </table>
 </div>
 <code class="ncode" data-target="html" data-code="
