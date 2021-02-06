@@ -1,7 +1,8 @@
 /* rows */
 .row,
 .row-reverse,
-.row-nowrap{
+.row-nowrap,
+.row-nowrap-reverse{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -9,14 +10,17 @@
 }
 .row-reverse{flex-direction: row-reverse;}
 .row-nowrap{flex-wrap: nowrap;}
+.row-nowrap-reverse{flex-direction: row-reverse; flex-wrap: nowrap;}
 
 /* columns */
 .column,
 .column-reverse,
-.column-nowrap{
+.column-nowrap,
+.column-nowrap-reverse{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 .column-reverse{flex-direction: column-reverse;}
 .column-nowrap{flex-wrap: nowrap;}
+.column-nowrap-reverse{flex-direction: column-reverse; flex-wrap: nowrap;}

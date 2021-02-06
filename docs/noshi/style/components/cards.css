@@ -1,0 +1,89 @@
+.card-holder,
+.card-holder-dark,
+.card-holder-hover,
+.card-holder-dark-hover{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e5e5;
+    margin: .2em;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .1);
+    text-decoration: none;
+    /* align-self: flex-start; */
+    cursor: default;
+    transition: box-shadow .25s;
+}
+.card-holder-dark,
+.card-holder-dark-hover{
+    border-color: #444444;
+    background-color: #222222;
+}
+.card-holder-hover,
+.card-holder-dark-hover{
+    cursor: pointer;
+}
+.card-holder:hover,
+.card-holder-hover:hover{
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .2);
+}
+.card-holder-dark:hover,
+.card-holder-dark-hover:hover{
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, .5);
+}
+.card-image{
+    width: 100%;
+}
+.card-txt-holder{
+    padding: 1.25em 1em;
+    display: flex;
+    flex-direction: column;
+}
+.card-holder .card-title,
+.card-holder-hover .card-title,
+.card-holder .card-title:visited,
+.card-holder-hover .card-title:visited,
+.card-holder-dark .card-title,
+.card-holder-dark-hover .card-title,
+.card-holder-dark .card-title:visited,
+.card-holder-dark-hover .card-title:visited{
+    font-size: 1.2em;
+    color: #222222;
+    padding-bottom: .3em;
+}
+.card-holder-dark .card-title,
+.card-holder-dark .card-title:visited,
+.card-holder-dark-hover .card-title,
+.card-holder-dark-hover .card-title:visited{
+    color: #fdfdfd;
+}
+.card-text{
+    font-size: .9em;
+    color: #a9a9a9;
+}
+
+.card-btn-holder{
+    padding: .5em 1em;
+    display: flex;
+}
+.card-holder .card-btn,
+.card-holder-hover .card-btn,
+.card-holder-dark .card-btn,
+.card-holder-dark-hover .card-btn{
+    background-color: transparent;
+    color: #a9a9a9;
+    border: 1px solid #a9a9a9;
+    padding: .5em .75em;
+    font-size: .9em;
+    cursor: pointer;
+    transition: border .25s, color .25s;
+}
+.card-holder .card-btn:hover,
+.card-holder-hover .card-btn:hover{
+    border-color: #444444;
+    color: #444444;
+}
+.card-holder-dark .card-btn:hover,
+.card-holder-dark-hover .card-btn:hover{
+    border-color: #fdfdfd;
+    color: #fdfdfd;
+}

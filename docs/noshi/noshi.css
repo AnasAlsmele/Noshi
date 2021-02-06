@@ -4,7 +4,14 @@
 @import "./style/components/layouts.css";
 @import "./style/components/navs.css";
 @import "./style/components/selects.css";
+@import "./style/components/sliders.css";
+@import "./style/components/cards.css";
+@import "./style/components/forms.css";
+@import "./style/components/notes.css";
+@import "./style/components/buttons.css";
+@import "./style/components/codes.css";
 @import "./style/icons/styles.css";
+@import "./style/animations.css";
 
 *{
     padding: 0;

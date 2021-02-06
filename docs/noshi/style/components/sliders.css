@@ -1,0 +1,18 @@
+.slider{
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+.slider-img{
+    display: flex;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    opacity: 0;
+    transition: z-index .25s, opacity .25s, left 1s, width .25s, height .25s, transform .25s;
+}

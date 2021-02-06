@@ -233,3 +233,12 @@
 .noshi-bill:before {
   content: "\23";
 }
+.noshi-loading:before {
+  content: "\24";
+}
+.noshi-redo:before {
+  content: "\25";
+}
+.noshi-undo:before {
+  content: "\26";
+}

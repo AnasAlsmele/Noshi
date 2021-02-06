@@ -5,7 +5,6 @@
     justify-content: space-between;
     align-items: center;
     background-color: #f5f5f5;
-    border-bottom: 1px solid #e5e5e5;
 }
 .nav-dark{background-color: #222222;}
 
@@ -116,6 +115,7 @@
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, .4);
     border: 1px solid #e5e5e5;
     padding: .5em;
+    z-index: 2;
 }
 .nav-dark .nav-menu-list{
     background-color: #222222;
