@@ -361,5 +361,59 @@
             <td><code>bggray</code></td>
             <td><div class="row w100 h5 bggray"></div></td>
         </tr>
+        <tr>
+            <td><code>bgolive</code></td>
+            <td><div class="row w100 h5 bgolive"></div></td>
+            <td><code>bgtomato</code></td>
+            <td><div class="row w100 h5 bgtomato"></div></td>
+        </tr>
+        <tr>
+            <td><code>bglemon</code></td>
+            <td><div class="row w100 h5 bglemon"></div></td>
+            <td><code>bgbrown</code></td>
+            <td><div class="row w100 h5 bgbrown"></div></td>
+        </tr>
+        <tr>
+            <td><code>bg11</code></td>
+            <td><div class="row w100 h5 bg11"></div></td>
+            <td><code>bg22</code></td>
+            <td><div class="row w100 h5 bg22"></div></td>
+        </tr>
+        <tr>
+            <td><code>bg33</code></td>
+            <td><div class="row w100 h5 bg33"></div></td>
+            <td><code>bg44</code></td>
+            <td><div class="row w100 h5 bg44"></div></td>
+        </tr>
+        <tr>
+            <td><code>bg55</code></td>
+            <td><div class="row w100 h5 bg55"></div></td>
+            <td><code>bg66</code></td>
+            <td><div class="row w100 h5 bg66"></div></td>
+        </tr>
+        <tr>
+            <td><code>bg77</code></td>
+            <td><div class="row w100 h5 bg77"></div></td>
+            <td><code>bg88</code></td>
+            <td><div class="row w100 h5 bg88"></div></td>
+        </tr>
+        <tr>
+            <td><code>bg99</code></td>
+            <td><div class="row w100 h5 bg99"></div></td>
+            <td><code>bgaa</code></td>
+            <td><div class="row w100 h5 bgaa"></div></td>
+        </tr>
+        <tr>
+            <td><code>bgbb</code></td>
+            <td><div class="row w100 h5 bgbb"></div></td>
+            <td><code>bgcc</code></td>
+            <td><div class="row w100 h5 bgcc"></div></td>
+        </tr>
+        <tr>
+            <td><code>bgdd</code></td>
+            <td><div class="row w100 h5 bgdd"></div></td>
+            <td><code>bgee</code></td>
+            <td><div class="row w100 h5 bgee"></div></td>
+        </tr>
     </table>
 </div>
