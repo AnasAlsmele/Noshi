@@ -421,8 +421,8 @@
 <h3 id="font-colors">Font Colors</h3>
 <p class="np">As same as the <b>Background Colors</b>, you can use them as a <b>Font Colors</b>. However, you will need to change <code>bg</code> to <code>c</code> e.g.</p>
 <code class="ncode" data-target="html" data-code="
-<p class='cred'>this is a red paragraph</p>
+<p class='cred'>this is a red paragraph with <span class='cblue'>Blue</span> word and <span class='cgreen'>Green</span> word too.</p>
 "></code>
 <div class="dcode">
-    <p class='cred'>this is a red paragraph</p>
+    <p class='cred'>this is a red paragraph with <span class="cblue">Blue</span> word and <span class="cgreen">Green</span> word too.</p>
 </div>
