@@ -3,3 +3,9 @@
 <code class="ncode" data-target="js" data-code="
 var nb = new NoshiBuilder();
 "></code>
+<p class="np">Now we can call any function inside the <code>nb</code> e.g. to build an input component you should write.</p>
+<code class="ncode" data-target="js" data-code="
+var inputTag = nb.input({
+    tag info (id, name, class, ... etc.)
+});
+"></code>
