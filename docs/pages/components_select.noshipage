@@ -1,9 +1,9 @@
 <h1 id="select">Select</h1>
 <p class="np-file-dir">noshi/style/components/selects.css</p>
-<p class="np">The <code>select</code> tag comes with two styles (light and dark). In this page we will show to they look like.</p>
+<p class="np">The <code>select</code> tag comes with two styles (light and dark). In this page, we will show how they look like.</p>
 <space></space>
 <h3 id="light-select">Light Mode</h3>
-<p class="np">To style up a <code>select</code> tag, you should pass <code>select</code> class as show in the example below.</p>
+<p class="np">To style up a <code>select</code> tag, you should pass <code>select</code> class as shown in the example below.</p>
 <code class="ncode" data-target="html" data-code="
 <select class='select'>
     <option value='1'>option 1</option>
@@ -55,7 +55,7 @@
         <option value='3'>option 3</option>
     </select>
 </div>
-<p class="np">And of course it could be stretch on the screen by wrapping it inside a <code>div</code>.</p>
+<p class="np">And of course, it could be stretch on the screen by wrapping it inside a <code>div</code>.</p>
 <code class="ncode" data-target="html" data-code="
 <div class='row'>
     <select class='select-dark'>
