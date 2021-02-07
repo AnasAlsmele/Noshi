@@ -1,11 +1,11 @@
 <h1 id="noshi-builder">Noshi Builder</h1>
-<p class="np">This tool is used to build different type of components. To initialize it, we need to create a new variable contains <b>Noshi Builder</b>.</p>
+<p class="np">This tool is used to build a different type of components. To initialize it, we need to create a new variable that contains the <b>Noshi Builder</b>.</p>
 <code class="ncode" data-target="js" data-code="
 var nb = new NoshiBuilder();
 "></code>
 <space></space>
 <h3 id="select">Select</h3>
-<p class="np">To create a <code>select</code> tag, we need to pass some information as an object to <b>Noshi Builder</b> that are needed to build the tag. The table below will show the name of the info (object key), it's type, and if it is required or optional.</p>
+<p class="np">To create a <code>select</code> tag, we need to pass some information as an object to <b>Noshi Builder</b> that are needed to build the tag. The table below will show the name of the info (object key), it's typed, and if it is required or optional.</p>
 <div class="dcode">
     <table class="table-head center">
         <tr>
@@ -80,7 +80,7 @@ var nb = new NoshiBuilder();
         </tr>
     </table>
 </div>
-<p class="np">For example, to build a <code>select</code> tag with id (list-of-colors) that contains 4 options (Green, Red, Yellow, Blue) and sorted ascending with selected value of the Green option, the code will be as show below.</p>
+<p class="np">For example, to build a <code>select</code> tag with id (list-of-colors) that contains 4 options (Green, Red, Yellow, Blue) and sorted ascending with the selected value of the Green option, the code will be as shown below.</p>
 <code class="ncode" data-target="js" data-code="
 var nb = new NoshiBuilder();
 var selectTag = nb.select({
@@ -113,7 +113,7 @@ document.body.appendChild(selectTag);
 "></code>
 <space></space>
 <h3 id="input">Input</h3>
-<p class="np">This part is use to create an <code>input</code> tag by passing a specific information as an object to it. The table below will show the name of the info (object key), it's type, and if it is required or optional.</p>
+<p class="np">This part is used to create an <code>input</code> tag by passing specific information as an object to it. The table below will show the name of the info (object key), it's typed, and if it is required or optional.</p>
 <div class="dcode">
     <table class="table-head center">
         <tr>
@@ -188,7 +188,7 @@ document.body.appendChild(selectTag);
         </tr>
     </table>
 </div>
-<p class="np">For example, to build a simple form inside a div tag with id <code>simple-form</code> and class <code>column</code>, which contains an email, username, password, and gender fileds, the code will be as below.</p>
+<p class="np">For example, to build a simple form inside a div tag with id <code>simple-form</code> and class <code>column</code>, which contains an email, username, password, and gender fields, the code will be as below.</p>
 <code class="ncode" data-target="js" data-code="
 var nb = new NoshiBuilder();
 var email = nb.input({
