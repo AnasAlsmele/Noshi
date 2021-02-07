@@ -1,9 +1,9 @@
 <h1 id="table">Table</h1>
 <p class="np-file-dir">noshi/style/components/tables.css</p>
-<p class="np">In this page we will show all available styles that can be used with <code>table</code> tag with examples.</p>
+<p class="np">In this page, we will show all available styles that can be used with <code>table</code> tag with examples.</p>
 <space></space>
 <h3 id="def-style">Default Style</h3>
-<p class="np">The default style of the <code>table</code> tag that can we pass is <code>table</code> as show in the example below.</p>
+<p class="np">The default style of the <code>table</code> tag that can we pass is <code>table</code> as shown in the example below.</p>
 <code class="ncode" data-target="html" data-code="
 <table class='table'>
     <tr>
