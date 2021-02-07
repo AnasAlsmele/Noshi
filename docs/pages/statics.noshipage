@@ -426,3 +426,110 @@
 <div class="dcode">
     <p class='cred'>this is a red paragraph with <span class="cblue">Blue</span> word and <span class="cgreen">Green</span> word too.</p>
 </div>
+<space></space>
+<h3 id="padding">Padding</h3>
+<p class="np">Multiple values have been set for the <b>padding</b> property with <b>Noshi</b>. The table below shows each class with its value.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w10">#</th>
+            <th class="w30">Class Name</th>
+            <th class="w60">Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>pad-01</code></td>
+            <td>padding with 0.1em</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>pad-02</code></td>
+            <td>padding with 0.2em</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>pad-03</code></td>
+            <td>padding with 0.3em</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><code>pad-04</code></td>
+            <td>padding with 0.4em</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>pad-05</code></td>
+            <td>padding with 0.5em</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>pad-06</code></td>
+            <td>padding with 0.6em</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>pad-07</code></td>
+            <td>padding with 0.7em</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><code>pad-08</code></td>
+            <td>padding with 0.8em</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td><code>pad-09</code></td>
+            <td>padding with 0.9em</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td><code>pad-1</code></td>
+            <td>padding with 1em</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td><code>pad-2</code></td>
+            <td>padding with 2em</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td><code>pad-3</code></td>
+            <td>padding with 3em</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td><code>pad-4</code></td>
+            <td>padding with 4em</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td><code>pad-5</code></td>
+            <td>padding with 5em</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td><code>pad-6</code></td>
+            <td>padding with 6em</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td><code>pad-7</code></td>
+            <td>padding with 7em</td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td><code>pad-8</code></td>
+            <td>padding with 8em</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td><code>pad-9</code></td>
+            <td>padding with 9em</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td><code>pad-10</code></td>
+            <td>padding with 10em</td>
+        </tr>
+    </table>
+</div>
