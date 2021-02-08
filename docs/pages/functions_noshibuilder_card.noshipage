@@ -1,0 +1,127 @@
+<h1 id="card">Card</h1>
+<p class="np"><b>Noshi</b> provide ability to add cards by passing some information to <code>card</code> function as shown below.</p>
+<space></space>
+<h3 id="card-properties">Card Properties</h3>
+<div class="dcode">
+    <table class="table-head">
+        <tr>
+            <th class="w20">Name</th>
+            <th class="w20">Type</th>
+            <th class="w20">Values</th>
+            <th class="w20">Default Value</th>
+            <th class="w20">R/O</th>
+        </tr>
+        <tr>
+            <td><code>image</code></td>
+            <td>string</td>
+            <td>empty, string, URL</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>imageHeight</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>imageWidth</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>title</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>Untitled</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>no text</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>mode</code></td>
+            <td>string</td>
+            <td>light, dark</td>
+            <td>light</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>style</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>link</code></td>
+            <td>URL</td>
+            <td>empty, URL</td>
+            <td>#</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>target</code></td>
+            <td>string</td>
+            <td>self, blank</td>
+            <td>self</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>size</code></td>
+            <td>string</td>
+            <td>same, fit</td>
+            <td>same</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>button</code></td>
+            <td>object key</td>
+            <td>object</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="card-button">Card Button</h3>
+<p class="np">The card button needs some information that should pass as an object key with a specefic values as shown below.</p>
+<div class="dcode">
+    <table class="table-head">
+        <tr>
+            <th class="w20">Name</th>
+            <th class="w20">Type</th>
+            <th class="w20">Values</th>
+            <th class="w20">Default Value</th>
+            <th class="w20">R/O</th>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>unknown</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>action</code></td>
+            <td>function</td>
+            <td>empty, function</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>position</code></td>
+            <td>string</td>
+            <td>start, center, end</td>
+            <td>start</td>
+            <td>optional</td>
+        </tr>
+    </table>
+</div>
