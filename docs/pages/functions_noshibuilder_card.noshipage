@@ -3,7 +3,7 @@
 <space></space>
 <h3 id="card-properties">Card Properties</h3>
 <div class="dcode">
-    <table class="table-head">
+    <table class="table-head center">
         <tr>
             <th class="w20">Name</th>
             <th class="w20">Type</th>
@@ -94,7 +94,7 @@
 <h3 id="card-button">Card Button</h3>
 <p class="np">The card button needs some information that should pass as an object key with a specefic values as shown below.</p>
 <div class="dcode">
-    <table class="table-head">
+    <table class="table-head center">
         <tr>
             <th class="w20">Name</th>
             <th class="w20">Type</th>

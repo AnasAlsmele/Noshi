@@ -17,7 +17,15 @@ window.onload = function () {
         ["Icons", "icons", null],
         ["Statics", "statics", null],
         ["Functions", "functions", [
-                ["Noshi Builder", "_noshibuilder", null]
+                ["Noshi Builder", "_noshibuilder", [
+                        ["Select", "_select", null],
+                        ["Input", "_input", null],
+                        ["Form", "_form", null],
+                        ["Card", "_card", null],
+                        ["Note", "_note", null],
+                        ["Button", "_button", null],
+                        ["Code", "_code", null]
+                    ]]
             ]]
     ];
     var f = function (txt, href, style) {
