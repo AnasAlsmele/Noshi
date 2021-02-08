@@ -17,15 +17,7 @@ window.onload = function () {
         ["Icons", "icons", null],
         ["Statics", "statics", null],
         ["Functions", "functions", [
-                ["Noshi Builder", "_noshibuilder", [
-                    ["Select", "_select", null],
-                    ["Input", "_input", null],
-                    ["Form", "_form", null],
-                    ["Card", "_card", null],
-                    ["Note", "_note", null],
-                    ["Button", "_button", null],
-                    ["Code", "_code", null]
-                ]]
+                ["Noshi Builder", "_noshibuilder", null]
             ]]
     ];
     var f = function (txt, href, style) {
@@ -100,17 +92,17 @@ window.onload = function () {
                 case "css":
                     break;
                 case "js":
-                    c = c.replace(/var|let|const|new/gi, function (x) {
-                        return "<js-var>" + x + "</js-var>";
+                    c = c.replace(/var |let |const |new /gi, function (x) {
+                        return "<js-var>" + x.slice(0, x.length - 1) + "</js-var> ";
                     });
-                    c = c.replace(/['"][a-z0-9-/()\s]+['"]/gi, function (x) {
+                    c = c.replace(/[a-z]+: ['"{\(]/gi, function (x) {
+                        return "<js-obj-key>" + x.slice(0, x.length - 2) + "</js-obj-key>" + x.slice(x.length - 2, x.length);
+                    });
+                    c = c.replace(/['"][a-zA-Z!,0-9-:;\./\(\)\s]+['"]/gi, function (x) {
                         return "<js-txt>" + x + "</js-txt>";
                     });
                     c = c.replace(/{|}/gi, function (x) {
                         return "<js-bracket>" + x + "</js-bracket>";
-                    });
-                    c = c.replace(/[a-z]+:/gi, function (x) {
-                        return "<js-obj-key>" + x + "</js-obj-key>";
                     });
                     c = c.replace(/[a-z]+\(\)|[a-z]+\(|\)/gi, function (x) {
                         return "<js-func>" + x + "</js-func>";

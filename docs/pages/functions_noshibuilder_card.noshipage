@@ -125,3 +125,25 @@
         </tr>
     </table>
 </div>
+<space></space>
+<h3 id="card-example">Example</h3>
+<p class="np">The code below shows a card that build with <code>card</code> function.</p>
+<code class="ncode" data-target="js" data-code="
+var card = nb.card({
+    image: 'red.jpg',
+    link: 'https://en.wikipedia.org/wiki/Red',
+    target: 'blank',
+    title: 'Red Color!',
+    text: 'Red is the color at the end of the spectrum next to orange and opposite violet, as of blood, fire, or rubies.',
+    mode: 'light',
+    style: 'max-width:350px;',
+    size: 'fit',
+    button: {
+        text: 'Open Wiki',
+        position: 'center'
+    }
+});
+"></code>
+<div class="dcode">
+    <a target="_blank" mode="light" style="align-self: flex-start;max-width:350px;" cardlink="https://en.wikipedia.org/wiki/Red" href="https://en.wikipedia.org/wiki/Red" class="card-holder-hover"><img src="imgs/red.jpg" alt="imgs/red.jpg" style="height: auto; width: 100%;" class="card-image"><div class="card-txt-holder"><p class="card-title">Red Color!</p><p class="card-text">Red is the color at the end of the spectrum next to orange and opposite violet, as of blood, fire, or rubies.</p></div><div class="card-btn-holder" style="justify-content:center;"><button class="card-btn">Open Wiki</button></div></a>
+</div>
