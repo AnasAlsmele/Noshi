@@ -20,7 +20,11 @@ window.onload = function () {
                 ["Noshi Builder", "_noshibuilder", [
                     ["Select", "_select", null],
                     ["Input", "_input", null],
-                    ["Form", "_form", null]
+                    ["Form", "_form", null],
+                    ["Card", "_card", null],
+                    ["Note", "_note", null],
+                    ["Button", "_button", null],
+                    ["Code", "_code", null]
                 ]]
             ]]
     ];
