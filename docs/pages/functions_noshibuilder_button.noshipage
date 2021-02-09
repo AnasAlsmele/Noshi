@@ -1,0 +1,89 @@
+<h1 id="button">Button</h1>
+<p class="np">To create a button with <b>Noshi</b>, call the <code>button</code> function and provide the required information as shown below.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w20">Name</th>
+            <th class="w20">Type</th>
+            <th class="w20">Values</th>
+            <th class="w20">Default Value</th>
+            <th class="w20">R/O</th>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>required if <code>icon</code> not provided</td>
+        </tr>
+        <tr>
+            <td><code>class</code></td>
+            <td>string</td>
+            <td>normal, error, warning, correct, active, dark</td>
+            <td>normal</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>disabled</code></td>
+            <td>boolean</td>
+            <td>false, true</td>
+            <td>false</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>click</code></td>
+            <td>function</td>
+            <td>fucntion</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>icon</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>required if <code>text</code> not provided</td>
+        </tr>
+        <tr>
+            <td><code>iconPos</code></td>
+            <td>string</td>
+            <td>left, right</td>
+            <td>left</td>
+            <td>optional</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="button_example">Button Example</h3>
+<p class="np">The code below, shows how to create a different style of buttons.</p>
+<code class="ncode" data-target="js" data-code="
+var welcomeAlert = function(){
+    alert('Welcome to Noshi Docs section!');
+};
+var correctBtn = nb.button({
+    text: 'Correct Button',
+    class: 'correct',
+    icon: 'noshi-correct'
+});
+var errorBtn = nb.button({
+    text: 'Error Button',
+    class: 'error',
+    icon: 'noshi-times'
+});
+var disabledBtn = nb.button({
+    text: 'Disabled Button',
+    disabled: true
+});
+var rightIconActiveButton = nb.button({
+    text: 'Active Button',
+    class: 'active',
+    icon: 'noshi-users',
+    iconPos: 'right'
+});
+"></code>
+<div class="row dcode">
+    <button class="btn-holder-correct"><i class="btn-holder-icon noshi-correct"></i><p class="btn-holder-text">Correct Button</p></button>
+    <button class="btn-holder-error"><i class="btn-holder-icon noshi-times"></i><p class="btn-holder-text">Error Button</p></button>
+    <button class="btn-holder" disabled="disabled"><div></div><p class="btn-holder-text">Disabled Button</p></button>
+    <button class="btn-holder-active"><p class="btn-holder-text">Active Button</p><i class="btn-holder-icon noshi-users"></i></button>
+</div>
