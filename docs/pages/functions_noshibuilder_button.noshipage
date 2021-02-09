@@ -90,7 +90,7 @@ var darkBtn = nb.button({
     class: 'dark'
 });
 "></code>
-<div class="row dcode">
+<div class="dcode">
     <button class="btn-holder-correct"><i class="btn-holder-icon noshi-correct"></i><p class="btn-holder-text">Correct Button</p></button>
     <button class="btn-holder-error"><i class="btn-holder-icon noshi-times"></i><p class="btn-holder-text">Error Button</p></button>
     <button class="btn-holder" disabled="disabled"><div></div><p class="btn-holder-text">Disabled Button</p></button>

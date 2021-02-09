@@ -13,6 +13,7 @@
     flex-direction: row;
     padding: 0 .5em;
     color: #444444;
+    align-items: center;
 }
 .btn-holder-active{background-color: #0077b6; color: #fdfdfd;}
 .btn-holder-dark{background-color: #222222; color: #fdfdfd;}
