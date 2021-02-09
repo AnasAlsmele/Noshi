@@ -80,10 +80,21 @@ var rightIconActiveButton = nb.button({
     icon: 'noshi-users',
     iconPos: 'right'
 });
+var warningBtn = nb.button({
+    text: 'Warning Button',
+    class: 'warning',
+    icon: 'noshi-warning'
+});
+var darkBtn = nb.button({
+    text: 'Dark Button',
+    class: 'dark'
+});
 "></code>
 <div class="row dcode">
     <button class="btn-holder-correct"><i class="btn-holder-icon noshi-correct"></i><p class="btn-holder-text">Correct Button</p></button>
     <button class="btn-holder-error"><i class="btn-holder-icon noshi-times"></i><p class="btn-holder-text">Error Button</p></button>
     <button class="btn-holder" disabled="disabled"><div></div><p class="btn-holder-text">Disabled Button</p></button>
     <button class="btn-holder-active"><p class="btn-holder-text">Active Button</p><i class="btn-holder-icon noshi-users"></i></button>
+    <button class="btn-holder-warning"><i class="btn-holder-icon noshi-warning"></i><p class="btn-holder-text">Warning Button</p></button>
+    <button class="btn-holder-dark"><div></div><p class="btn-holder-text">Dark Button</p></button>
 </div>
