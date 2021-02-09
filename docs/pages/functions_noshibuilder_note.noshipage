@@ -1,0 +1,51 @@
+<h1 id="note">Note</h1>
+<p class="np">To create a note section that can use to notify the user about something e.g. error message, you can simple call <code>note</code> function.</p>
+<p class="np">The <code>note</code> function comes with some properties that you need to provide when you call it as shown in table below.</p>
+<div class="dcode">
+    <table class="table-head center">
+        <tr>
+            <th class="w20">Name</th>
+            <th class="w20">Type</th>
+            <th class="w20">Values</th>
+            <th class="w20">Default Value</th>
+            <th class="w20">R/O</th>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>required</td>
+        </tr>
+        <tr>
+            <td><code>class</code></td>
+            <td>string</td>
+            <td>normal, error, warning, correct</td>
+            <td>normal</td>
+            <td>optional</td>
+        </tr>
+        <tr>
+            <td><code>icon</code></td>
+            <td>string</td>
+            <td>empty, string</td>
+            <td>empty</td>
+            <td>optional</td>
+        </tr>
+    </table>
+</div>
+<space></space>
+<h3 id="note_example">Note Example</h3>
+<p class="np">An example of creating a note with <code>correct</code> class and <code>noshi-correct</code> icon.</p>
+<code class="ncode" data-target="js" data-code="
+var d = nb.note({
+    class: 'correct',
+    text: 'Well done, note has been create to show the correct class',
+    icon: 'noshi-correct'
+});
+"></code>
+<div class="dcode">
+    <div class="note-holder-correct">
+        <i class="note-icon-correct noshi-correct"></i>
+        <p class="note-text-correct">Well done, note has been create to show the correct class</p>
+    </div>
+</div>
