@@ -702,6 +702,51 @@ var NoshiBuilder = (function () {
                 html: c
             }).tag;
         };
+        this.graph = function (info) {
+            var items = [];
+            if (info.headTitle !== undefined) {
+                if (typeof info.headTitle == "object") {
+                    var hTitle = "Untitled";
+                    var hTitleColor = "#222222";
+                    var hBGColor = "#fdfdfd";
+                    if (info.headTitle.text !== undefined && typeof info.headTitle.text == "string") {
+                        hTitle = info.headTitle.text;
+                    }
+                    if (info.headTitle.color !== undefined && typeof info.headTitle.color == "string") {
+                        hTitleColor = info.headTitle.color;
+                    }
+                    if (info.headTitle.bgColor !== undefined && typeof info.headTitle.bgColor == "string") {
+                        hBGColor = info.headTitle.bgColor;
+                    }
+                    items.push(new NoshiCE({
+                        tag: "p",
+                        "class": "graph-head-title-holder",
+                        text: hTitle,
+                        style: "color: " + hTitleColor + "; background-color: " + hBGColor
+                    }).tag);
+                }
+            }
+            var gHeight = "300px";
+            var gWidth = "400px";
+            var gBg = "#ffffff";
+            if (info.graph !== undefined) {
+                if (info.graph.height !== undefined && typeof info.graph.height == "string") {
+                    gHeight = info.graph.height;
+                }
+                if (info.graph.width !== undefined && typeof info.graph.width == "string") {
+                    gWidth = info.graph.width;
+                }
+                if (info.graph.backgroundColor !== undefined && typeof info.graph.backgroundColor == "string") {
+                    gBg = info.graph.backgroundColor;
+                }
+            }
+            var graphStyle = "height:" + gHeight + ";width:" + gWidth + ";background-color:" + gBg + ";";
+            return new NoshiCE({
+                tag: "div",
+                style: graphStyle,
+                child: items
+            }).tag;
+        };
     }
     return NoshiBuilder;
 }());
