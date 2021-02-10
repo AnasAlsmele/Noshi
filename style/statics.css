@@ -97,6 +97,14 @@
 .bgcc{background-color: #cccccc;}
 .bgdd{background-color: #dddddd;}
 .bgee{background-color: #eeeeee;}
+.bggry{background-image: linear-gradient(45deg, #9e2a2b, #ffc971);}
+.bggpb{background-image: linear-gradient(45deg, lightpink, lightblue);}
+.bggmg{background-image: linear-gradient(45deg, magenta, gold);}
+.bggpg{background-image: linear-gradient(45deg, lightpink, seagreen);}
+.bgggb{background-image: linear-gradient(45deg, seagreen, lightblue);}
+.bggbw{background-image: linear-gradient(45deg, black, white);}
+.bggpp{background-image: linear-gradient(45deg, lightpink, purple);}
+.bgggp{background-image: linear-gradient(45deg, gold, purple);}
 
 /* font colors */
 .cred{color: #9e2a2b;}
