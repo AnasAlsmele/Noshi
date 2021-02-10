@@ -1,0 +1,10 @@
+.graph-holder{
+    margin: .2em;
+    padding: .5em;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+}
+.graph-head-title-holder{
+    padding: .5em 1em;
+    text-align: center;
+}

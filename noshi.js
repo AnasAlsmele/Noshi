@@ -708,7 +708,7 @@ var NoshiBuilder = (function () {
                 if (typeof info.headTitle == "object") {
                     var hTitle = "Untitled";
                     var hTitleColor = "#222222";
-                    var hBGColor = "#fdfdfd";
+                    var hBGColor = "#f5f5f5";
                     if (info.headTitle.text !== undefined && typeof info.headTitle.text == "string") {
                         hTitle = info.headTitle.text;
                     }
@@ -727,7 +727,7 @@ var NoshiBuilder = (function () {
                 }
             }
             var gHeight = "300px";
-            var gWidth = "400px";
+            var gWidth = "100%";
             var gBg = "#ffffff";
             if (info.graph !== undefined) {
                 if (info.graph.height !== undefined && typeof info.graph.height == "string") {
@@ -743,6 +743,7 @@ var NoshiBuilder = (function () {
             var graphStyle = "height:" + gHeight + ";width:" + gWidth + ";background-color:" + gBg + ";";
             return new NoshiCE({
                 tag: "div",
+                "class": "graph-holder",
                 style: graphStyle,
                 child: items
             }).tag;
