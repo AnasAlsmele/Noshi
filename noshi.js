@@ -760,12 +760,14 @@ var NoshiBuilder = (function () {
                             }).tag);
                         }
                     }
+                    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
                     items.push(new NoshiCE({
                         tag: "svg",
                         width: 200,
                         height: 250,
                         child: lines
                     }).tag);
+                    console.log(items);
                 }
                 else {
                     errorScreen("Error: <b>data</b> property can't be empty");
