@@ -42,6 +42,9 @@ var NoshiCE = (function () {
                         tag.setAttribute("required", "required");
                     }
                     break;
+                case "strokeWidth":
+                    tag.setAttribute("stroke-width", props.strokeWidth);
+                    break;
                 case "click":
                     tag.addEventListener("click", props[prop]);
                     break;
@@ -739,6 +742,39 @@ var NoshiBuilder = (function () {
                 if (info.graph.backgroundColor !== undefined && typeof info.graph.backgroundColor == "string") {
                     gBg = info.graph.backgroundColor;
                 }
+            }
+            if (info.data !== undefined) {
+                if (info.data.length !== 0) {
+                    var lines = [];
+                    for (var i = 0; i < info.data.length; i++) {
+                        for (var j = 0; j < info.data[i].length; j++) {
+                            var height = gHeight.match(/[0-9]+/gi);
+                            lines.push(new NoshiCE({
+                                tag: "line",
+                                x1: 10,
+                                x2: 50,
+                                y1: 110,
+                                y2: 150,
+                                stroke: "orange",
+                                strokeWidth: 5
+                            }).tag);
+                        }
+                    }
+                    items.push(new NoshiCE({
+                        tag: "svg",
+                        width: 200,
+                        height: 250,
+                        child: lines
+                    }).tag);
+                }
+                else {
+                    errorScreen("Error: <b>data</b> property can't be empty");
+                    return _this.et;
+                }
+            }
+            else {
+                errorScreen("Error: you must pass <b>data</b> property");
+                return _this.et;
             }
             var graphStyle = "height:" + gHeight + ";width:" + gWidth + ";background-color:" + gBg + ";";
             return new NoshiCE({
