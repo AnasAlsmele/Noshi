@@ -72,6 +72,17 @@ var NoshiCE = (function () {
     }
     return NoshiCE;
 }());
+var NoshiCENS = (function () {
+    function NoshiCENS(props) {
+        var keys = Object.keys(props);
+        var namespace = "http://www.w3.org/2000/svg";
+        if (props.namespace !== undefined && typeof props.namespace == "string") {
+            namespace = props.namespace;
+        }
+        console.log(keys);
+    }
+    return NoshiCENS;
+}());
 var NoshiBuilder = (function () {
     function NoshiBuilder() {
         var _this = this;
@@ -745,29 +756,10 @@ var NoshiBuilder = (function () {
             }
             if (info.data !== undefined) {
                 if (info.data.length !== 0) {
-                    var lines = [];
-                    for (var i = 0; i < info.data.length; i++) {
-                        for (var j = 0; j < info.data[i].length; j++) {
-                            var height = gHeight.match(/[0-9]+/gi);
-                            lines.push(new NoshiCE({
-                                tag: "line",
-                                x1: 10,
-                                x2: 50,
-                                y1: 110,
-                                y2: 150,
-                                stroke: "orange",
-                                strokeWidth: 5
-                            }).tag);
-                        }
-                    }
-                    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                    items.push(new NoshiCE({
+                    var svg = new NoshiCENS({
                         tag: "svg",
-                        width: 200,
-                        height: 250,
-                        child: lines
-                    }).tag);
-                    console.log(items);
+                        id: "test-id"
+                    }).tag;
                 }
                 else {
                     errorScreen("Error: <b>data</b> property can't be empty");
