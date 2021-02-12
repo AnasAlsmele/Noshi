@@ -781,32 +781,44 @@ var NoshiBuilder = (function () {
                     gBg = info.graph.backgroundColor;
                 }
             }
+            var lineColors = ["green", "red", "blue", "orange", "purple", "cyan", "pink", "black", "gray"];
             if (info.data !== undefined) {
                 if (info.data.length !== 0) {
                     var lines = [];
                     for (var i = 0; i < info.data.length; i++) {
+                        var lineColor = lineColors[i];
+                        var lineStyle = info.style[i];
+                        if (lineStyle !== undefined) {
+                            if (lineStyle.color !== undefined && lineStyle.color !== "") {
+                                lineColor = lineStyle.color;
+                            }
+                        }
                         for (var j = 0; j < info.data[i].length; j++) {
                             var dataLine = info.data[i];
                             var height = Number(gHeight.match(/[0-9]+/gi)[0]);
                             var width = Number(gWidth.match(/[0-9]+/gi)[0]);
                             var step = width / (dataLine.length - 1);
+                            if (step == Infinity) {
+                                step = 0;
+                            }
                             var maxLenght = (Math.max.apply(Math, dataLine) / height) * 100;
                             var scale = maxLenght - 1;
-                            console.log(maxLenght + " " + scale);
                             scale = 1;
-                            var y2 = height - dataLine[j + 1] * scale;
-                            if (j == info.data[i].length - 1) {
-                                y2 = 0;
+                            if (dataLine.length > 1) {
+                                var y2 = height - dataLine[j + 1] * scale;
+                                if (j == info.data[i].length - 1) {
+                                    y2 = height - dataLine[j] * scale;
+                                }
+                                lines.push(new NoshiCENS({
+                                    tag: "line",
+                                    x1: step * j + "%",
+                                    x2: step * (j + 1) + "%",
+                                    y1: height - dataLine[j] * scale,
+                                    y2: y2,
+                                    stroke: lineColor,
+                                    strokeWidth: 3
+                                }).tag);
                             }
-                            lines.push(new NoshiCENS({
-                                tag: "line",
-                                x1: step * j + "%",
-                                x2: step * (j + 1) + "%",
-                                y1: height - dataLine[j] * scale,
-                                y2: y2,
-                                stroke: "green",
-                                strokeWidth: 3
-                            }).tag);
                             lines.push(new NoshiCENS({
                                 tag: "circle",
                                 cx: step * j + "%",
@@ -814,7 +826,7 @@ var NoshiBuilder = (function () {
                                 r: 5,
                                 stroke: "white",
                                 strokeWidth: 4,
-                                fill: "green"
+                                fill: lineColor
                             }).tag);
                         }
                     }
