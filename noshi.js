@@ -789,27 +789,31 @@ var NoshiBuilder = (function () {
                             var dataLine = info.data[i];
                             var height = Number(gHeight.match(/[0-9]+/gi)[0]);
                             var width = Number(gWidth.match(/[0-9]+/gi)[0]);
-                            var step = width / dataLine.length;
-                            if (Math.max.apply(Math, dataLine) > height) {
-                                dataLine[j] = dataLine[j] / height * 100;
+                            var step = width / (dataLine.length - 1);
+                            if (Math.max.apply(Math, dataLine) < height) {
+                                height = Math.max.apply(Math, dataLine) + 2;
+                            }
+                            var y2 = height - dataLine[j + 1];
+                            if (j == info.data[i].length - 1) {
+                                y2 = 0;
                             }
                             lines.push(new NoshiCENS({
                                 tag: "line",
-                                x1: 50,
-                                x2: 110,
-                                y1: 60,
-                                y2: 150,
-                                stroke: "orange",
+                                x1: step * j + "%",
+                                x2: step * (j + 1) + "%",
+                                y1: height - dataLine[j],
+                                y2: y2,
+                                stroke: "green",
                                 strokeWidth: 3
                             }).tag);
                             lines.push(new NoshiCENS({
                                 tag: "circle",
-                                cx: step * j + (step / 2) + "%",
+                                cx: step * j + "%",
                                 cy: height - dataLine[j],
                                 r: 5,
-                                stroke: "green",
-                                strokeWidth: 2,
-                                fill: "transparent"
+                                stroke: "white",
+                                strokeWidth: 4,
+                                fill: "green"
                             }).tag);
                         }
                     }
