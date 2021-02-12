@@ -79,7 +79,29 @@ var NoshiCENS = (function () {
         if (props.namespace !== undefined && typeof props.namespace == "string") {
             namespace = props.namespace;
         }
-        console.log(keys);
+        var tagType = "svg";
+        if (props['tag'] !== undefined && props['tag'] !== "") {
+            tagType = props['tag'];
+        }
+        var tag = document.createElementNS(namespace, tagType);
+        keys.forEach(function (key) {
+            switch (key) {
+                case "child":
+                    for (var i = 0; i < props['child'].length; i++) {
+                        var childInfo = props['child'][i];
+                        console.log(props['child'][i]);
+                        tag.appendChild(childInfo);
+                    }
+                    console.log(tag);
+                    break;
+                case "tag":
+                    break;
+                default:
+                    tag.setAttributeNS(null, key, props[key]);
+                    break;
+            }
+        });
+        this.tag = tag;
     }
     return NoshiCENS;
 }());
@@ -756,10 +778,26 @@ var NoshiBuilder = (function () {
             }
             if (info.data !== undefined) {
                 if (info.data.length !== 0) {
+                    var lines = [];
+                    for (var i = 0; i < info.data.length; i++) {
+                        for (var j = 0; j < info.data[i].length; j++) {
+                            var height = gHeight.match(/[0-9]+/gi);
+                            lines.push(new NoshiCENS({
+                                tag: "line",
+                                x1: 50,
+                                x2: 110,
+                                y1: 60,
+                                y2: 150,
+                                stroke: "orange"
+                            }).tag);
+                        }
+                    }
                     var svg = new NoshiCENS({
                         tag: "svg",
-                        id: "test-id"
+                        id: "test-id",
+                        child: lines
                     }).tag;
+                    items.push(svg);
                 }
                 else {
                     errorScreen("Error: <b>data</b> property can't be empty");
