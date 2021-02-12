@@ -87,12 +87,17 @@ var NoshiCENS = (function () {
         keys.forEach(function (key) {
             switch (key) {
                 case "child":
-                    for (var i = 0; i < props['child'].length; i++) {
-                        var childInfo = props['child'][i];
-                        console.log(props['child'][i]);
-                        tag.appendChild(childInfo);
+                    if (typeof props['child'] === "object") {
+                        for (var i = 0; i < props['child'].length; i++) {
+                            tag.appendChild(props['child'][i]);
+                        }
                     }
-                    console.log(tag);
+                    else {
+                        errorScreen("Error: <b>child</b> must be an array");
+                    }
+                    break;
+                case "strokeWidth":
+                    tag.setAttributeNS(null, "stroke-width", props[key]);
                     break;
                 case "tag":
                     break;
@@ -781,20 +786,39 @@ var NoshiBuilder = (function () {
                     var lines = [];
                     for (var i = 0; i < info.data.length; i++) {
                         for (var j = 0; j < info.data[i].length; j++) {
-                            var height = gHeight.match(/[0-9]+/gi);
+                            var dataLine = info.data[i];
+                            var height = Number(gHeight.match(/[0-9]+/gi)[0]);
+                            var width = Number(gWidth.match(/[0-9]+/gi)[0]);
+                            var step = width / dataLine.length;
+                            if (Math.max.apply(Math, dataLine) > height) {
+                                dataLine[j] = dataLine[j] / height * 100;
+                            }
                             lines.push(new NoshiCENS({
                                 tag: "line",
                                 x1: 50,
                                 x2: 110,
                                 y1: 60,
                                 y2: 150,
-                                stroke: "orange"
+                                stroke: "orange",
+                                strokeWidth: 3
+                            }).tag);
+                            lines.push(new NoshiCENS({
+                                tag: "circle",
+                                cx: step * j + (step / 2) + "%",
+                                cy: height - dataLine[j],
+                                r: 5,
+                                stroke: "green",
+                                strokeWidth: 2,
+                                fill: "transparent"
                             }).tag);
                         }
                     }
                     var svg = new NoshiCENS({
                         tag: "svg",
                         id: "test-id",
+                        height: gHeight,
+                        width: gWidth,
+                        backgroundColor: gBg,
                         child: lines
                     }).tag;
                     items.push(svg);
