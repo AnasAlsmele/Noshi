@@ -790,10 +790,11 @@ var NoshiBuilder = (function () {
                             var height = Number(gHeight.match(/[0-9]+/gi)[0]);
                             var width = Number(gWidth.match(/[0-9]+/gi)[0]);
                             var step = width / (dataLine.length - 1);
-                            if (Math.max.apply(Math, dataLine) < height) {
-                                height = Math.max.apply(Math, dataLine) + 2;
-                            }
-                            var y2 = height - dataLine[j + 1];
+                            var maxLenght = (Math.max.apply(Math, dataLine) / height) * 100;
+                            var scale = maxLenght - 1;
+                            console.log(maxLenght + " " + scale);
+                            scale = 1;
+                            var y2 = height - dataLine[j + 1] * scale;
                             if (j == info.data[i].length - 1) {
                                 y2 = 0;
                             }
@@ -801,7 +802,7 @@ var NoshiBuilder = (function () {
                                 tag: "line",
                                 x1: step * j + "%",
                                 x2: step * (j + 1) + "%",
-                                y1: height - dataLine[j],
+                                y1: height - dataLine[j] * scale,
                                 y2: y2,
                                 stroke: "green",
                                 strokeWidth: 3
@@ -809,7 +810,7 @@ var NoshiBuilder = (function () {
                             lines.push(new NoshiCENS({
                                 tag: "circle",
                                 cx: step * j + "%",
-                                cy: height - dataLine[j],
+                                cy: height - dataLine[j] * scale,
                                 r: 5,
                                 stroke: "white",
                                 strokeWidth: 4,
