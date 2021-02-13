@@ -798,23 +798,27 @@ var NoshiBuilder = (function () {
                         }
                         for (var j = 0; j < info.data[i].length; j++) {
                             var dataLine = info.data[i];
-                            var height = Number(gHeight.match(/[0-9]+/gi)[0]) - 10;
-                            var width = Number(gWidth.match(/[0-9]+/gi)[0]);
+                            var svgHPadding = 4;
+                            var height = Number(gHeight.match(/[0-9]+/gi)[0]) - 25;
+                            var width = Number(gWidth.match(/[0-9]+/gi)[0]) - svgHPadding;
                             var step = width / (dataLine.length - 1);
                             if (step == Infinity) {
                                 step = 0;
                             }
                             var maxFactor = -2;
                             var y1 = height - dataLine[j] / (Math.max.apply(Math, dataLine) - maxFactor) * height;
+                            var x1 = (step * j + svgHPadding / 2) + "%";
                             if (dataLine.length > 1) {
                                 var y2 = height - dataLine[j + 1] / (Math.max.apply(Math, dataLine) - maxFactor) * height;
+                                var x2 = step * (j + 1) + svgHPadding / 2 + "%";
                                 if (j == info.data[i].length - 1) {
                                     y2 = y1;
+                                    x2 = x1;
                                 }
                                 lines.push(new NoshiCENS({
                                     tag: "line",
-                                    x1: step * j + "%",
-                                    x2: step * (j + 1) + "%",
+                                    x1: x1,
+                                    x2: x2,
                                     y1: y1,
                                     y2: y2,
                                     stroke: lineColor,
@@ -823,31 +827,48 @@ var NoshiBuilder = (function () {
                             }
                             lines.push(new NoshiCENS({
                                 tag: "circle",
-                                cx: step * j + "%",
+                                cx: x1,
                                 cy: y1,
-                                r: 5,
+                                r: 6,
                                 stroke: gBg,
-                                strokeWidth: 4,
+                                strokeWidth: 3,
                                 fill: lineColor
                             }).tag);
                         }
                     }
-                    var headTitle = "";
-                    var headTitleColor = "#bbbbbb";
-                    if (info.graph.head !== undefined) {
-                        console.log("tt");
-                        if (info.graph.head.title !== undefined && info.graph.head.title !== "") {
-                            headTitle = info.graph.head.title;
-                            if (info.graph.head.color !== undefined && info.graph.head.color !== "") {
-                                headTitleColor = info.graph.head.color;
-                            }
+                    if (info.graph.legend !== undefined && info.graph.legend === true) {
+                        var legendPosition = "tl";
+                        var legendLines = [];
+                        for (var i = 0; i < info.data.length; i++) {
+                            var line = new NoshiCENS({
+                                tag: "line",
+                                x1: 0,
+                                x2: 10,
+                                y1: 5,
+                                y2: 5,
+                                stroke: "green",
+                                strokeWidth: 3,
+                                "class": "legend-line"
+                            }).tag;
+                            var text = new NoshiCENS({
+                                tag: "text",
+                                text: "test",
+                                x: 15,
+                                y: 10,
+                                "class": "legend-text"
+                            }).tag;
+                            legendLines.push(new NoshiCENS({
+                                tag: "g",
+                                child: [
+                                    line,
+                                    text
+                                ]
+                            }).tag);
                         }
                         lines.push(new NoshiCENS({
-                            tag: "text",
-                            x: 0,
-                            y: 15,
-                            fill: headTitleColor,
-                            text: headTitle
+                            tag: "g",
+                            "class": "legend-holder",
+                            child: legendLines
                         }).tag);
                     }
                     var svg = new NoshiCENS({

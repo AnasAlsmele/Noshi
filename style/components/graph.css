@@ -12,3 +12,12 @@
     background-color: #f9f9f9;
     border: 1px solid #e5e5e5;
 }
+.legend-holder{
+    opacity: .5;
+    cursor: default;
+    transition: opacity .25s;
+    font-size: .8em;
+}
+.legend-holder:hover{
+    opacity: 1;
+}
