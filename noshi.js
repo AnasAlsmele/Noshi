@@ -837,24 +837,29 @@ var NoshiBuilder = (function () {
                         }
                     }
                     if (info.graph.legend !== undefined && info.graph.legend === true) {
-                        var legendPosition = "tl";
                         var legendLines = [];
+                        var yLegendRow = 10;
                         for (var i = 0; i < info.data.length; i++) {
+                            var legendLineColor = lineColors[i];
                             var line = new NoshiCENS({
                                 tag: "line",
                                 x1: 0,
-                                x2: 10,
-                                y1: 5,
-                                y2: 5,
-                                stroke: "green",
+                                x2: 30,
+                                y1: yLegendRow - 5,
+                                y2: yLegendRow - 5,
+                                stroke: legendLineColor,
                                 strokeWidth: 3,
                                 "class": "legend-line"
                             }).tag;
+                            var legendRowText = "unknown";
+                            if (info.graph.legendTitles[i] !== undefined && info.graph.legendTitles[i] !== "") {
+                                legendRowText = info.graph.legendTitles[i];
+                            }
                             var text = new NoshiCENS({
                                 tag: "text",
-                                text: "test",
-                                x: 15,
-                                y: 10,
+                                text: legendRowText,
+                                x: 35,
+                                y: yLegendRow,
                                 "class": "legend-text"
                             }).tag;
                             legendLines.push(new NoshiCENS({
@@ -864,9 +869,19 @@ var NoshiBuilder = (function () {
                                     text
                                 ]
                             }).tag);
+                            yLegendRow += 15;
+                        }
+                        var legendPosition = "tl";
+                        switch (legendPosition) {
+                            case "tr":
+                                legendPosition = "translate(0, 0)";
+                            default:
+                                legendPosition = "translate(0, 0)";
                         }
                         lines.push(new NoshiCENS({
                             tag: "g",
+                            x: 30,
+                            transform: legendPosition,
                             "class": "legend-holder",
                             child: legendLines
                         }).tag);

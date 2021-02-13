@@ -13,11 +13,14 @@
     border: 1px solid #e5e5e5;
 }
 .legend-holder{
-    opacity: .5;
+    opacity: 1;
     cursor: default;
     transition: opacity .25s;
     font-size: .8em;
 }
 .legend-holder:hover{
     opacity: 1;
+}
+.legend-text{
+    fill: #a9a9a9;
 }
