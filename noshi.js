@@ -801,19 +801,18 @@ var NoshiBuilder = (function () {
                             if (step == Infinity) {
                                 step = 0;
                             }
-                            var maxLenght = (Math.max.apply(Math, dataLine) / height) * 100;
-                            var scale = maxLenght - 1;
-                            scale = 1;
+                            var maxFactor = -2;
+                            var y1 = height - dataLine[j] / (Math.max.apply(Math, dataLine) - maxFactor) * height;
                             if (dataLine.length > 1) {
-                                var y2 = height - dataLine[j + 1] * scale;
+                                var y2 = height - dataLine[j + 1] / (Math.max.apply(Math, dataLine) - maxFactor) * height;
                                 if (j == info.data[i].length - 1) {
-                                    y2 = height - dataLine[j] * scale;
+                                    y2 = y1;
                                 }
                                 lines.push(new NoshiCENS({
                                     tag: "line",
                                     x1: step * j + "%",
                                     x2: step * (j + 1) + "%",
-                                    y1: height - dataLine[j] * scale,
+                                    y1: y1,
                                     y2: y2,
                                     stroke: lineColor,
                                     strokeWidth: 3
@@ -822,9 +821,9 @@ var NoshiBuilder = (function () {
                             lines.push(new NoshiCENS({
                                 tag: "circle",
                                 cx: step * j + "%",
-                                cy: height - dataLine[j] * scale,
+                                cy: y1,
                                 r: 5,
-                                stroke: "white",
+                                stroke: gBg,
                                 strokeWidth: 4,
                                 fill: lineColor
                             }).tag);
