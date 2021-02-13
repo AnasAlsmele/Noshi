@@ -872,12 +872,19 @@ var NoshiBuilder = (function () {
                             yLegendRow += 15;
                         }
                         var legendPosition = "tl";
-                        switch (legendPosition) {
-                            case "tr":
+                        console.log(info.graph.legendPosition);
+                        switch (info.graph.legendPosition) {
+                            case "lt":
                                 legendPosition = "translate(0, 0)";
+                                break;
+                            case "lb":
+                                legendPosition = "translate(0, 20)";
+                                break;
                             default:
                                 legendPosition = "translate(0, 0)";
+                                break;
                         }
+                        console.log(legendPosition);
                         lines.push(new NoshiCENS({
                             tag: "g",
                             x: 30,
