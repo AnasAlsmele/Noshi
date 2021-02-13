@@ -99,6 +99,9 @@ var NoshiCENS = (function () {
                 case "strokeWidth":
                     tag.setAttributeNS(null, "stroke-width", props[key]);
                     break;
+                case "text":
+                    tag.textContent = props[key];
+                    break;
                 case "tag":
                     break;
                 default:
@@ -795,7 +798,7 @@ var NoshiBuilder = (function () {
                         }
                         for (var j = 0; j < info.data[i].length; j++) {
                             var dataLine = info.data[i];
-                            var height = Number(gHeight.match(/[0-9]+/gi)[0]);
+                            var height = Number(gHeight.match(/[0-9]+/gi)[0]) - 10;
                             var width = Number(gWidth.match(/[0-9]+/gi)[0]);
                             var step = width / (dataLine.length - 1);
                             if (step == Infinity) {
@@ -828,6 +831,24 @@ var NoshiBuilder = (function () {
                                 fill: lineColor
                             }).tag);
                         }
+                    }
+                    var headTitle = "";
+                    var headTitleColor = "#bbbbbb";
+                    if (info.graph.head !== undefined) {
+                        console.log("tt");
+                        if (info.graph.head.title !== undefined && info.graph.head.title !== "") {
+                            headTitle = info.graph.head.title;
+                            if (info.graph.head.color !== undefined && info.graph.head.color !== "") {
+                                headTitleColor = info.graph.head.color;
+                            }
+                        }
+                        lines.push(new NoshiCENS({
+                            tag: "text",
+                            x: 0,
+                            y: 15,
+                            fill: headTitleColor,
+                            text: headTitle
+                        }).tag);
                     }
                     var svg = new NoshiCENS({
                         tag: "svg",
