@@ -871,20 +871,39 @@ var NoshiBuilder = (function () {
                             }).tag);
                             yLegendRow += 15;
                         }
+                        var legendWidth = 0;
+                        for (var i = 0; i < info.graph.legendTitles.length; i++) {
+                            if (info.graph.legendTitles[i].length > legendWidth) {
+                                legendWidth = info.graph.legendTitles[i].length;
+                            }
+                        }
+                        legendWidth *= 7;
+                        legendWidth += 45;
+                        console.log(legendWidth);
+                        lines.push(new NoshiCENS({
+                            tag: "rect",
+                            fill: "rgba(240, 240, 240, .4)",
+                            stroke: "#e5e5e5",
+                            strokeWidth: 2,
+                            child: legendLines,
+                            width: legendWidth,
+                            height: yLegendRow,
+                            cx: 0,
+                            cy: 0
+                        }).tag);
                         var legendPosition = "tl";
                         console.log(info.graph.legendPosition);
                         switch (info.graph.legendPosition) {
                             case "lt":
-                                legendPosition = "translate(0, 0)";
+                                legendPosition = "translate(7.5, 7.5)";
                                 break;
                             case "lb":
-                                legendPosition = "translate(0, 20)";
+                                legendPosition = "translate(7.5, 7.5)";
                                 break;
                             default:
                                 legendPosition = "translate(0, 0)";
                                 break;
                         }
-                        console.log(legendPosition);
                         lines.push(new NoshiCENS({
                             tag: "g",
                             x: 30,
