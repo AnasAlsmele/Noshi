@@ -815,6 +815,18 @@ var NoshiBuilder = (function () {
                                     y2 = y1;
                                     x2 = x1;
                                 }
+                                if (info.graph.grid !== undefined && info.graph.grid === true) {
+                                    if (i == 0) {
+                                        lines.push(new NoshiCENS({
+                                            tag: "line",
+                                            x1: x1,
+                                            x2: x1,
+                                            y1: 0,
+                                            y2: height,
+                                            stroke: "#e5e5e5"
+                                        }).tag);
+                                    }
+                                }
                                 lines.push(new NoshiCENS({
                                     tag: "line",
                                     x1: x1,
