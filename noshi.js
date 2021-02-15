@@ -773,12 +773,16 @@ var NoshiBuilder = (function () {
             var gType = "line";
             var gHeight = "300px";
             var gWidth = "100%";
+            var gWidthNumber = [0, ""];
             var gBg = "#ffffff";
             if (info.graph !== undefined) {
                 if (info.graph.type !== undefined) {
                     switch (info.graph.type) {
                         case "column":
                             gType = "column";
+                            break;
+                        case "area":
+                            gType = "area";
                             break;
                         default:
                             break;
@@ -789,6 +793,11 @@ var NoshiBuilder = (function () {
                 }
                 if (info.graph.width !== undefined && typeof info.graph.width == "string") {
                     gWidth = info.graph.width;
+                }
+                else {
+                    gWidthNumber[0] = Number(gWidth.replace(/%|vw/g, ""));
+                    gWidthNumber[1] = gWidth.replace(/^[0-9]+/g, "");
+                    gWidthNumber[0] = document.body.offsetWidth * (gWidthNumber[0] / 100);
                 }
                 if (info.graph.backgroundColor !== undefined && typeof info.graph.backgroundColor == "string") {
                     gBg = info.graph.backgroundColor;
@@ -802,6 +811,7 @@ var NoshiBuilder = (function () {
                 if (info.data.length !== 0) {
                     var lines = [];
                     for (var i = 0; i < info.data.length; i++) {
+                        var areaPoints = [];
                         var lineColor = lineColors[i];
                         var lineStyle = info.style[i];
                         if (lineStyle !== undefined) {
@@ -811,16 +821,15 @@ var NoshiBuilder = (function () {
                         }
                         for (var j = 0; j < info.data[i].length; j++) {
                             var dataLine = info.data[i];
-                            var step = width / (dataLine.length - 1);
-                            if (step == Infinity) {
-                                step = 0;
-                            }
+                            var w = Number(gWidthNumber[0]);
+                            var step = w / dataLine.length;
+                            var svgShift = w / 100 * (svgHPadding / 2);
                             var maxFactor = -2;
                             var y1 = height - dataLine[j] / (Math.max.apply(Math, dataLine) - maxFactor) * height;
-                            var x1 = (step * j + svgHPadding / 2) + "%";
+                            var x1 = step * j + svgShift;
                             if (dataLine.length > 1) {
                                 var y2 = height - dataLine[j + 1] / (Math.max.apply(Math, dataLine) - maxFactor) * height;
-                                var x2 = step * (j + 1) + svgHPadding / 2 + "%";
+                                var x2 = step * (j + 1) + svgShift;
                                 if (j == info.data[i].length - 1) {
                                     y2 = y1;
                                     x2 = x1;
@@ -841,24 +850,54 @@ var NoshiBuilder = (function () {
                                         }).tag);
                                     }
                                 }
+                                if (gType === "line") {
+                                    lines.push(new NoshiCENS({
+                                        tag: "line",
+                                        x1: x1,
+                                        x2: x2,
+                                        y1: y1,
+                                        y2: y2,
+                                        stroke: lineColor,
+                                        strokeWidth: 3
+                                    }).tag);
+                                }
+                                if (gType === "column") {
+                                    lines.push(new NoshiCENS({
+                                        tag: "line",
+                                        x1: x1,
+                                        x2: x1,
+                                        y1: y1,
+                                        y2: height,
+                                        stroke: lineColor,
+                                        strokeWidth: 25
+                                    }).tag);
+                                }
+                            }
+                            areaPoints.push([x1, y1]);
+                            if (gType === "line" || gType === "area") {
                                 lines.push(new NoshiCENS({
-                                    tag: "line",
-                                    x1: x1,
-                                    x2: x2,
-                                    y1: y1,
-                                    y2: y2,
-                                    stroke: lineColor,
-                                    strokeWidth: 3
+                                    tag: "circle",
+                                    cx: x1,
+                                    cy: y1,
+                                    r: 6,
+                                    stroke: gBg,
+                                    strokeWidth: 3,
+                                    fill: lineColor
                                 }).tag);
                             }
+                        }
+                        if (gType === "area") {
+                            var w = gWidthNumber[0];
+                            var step = w / areaPoints.length;
+                            var svgShift = w / 100 * (svgHPadding / 2);
+                            for (var k = 0; k < areaPoints.length; k++) {
+                                areaPoints[k][0] = step * k + svgShift;
+                            }
                             lines.push(new NoshiCENS({
-                                tag: "circle",
-                                cx: x1,
-                                cy: y1,
-                                r: 6,
-                                stroke: gBg,
-                                strokeWidth: 3,
-                                fill: lineColor
+                                tag: "polygon",
+                                points: "" + svgShift + "," + height + " " + areaPoints.join(" ") + " " + (areaPoints[areaPoints.length - 1][0]) + "," + height,
+                                fill: lineColor,
+                                style: "opacity: .4"
                             }).tag);
                         }
                     }
