@@ -770,10 +770,20 @@ var NoshiBuilder = (function () {
                     }).tag);
                 }
             }
+            var gType = "line";
             var gHeight = "300px";
             var gWidth = "100%";
             var gBg = "#ffffff";
             if (info.graph !== undefined) {
+                if (info.graph.type !== undefined) {
+                    switch (info.graph.type) {
+                        case "column":
+                            gType = "column";
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 if (info.graph.height !== undefined && typeof info.graph.height == "string") {
                     gHeight = info.graph.height;
                 }
