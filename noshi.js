@@ -851,21 +851,17 @@ var NoshiBuilder = (function () {
                                         }).tag);
                                     }
                                 }
-                                if (gType === "line") {
-                                    if (info.graph.curve === true) {
-                                        curvePoints.push([x1, y1]);
-                                    }
-                                    else {
-                                        lines.push(new NoshiCENS({
-                                            tag: "line",
-                                            x1: x1,
-                                            x2: x2,
-                                            y1: y1,
-                                            y2: y2,
-                                            stroke: lineColor,
-                                            strokeWidth: 3
-                                        }).tag);
-                                    }
+                                curvePoints.push([x1, y1]);
+                                if (gType === "line" && info.graph.curve !== true) {
+                                    lines.push(new NoshiCENS({
+                                        tag: "line",
+                                        x1: x1,
+                                        x2: x2,
+                                        y1: y1,
+                                        y2: y2,
+                                        stroke: lineColor,
+                                        strokeWidth: 3
+                                    }).tag);
                                 }
                                 if (gType === "column") {
                                     lines.push(new NoshiCENS({
@@ -892,7 +888,7 @@ var NoshiBuilder = (function () {
                                 }).tag);
                             }
                         }
-                        if (gType === "area") {
+                        if (gType === "area" && info.graph.curve !== true) {
                             var w = gWidthNumber[0];
                             var step = w / areaPoints.length;
                             var svgShift = w / 100 * (svgHPadding / 2);
@@ -918,7 +914,7 @@ var NoshiBuilder = (function () {
                             var controlPoints_1 = function (current, prv, next, reverse) {
                                 var p = prv || current;
                                 var n = next || current;
-                                var smoothing = 0.2;
+                                var smoothing = .2;
                                 var o = line_1(p, n);
                                 var angle = o.angle + (reverse ? Math.PI : 0);
                                 var length = o.length * smoothing;
@@ -933,15 +929,26 @@ var NoshiBuilder = (function () {
                             };
                             var points = "";
                             for (var i_1 = 1; i_1 < curvePoints.length; i_1++) {
-                                points += " M" + curvePoints[i_1 - 1][0] + " " + curvePoints[i_1 - 1][1] + " " + bz(curvePoints[i_1], i_1, curvePoints);
+                                points += bz(curvePoints[i_1], i_1, curvePoints);
                             }
-                            lines.push(new NoshiCENS({
-                                tag: "path",
-                                d: points,
-                                stroke: lineColor,
-                                strokeWidth: 3,
-                                fill: "transparent"
-                            }).tag);
+                            var fillMode = ["transparent", 1];
+                            if (info.graph.type === "area") {
+                                fillMode = [lineColor, .4];
+                                points = "\n                                M" + curvePoints[0][0] + " " + height + "\n                                L" + curvePoints[0][0] + " " + curvePoints[0][1] + "\n                                " + points + " \n                                L" + curvePoints[curvePoints.length - 1][0] + " " + height + "\n                                Z\n                            ";
+                            }
+                            else {
+                                points = "M" + curvePoints[0][0] + " " + curvePoints[0][1] + " " + points;
+                            }
+                            if (info.graph.type !== "column") {
+                                lines.push(new NoshiCENS({
+                                    tag: "path",
+                                    d: points,
+                                    stroke: lineColor,
+                                    strokeWidth: 3,
+                                    fill: fillMode[0],
+                                    style: "opacity: " + fillMode[1]
+                                }).tag);
+                            }
                         }
                     };
                     for (var i = 0; i < info.data.length; i++) {
