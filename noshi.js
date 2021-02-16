@@ -810,8 +810,9 @@ var NoshiBuilder = (function () {
             if (info.data !== undefined) {
                 if (info.data.length !== 0) {
                     var lines = [];
-                    for (var i = 0; i < info.data.length; i++) {
+                    var _loop_1 = function (i) {
                         var areaPoints = [];
+                        var curvePoints = [];
                         var lineColor = lineColors[i];
                         var lineStyle = info.style[i];
                         if (lineStyle !== undefined) {
@@ -851,15 +852,20 @@ var NoshiBuilder = (function () {
                                     }
                                 }
                                 if (gType === "line") {
-                                    lines.push(new NoshiCENS({
-                                        tag: "line",
-                                        x1: x1,
-                                        x2: x2,
-                                        y1: y1,
-                                        y2: y2,
-                                        stroke: lineColor,
-                                        strokeWidth: 3
-                                    }).tag);
+                                    if (info.graph.curve === true) {
+                                        curvePoints.push([x1, y1]);
+                                    }
+                                    else {
+                                        lines.push(new NoshiCENS({
+                                            tag: "line",
+                                            x1: x1,
+                                            x2: x2,
+                                            y1: y1,
+                                            y2: y2,
+                                            stroke: lineColor,
+                                            strokeWidth: 3
+                                        }).tag);
+                                    }
                                 }
                                 if (gType === "column") {
                                     lines.push(new NoshiCENS({
@@ -900,6 +906,45 @@ var NoshiBuilder = (function () {
                                 style: "opacity: .4"
                             }).tag);
                         }
+                        if (info.graph.curve === true) {
+                            var line_1 = function (pointA, pointB) {
+                                var lx = pointB[0] - pointA[0];
+                                var ly = pointB[1] - pointA[1];
+                                return {
+                                    length: Math.sqrt(Math.pow(lx, 2) + Math.pow(ly, 2)),
+                                    angle: Math.atan2(ly, lx)
+                                };
+                            };
+                            var controlPoints_1 = function (current, prv, next, reverse) {
+                                var p = prv || current;
+                                var n = next || current;
+                                var smoothing = 0.2;
+                                var o = line_1(p, n);
+                                var angle = o.angle + (reverse ? Math.PI : 0);
+                                var length = o.length * smoothing;
+                                var x = current[0] + Math.cos(angle) * length;
+                                var y = current[1] + Math.sin(angle) * length;
+                                return [x, y];
+                            };
+                            var bz = function (point, i, a) {
+                                var _a = controlPoints_1(a[i - 1], a[i - 2], point, false), sx = _a[0], sy = _a[1];
+                            };
+                            var points = "";
+                            for (var i_1 = 0; i_1 < curvePoints.length - 1; i_1++) {
+                                var aPoint = controlPoints_1(curvePoints[i_1], curvePoints[i_1 - 1], curvePoints[i_1 + 1], false);
+                                points += "M" + curvePoints[i_1][0] + " " + curvePoints[i_1][1] + " C" + aPoint + " " + curvePoints[i_1 + 1][0] + " " + curvePoints[i_1 + 1][1] + " " + curvePoints[i_1 + 1][0] + " " + curvePoints[i_1 + 1][1];
+                            }
+                            lines.push(new NoshiCENS({
+                                tag: "path",
+                                d: points,
+                                stroke: lineColor,
+                                strokeWidth: 3,
+                                fill: "transparent"
+                            }).tag);
+                        }
+                    };
+                    for (var i = 0; i < info.data.length; i++) {
+                        _loop_1(i);
                     }
                     if (info.graph.legend !== undefined && info.graph.legend === true) {
                         var legendLines = [];
@@ -1021,7 +1066,7 @@ var NoshiBuilder = (function () {
 var _sliders = function () {
     var sliders = _("slider", true, false);
     if (sliders !== undefined) {
-        var _loop_1 = function (i) {
+        var _loop_2 = function (i) {
             var c = sliders[i].childNodes;
             var t = sliders[i].getAttribute("type");
             var m = Number(sliders[i].getAttribute("data-slide-time"));
@@ -1053,8 +1098,8 @@ var _sliders = function () {
                         };
                         break;
                     case "zoomin":
-                        for (var i_1 = 0; i_1 < c.length; i_1++) {
-                            var img_1 = c[i_1];
+                        for (var i_2 = 0; i_2 < c.length; i_2++) {
+                            var img_1 = c[i_2];
                             img_1.style.opacity = "1";
                             img_1.style.width = "0";
                             img_1.style.zIndex = "1";
@@ -1082,8 +1127,8 @@ var _sliders = function () {
                         };
                         break;
                     case "toleft":
-                        for (var i_2 = 0; i_2 < c.length - 1; i_2++) {
-                            var img_2 = c[i_2];
+                        for (var i_3 = 0; i_3 < c.length - 1; i_3++) {
+                            var img_2 = c[i_3];
                             img_2.style.position = "unset";
                             img_2.style.opacity = "1";
                             img_2.style.zIndex = "1";
@@ -1103,8 +1148,8 @@ var _sliders = function () {
                         };
                         break;
                     default:
-                        for (var i_3 = 0; i_3 < c.length - 1; i_3++) {
-                            var img_3 = c[i_3];
+                        for (var i_4 = 0; i_4 < c.length - 1; i_4++) {
+                            var img_3 = c[i_4];
                             img_3.style.opacity = "1";
                             img_3.style.zIndex = "initial";
                             img_3.style.visibility = "hidden";
@@ -1134,7 +1179,7 @@ var _sliders = function () {
             var tvl = window.setInterval(slideFunction, m * 1000);
         };
         for (var i = 0; i < sliders.length; i++) {
-            _loop_1(i);
+            _loop_2(i);
         }
     }
 };
@@ -1192,7 +1237,7 @@ var errorScreen = function (msg) {
 var _activeNavs = function () {
     if (_("nav-menu-head", true, false) !== undefined) {
         var navs = _("nav-menu-head", true);
-        var _loop_2 = function (i) {
+        var _loop_3 = function (i) {
             var nav = navs[i];
             nav.addEventListener("click", function () {
                 var target = nav.getAttribute("data-target");
@@ -1218,7 +1263,7 @@ var _activeNavs = function () {
             });
         };
         for (var i = 0; i < Object.keys(navs).length; i++) {
-            _loop_2(i);
+            _loop_3(i);
         }
     }
 };
