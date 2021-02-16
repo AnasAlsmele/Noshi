@@ -928,11 +928,12 @@ var NoshiBuilder = (function () {
                             };
                             var bz = function (point, i, a) {
                                 var _a = controlPoints_1(a[i - 1], a[i - 2], point, false), sx = _a[0], sy = _a[1];
+                                var _b = controlPoints_1(point, a[i - 1], a[i + 1], true), ex = _b[0], ey = _b[1];
+                                return "C" + sx + " " + sy + " " + ex + " " + ey + " " + point[0] + " " + point[1];
                             };
                             var points = "";
-                            for (var i_1 = 0; i_1 < curvePoints.length - 1; i_1++) {
-                                var aPoint = controlPoints_1(curvePoints[i_1], curvePoints[i_1 - 1], curvePoints[i_1 + 1], false);
-                                points += "M" + curvePoints[i_1][0] + " " + curvePoints[i_1][1] + " C" + aPoint + " " + curvePoints[i_1 + 1][0] + " " + curvePoints[i_1 + 1][1] + " " + curvePoints[i_1 + 1][0] + " " + curvePoints[i_1 + 1][1];
+                            for (var i_1 = 1; i_1 < curvePoints.length; i_1++) {
+                                points += " M" + curvePoints[i_1 - 1][0] + " " + curvePoints[i_1 - 1][1] + " " + bz(curvePoints[i_1], i_1, curvePoints);
                             }
                             lines.push(new NoshiCENS({
                                 tag: "path",
