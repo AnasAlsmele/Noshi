@@ -784,6 +784,9 @@ var NoshiBuilder = (function () {
                         case "area":
                             gType = "area";
                             break;
+                        case "pie":
+                            gType = "pie";
+                            break;
                         default:
                             break;
                     }
@@ -794,11 +797,10 @@ var NoshiBuilder = (function () {
                 if (info.graph.width !== undefined && typeof info.graph.width == "string") {
                     gWidth = info.graph.width;
                 }
-                else {
-                    gWidthNumber[0] = Number(gWidth.replace(/%|vw/g, ""));
-                    gWidthNumber[1] = gWidth.replace(/^[0-9]+/g, "");
-                    gWidthNumber[0] = document.body.offsetWidth * (gWidthNumber[0] / 100);
-                }
+                gWidthNumber[1] = gWidth.replace(/[0-9]+/g, "");
+                var rex = new RegExp(gWidthNumber[1], "g");
+                gWidthNumber[0] = Number(gWidth.replace(rex, ""));
+                gWidthNumber[0] = document.body.offsetWidth * (gWidthNumber[0] / 100);
                 if (info.graph.backgroundColor !== undefined && typeof info.graph.backgroundColor == "string") {
                     gBg = info.graph.backgroundColor;
                 }
@@ -810,6 +812,7 @@ var NoshiBuilder = (function () {
             if (info.data !== undefined) {
                 if (info.data.length !== 0) {
                     var lines = [];
+                    var pieValues = [];
                     var _loop_1 = function (i) {
                         var areaPoints = [];
                         var curvePoints = [];
@@ -876,7 +879,7 @@ var NoshiBuilder = (function () {
                                 }
                             }
                             areaPoints.push([x1, y1]);
-                            if (gType === "line" || gType === "area") {
+                            if ((gType === "line" || gType === "area") && info.graph.points !== false) {
                                 lines.push(new NoshiCENS({
                                     tag: "circle",
                                     cx: x1,
@@ -902,7 +905,14 @@ var NoshiBuilder = (function () {
                                 style: "opacity: .4"
                             }).tag);
                         }
-                        if (info.graph.curve === true) {
+                        if (gType === "pie") {
+                            var yMount = 0;
+                            for (var i_1 = 0; i_1 < curvePoints.length; i_1++) {
+                                yMount += curvePoints[i_1][1];
+                            }
+                            pieValues.push(yMount);
+                        }
+                        if (info.graph.curve === true && (gType === "line" || gType === "area")) {
                             var line_1 = function (pointA, pointB) {
                                 var lx = pointB[0] - pointA[0];
                                 var ly = pointB[1] - pointA[1];
@@ -928,8 +938,8 @@ var NoshiBuilder = (function () {
                                 return "C" + sx + " " + sy + " " + ex + " " + ey + " " + point[0] + " " + point[1];
                             };
                             var points = "";
-                            for (var i_1 = 1; i_1 < curvePoints.length; i_1++) {
-                                points += bz(curvePoints[i_1], i_1, curvePoints);
+                            for (var i_2 = 1; i_2 < curvePoints.length; i_2++) {
+                                points += bz(curvePoints[i_2], i_2, curvePoints);
                             }
                             var fillMode = ["transparent", 1];
                             if (info.graph.type === "area") {
@@ -953,6 +963,27 @@ var NoshiBuilder = (function () {
                     };
                     for (var i = 0; i < info.data.length; i++) {
                         _loop_1(i);
+                    }
+                    if (gType === "pie") {
+                        var r = height / 2 - 20;
+                        var bodyWidth = gWidthNumber[0];
+                        lines.push(new NoshiCENS({
+                            tag: "path",
+                            d: "M" + bodyWidth / 2 + " " + (height / 2 - r) + " L" + bodyWidth / 2 + " " + height / 2,
+                            stroke: "red",
+                            strokeWidth: 3
+                        }).tag);
+                        var sum = pieValues.reduce(function (a, b) { return a + b; }, 0);
+                        for (var i = 0; i < pieValues.length; i++) {
+                            var percentage = pieValues[i] / sum;
+                            console.log(percentage);
+                        }
+                        lines.push(new NoshiCENS({
+                            tag: "circle",
+                            cx: bodyWidth / 2,
+                            cy: height / 2,
+                            r: 5
+                        }).tag);
                     }
                     if (info.graph.legend !== undefined && info.graph.legend === true) {
                         var legendLines = [];
@@ -1106,8 +1137,8 @@ var _sliders = function () {
                         };
                         break;
                     case "zoomin":
-                        for (var i_2 = 0; i_2 < c.length; i_2++) {
-                            var img_1 = c[i_2];
+                        for (var i_3 = 0; i_3 < c.length; i_3++) {
+                            var img_1 = c[i_3];
                             img_1.style.opacity = "1";
                             img_1.style.width = "0";
                             img_1.style.zIndex = "1";
@@ -1135,8 +1166,8 @@ var _sliders = function () {
                         };
                         break;
                     case "toleft":
-                        for (var i_3 = 0; i_3 < c.length - 1; i_3++) {
-                            var img_2 = c[i_3];
+                        for (var i_4 = 0; i_4 < c.length - 1; i_4++) {
+                            var img_2 = c[i_4];
                             img_2.style.position = "unset";
                             img_2.style.opacity = "1";
                             img_2.style.zIndex = "1";
@@ -1156,8 +1187,8 @@ var _sliders = function () {
                         };
                         break;
                     default:
-                        for (var i_4 = 0; i_4 < c.length - 1; i_4++) {
-                            var img_3 = c[i_4];
+                        for (var i_5 = 0; i_5 < c.length - 1; i_5++) {
+                            var img_3 = c[i_5];
                             img_3.style.opacity = "1";
                             img_3.style.zIndex = "initial";
                             img_3.style.visibility = "hidden";
