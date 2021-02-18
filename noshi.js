@@ -852,6 +852,19 @@ var NoshiBuilder = (function () {
                                             y2: height,
                                             stroke: gridColor
                                         }).tag);
+                                        if (info.label !== undefined) {
+                                            if (info.label.x !== undefined) {
+                                                var xText = info.label.x[j];
+                                                lines.push(new NoshiCENS({
+                                                    tag: "text",
+                                                    x: x1,
+                                                    y: height + 20,
+                                                    fill: "#a9a9a9",
+                                                    text: xText,
+                                                    style: "font-size: .6em;"
+                                                }).tag);
+                                            }
+                                        }
                                     }
                                 }
                                 curvePoints.push([x1, y1]);
@@ -976,7 +989,6 @@ var NoshiBuilder = (function () {
                         var sum = pieValues.reduce(function (a, b) { return a + b; }, 0);
                         for (var i = 0; i < pieValues.length; i++) {
                             var percentage = pieValues[i] / sum;
-                            console.log(percentage);
                         }
                         lines.push(new NoshiCENS({
                             tag: "circle",
