@@ -854,12 +854,16 @@ var NoshiBuilder = (function () {
                                         }).tag);
                                         if (info.label !== undefined) {
                                             if (info.label.x !== undefined) {
+                                                var labelColor = "#a9a9a9";
+                                                if (info.graph.labelColor !== undefined) {
+                                                    labelColor = info.graph.labelColor;
+                                                }
                                                 var xText = info.label.x[j];
                                                 lines.push(new NoshiCENS({
                                                     tag: "text",
                                                     x: x1,
                                                     y: height + 20,
-                                                    fill: "#a9a9a9",
+                                                    fill: labelColor,
                                                     text: xText,
                                                     style: "font-size: .6em;"
                                                 }).tag);
