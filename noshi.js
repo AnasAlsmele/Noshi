@@ -852,6 +852,14 @@ var NoshiBuilder = (function () {
                                             y2: height,
                                             stroke: gridColor
                                         }).tag);
+                                        lines.push(new NoshiCENS({
+                                            tag: "line",
+                                            x1: svgShift / 2,
+                                            x2: step * dataLine.length - svgShift,
+                                            y1: y1,
+                                            y2: y1,
+                                            stroke: gridColor
+                                        }).tag);
                                         if (info.label !== undefined) {
                                             if (info.label.x !== undefined) {
                                                 var labelColor = "#a9a9a9";
@@ -1092,7 +1100,7 @@ var NoshiBuilder = (function () {
                         tag: "svg",
                         id: "test-id",
                         height: gHeight,
-                        width: gWidth,
+                        width: "100%",
                         backgroundColor: gBg,
                         child: lines
                     }).tag;
