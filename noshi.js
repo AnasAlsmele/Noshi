@@ -791,6 +791,7 @@ var NoshiBuilder = (function () {
                 if (info.data.length !== 0) {
                     var lines = [];
                     var pieValues = [];
+                    var columnStep = 0;
                     var _loop_1 = function (i) {
                         var areaPoints = [];
                         var curvePoints = [];
@@ -885,8 +886,8 @@ var NoshiBuilder = (function () {
                                 if (gType === "column") {
                                     lines.push(new NoshiCENS({
                                         tag: "line",
-                                        x1: x1,
-                                        x2: x1,
+                                        x1: x1 + columnStep,
+                                        x2: x1 + columnStep,
                                         y1: y1,
                                         y2: height,
                                         stroke: lineColor,
@@ -907,6 +908,7 @@ var NoshiBuilder = (function () {
                                 }).tag);
                             }
                         }
+                        columnStep += 10;
                         if (gType === "area" && info.graph.curve !== true) {
                             var w = gWidthNumber[0];
                             var step = w / areaPoints.length;
@@ -1002,7 +1004,7 @@ var NoshiBuilder = (function () {
                     }
                     if (info.graph.legend !== undefined && info.graph.legend === true) {
                         var legendLines = [];
-                        var yLegendRow = 20;
+                        var yLegendRow = 40;
                         for (var i = 0; i < info.data.length; i++) {
                             var legendLineColor = lineColors[i];
                             var lineStyle = info.style[i];
@@ -1013,8 +1015,8 @@ var NoshiBuilder = (function () {
                             }
                             var line = new NoshiCENS({
                                 tag: "line",
-                                x1: 10,
-                                x2: 40,
+                                x1: 40,
+                                x2: 70,
                                 y1: yLegendRow - 5,
                                 y2: yLegendRow - 5,
                                 stroke: legendLineColor,
@@ -1028,7 +1030,7 @@ var NoshiBuilder = (function () {
                             var text = new NoshiCENS({
                                 tag: "text",
                                 text: legendRowText,
-                                x: 45,
+                                x: 75,
                                 y: yLegendRow,
                                 "class": "legend-text"
                             }).tag;
@@ -1050,8 +1052,8 @@ var NoshiBuilder = (function () {
                         legendWidth *= 7;
                         legendWidth += 45;
                         var legendPosition = "tl";
-                        var legendBorderY = 0;
-                        var legendBorderX = "0";
+                        var legendBorderY = 10;
+                        var legendBorderX = "30";
                         switch (info.graph.legendPosition) {
                             case "lt":
                                 legendPosition = "translate(0,0)";
@@ -1093,7 +1095,6 @@ var NoshiBuilder = (function () {
                         height: gHeight,
                         width: "100%",
                         backgroundColor: gBg,
-                        style: "display: flex; flex: 1; padding: 1em; border: 1px solid #e5e5e5",
                         child: lines
                     }).tag;
                     items.push(svg);
@@ -1153,7 +1154,7 @@ var NoshiBuilder = (function () {
             return new NoshiCE({
                 tag: "div",
                 child: graphChild,
-                style: "flex: 1; margin: .5em; display: flex; flex-direction: column"
+                style: "flex: 1; margin: .5em; display: flex; flex-direction: column; border: 1px solid #e5e5e5;"
             }).tag;
         };
     }
