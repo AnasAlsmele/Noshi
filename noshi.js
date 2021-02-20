@@ -843,17 +843,18 @@ var NoshiBuilder = (function () {
                                             if (info.graph.labelColor !== undefined) {
                                                 labelColor = info.graph.labelColor;
                                             }
-                                            if (info.label.x !== undefined) {
-                                                var xText = info.label.x[j];
-                                                lines.push(new NoshiCENS({
-                                                    tag: "text",
-                                                    x: x1,
-                                                    y: height + 20,
-                                                    fill: labelColor,
-                                                    text: xText,
-                                                    style: "font-size: .6em;"
-                                                }).tag);
+                                            var xText = j;
+                                            if (info.label.x !== undefined && info.label.x[j] !== undefined) {
+                                                info.label.x[j];
                                             }
+                                            lines.push(new NoshiCENS({
+                                                tag: "text",
+                                                x: x1,
+                                                y: height + 20,
+                                                fill: labelColor,
+                                                text: xText,
+                                                style: "font-size: .6em;"
+                                            }).tag);
                                             var yText = dataLine[j];
                                             if (info.label.y !== undefined && info.label.y[j] !== undefined) {
                                                 yText = info.label.y[j];
