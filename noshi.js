@@ -748,28 +748,6 @@ var NoshiBuilder = (function () {
         };
         this.graph = function (info) {
             var items = [];
-            if (info.headTitle !== undefined) {
-                if (typeof info.headTitle == "object") {
-                    var hTitle = "Untitled";
-                    var hTitleColor = "#222222";
-                    var hBGColor = "#f5f5f5";
-                    if (info.headTitle.text !== undefined && typeof info.headTitle.text == "string") {
-                        hTitle = info.headTitle.text;
-                    }
-                    if (info.headTitle.color !== undefined && typeof info.headTitle.color == "string") {
-                        hTitleColor = info.headTitle.color;
-                    }
-                    if (info.headTitle.bgColor !== undefined && typeof info.headTitle.bgColor == "string") {
-                        hBGColor = info.headTitle.bgColor;
-                    }
-                    items.push(new NoshiCE({
-                        tag: "p",
-                        "class": "graph-head-title-holder",
-                        text: hTitle,
-                        style: "color: " + hTitleColor + "; background-color: " + hBGColor
-                    }).tag);
-                }
-            }
             var gType = "line";
             var gHeight = "300px";
             var gWidth = "100%";
@@ -1114,6 +1092,7 @@ var NoshiBuilder = (function () {
                         height: gHeight,
                         width: "100%",
                         backgroundColor: gBg,
+                        style: "display: flex; flex: 1; padding: 1em; border: 1px solid #e5e5e5",
                         child: lines
                     }).tag;
                     items.push(svg);
@@ -1127,12 +1106,53 @@ var NoshiBuilder = (function () {
                 errorScreen("Error: you must pass <b>data</b> property");
                 return _this.et;
             }
-            var graphStyle = "height:" + gHeight + ";width:" + gWidth + ";background-color:" + gBg + ";";
-            return new NoshiCE({
+            var graphHead = _this.et;
+            if (info.head !== undefined) {
+                if (typeof info.head == "object") {
+                    var hTitle = "Untitled";
+                    var hTitleColor = "#222222";
+                    var hBGColor = "#f5f5f5";
+                    var hPosition = "top";
+                    if (info.head.title !== undefined && typeof info.head.title == "string") {
+                        hTitle = info.head.title;
+                    }
+                    if (info.head.color !== undefined && typeof info.head.color == "string") {
+                        hTitleColor = info.head.color;
+                    }
+                    if (info.head.backgroundColor !== undefined && typeof info.head.backgroundColor == "string") {
+                        hBGColor = info.head.backgroundColor;
+                    }
+                    if (info.head.position === "bottom") {
+                        hPosition = "bottom";
+                    }
+                    graphHead = new NoshiCE({
+                        tag: "p",
+                        "class": "graph-head-title-holder",
+                        text: hTitle,
+                        style: "color: " + hTitleColor + "; background-color: " + hBGColor
+                    }).tag;
+                }
+            }
+            var graphStyle = "width:" + gWidth + ";background-color:" + gBg + ";";
+            var graphDiv = new NoshiCE({
                 tag: "div",
                 "class": "graph-holder",
                 style: graphStyle,
                 child: items
+            }).tag;
+            var graphChild = [];
+            if (info.head.position === "bottom") {
+                graphChild.push(graphDiv);
+                graphChild.push(graphHead);
+            }
+            else {
+                graphChild.push(graphHead);
+                graphChild.push(graphDiv);
+            }
+            return new NoshiCE({
+                tag: "div",
+                child: graphChild,
+                style: "flex: 1; margin: .5em; display: flex; flex-direction: column"
             }).tag;
         };
     }
