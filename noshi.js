@@ -992,14 +992,45 @@ var NoshiBuilder = (function () {
                             strokeWidth: 3
                         }).tag);
                         var sum = pieValues.reduce(function (a, b) { return a + b; }, 0);
+                        var percentage = 0;
                         for (var i = 0; i < pieValues.length; i++) {
-                            var percentage = pieValues[i] / sum;
+                            percentage += pieValues[i] / sum * 360;
+                            console.log(percentage);
+                            var angel = percentage + 180;
+                            console.log(angel);
+                            var sin = -1 * Math.sin(angel * (Math.PI / 180)) * r;
+                            var cos = Math.cos(angel * (Math.PI / 180)) * r;
+                            lines.push(new NoshiCENS({
+                                tag: "circle",
+                                cx: (bodyWidth / 2) + sin,
+                                cy: (height / 2) + cos,
+                                r: 5,
+                                stroke: "yellow",
+                                strokeWidth: 5
+                            }).tag);
+                            lines.push(new NoshiCENS({
+                                tag: "line",
+                                x1: bodyWidth / 2,
+                                x2: (bodyWidth / 2) + sin,
+                                y1: height / 2,
+                                y2: (height / 2) + cos,
+                                stroke: "red",
+                                strokeWidth: 3
+                            }).tag);
+                            console.log(percentage + " " + sin + " " + cos);
                         }
                         lines.push(new NoshiCENS({
                             tag: "circle",
                             cx: bodyWidth / 2,
                             cy: height / 2,
                             r: 5
+                        }).tag);
+                        lines.push(new NoshiCENS({
+                            tag: "circle",
+                            cx: bodyWidth / 2,
+                            cy: height / 2,
+                            r: r,
+                            style: "opacity: .2"
                         }).tag);
                     }
                     if (info.graph.legend !== undefined && info.graph.legend === true) {
