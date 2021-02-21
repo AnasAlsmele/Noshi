@@ -1009,6 +1009,12 @@ var NoshiBuilder = (function () {
                                 strokeWidth: 5
                             }).tag);
                             lines.push(new NoshiCENS({
+                                tag: "path",
+                                d: "M" + (bodyWidth / 2 + sin) + " " + (height / 2 + cos) + " A" + r + " " + r + " 0 0 1 " + r + " 132.45",
+                                stroke: "green",
+                                strokeWidth: 3
+                            }).tag);
+                            lines.push(new NoshiCENS({
                                 tag: "line",
                                 x1: bodyWidth / 2,
                                 x2: (bodyWidth / 2) + sin,
