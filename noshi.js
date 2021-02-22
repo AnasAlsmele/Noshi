@@ -846,7 +846,7 @@ var NoshiBuilder = (function () {
                                             }
                                             var xText = j;
                                             if (info.label.x !== undefined && info.label.x[j] !== undefined) {
-                                                info.label.x[j];
+                                                xText = info.label.x[j];
                                             }
                                             lines.push(new NoshiCENS({
                                                 tag: "text",
