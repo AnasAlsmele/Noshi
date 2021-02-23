@@ -1317,6 +1317,35 @@ var _sliders = function () {
         }
     }
 };
+var loading = function (type) {
+    if (type === void 0) { type = "normal"; }
+    if (_("loading", false, false) === undefined) {
+        var nlhInfo = {
+            tag: "div",
+            id: "noshi-loading-holder",
+            "class": "noshi-loading-holder",
+            style: "width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: fixed; left: 0; top: 0; z-index: 10000;"
+        };
+        var child = [];
+        switch (type) {
+            case "circle":
+                break;
+            default:
+                child.push(new NoshiCE({
+                    tag: "p",
+                    text: "loading...",
+                    style: "color: #222222; background-color: rgba(220, 220, 220, .4);"
+                }).tag);
+                break;
+        }
+        nlhInfo.child = child;
+        document.body.appendChild(new NoshiCE(nlhInfo).tag);
+    }
+    else {
+        var nlh = _("noshi-loading-holder", false, false);
+        nlh.remove();
+    }
+};
 var ajax = function (type, link, state, data) {
     if (type === void 0) { type = "GET"; }
     if (state === void 0) { state = true; }
