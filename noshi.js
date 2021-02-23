@@ -1329,6 +1329,10 @@ var loading = function (type) {
         var child = [];
         switch (type) {
             case "circle":
+                child.push(new NoshiCE({
+                    tag: "div",
+                    style: "width: 30px; height: 30px; border: 6px solid #222222; border-top-color: #fdfdfd; border-radius: 50%; animation: rotate360 1s infinite linear;"
+                }).tag);
                 break;
             default:
                 child.push(new NoshiCE({
