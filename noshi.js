@@ -1317,8 +1317,7 @@ var _sliders = function () {
         }
     }
 };
-var loading = function (type) {
-    if (type === void 0) { type = "normal"; }
+var loading = function (info) {
     if (_("loading", false, false) === undefined) {
         var nlhInfo = {
             tag: "div",
@@ -1327,7 +1326,7 @@ var loading = function (type) {
             style: "width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: fixed; left: 0; top: 0; z-index: 10000;"
         };
         var child = [];
-        switch (type) {
+        switch (info.type) {
             case "circle":
                 child.push(new NoshiCE({
                     tag: "div",
