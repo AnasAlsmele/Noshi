@@ -1325,12 +1325,30 @@ var loading = function (info) {
             "class": "noshi-loading-holder",
             style: "width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: fixed; left: 0; top: 0; z-index: 10000;"
         };
+        if (info.backgroundColor !== undefined && typeof info.backgroundColor === "string") {
+            nlhInfo.style += "background-color: " + info.backgroundColor;
+        }
         var child = [];
         switch (info.type) {
             case "circle":
                 child.push(new NoshiCE({
                     tag: "div",
-                    style: "width: 30px; height: 30px; border: 6px solid #222222; border-top-color: #fdfdfd; border-radius: 50%; animation: rotate360 1s infinite linear;"
+                    style: "width: 25px; height: 25px; border: 6px solid #a9a9a9; border-top-color: #fdfdfd; border-radius: 50%; animation: rotate360 1s infinite linear;"
+                }).tag);
+                break;
+            case "dots":
+                var dots = [];
+                for (var i = 0; i < 4; i++) {
+                    dots.push(new NoshiCE({
+                        tag: "div",
+                        style: "width: 15px; height: 15px; border-radius: 50%; background-color: #222222; position: relative; animation: loading-dots 1s infinite; animation-delay: " + (i + 1) / 4 + "s;"
+                    }).tag);
+                }
+                child.push(new NoshiCE({
+                    tag: "div",
+                    "class": "loading-dots-holder",
+                    style: "display: flex; position: relative;",
+                    child: dots
                 }).tag);
                 break;
             default:
