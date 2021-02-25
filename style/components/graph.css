@@ -27,9 +27,3 @@
 .legend-text{
     fill: #a9a9a9;
 }
-
-/* loading function */
-.loading-dots-holder div:nth-child(0){
-    background-color: blue;
-    animation-delay: .25s;
-}
