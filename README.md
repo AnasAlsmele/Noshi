@@ -23,7 +23,7 @@
  ---
 
  ## Usage
- you can find all documents that explain the usage and functionallity of <b>Noshi</b> <a href="https://anasmusic.github.io/Noshi/" target="_blank">here</a>.
+ you can find all documents that explain the usage and functionallity of <b>Noshi</b> <a href="https://anasalsmele.github.io/Noshi/" target="_blank">here</a>.
 
 ---
 
