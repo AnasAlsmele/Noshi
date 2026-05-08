@@ -1,0 +1,61 @@
+<h1 id="graphs">Graphs</h1>
+<p>The Graph component provides a clean, SVG-based way to visualize data sets in your application.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Noshi supports Line and Area graphs with multiple data sets and customizable styling.</p>
+
+<code data-target="js" data-code="const performanceGraph = builder.graph({
+    head: { title: 'Server Load', backgroundColor: '#0077b6', color: '#fff' },
+    data: [
+        [15, 30, 25, 45, 60, 50, 80], // Set 1
+        [10, 20, 15, 30, 40, 35, 60]  // Set 2
+    ],
+    style: [
+        { color: '#0077b6' },
+        { color: '#9e2a2b' }
+    ],
+    graph: { type: 'area', points: true, height: '350px' }
+});"></code>
+
+<h2 id="customization">Graph Customization</h2>
+<p>You can toggle points, change graph heights, and define background colors.</p>
+
+<code data-target="js" data-code="graph: { 
+    type: 'line', 
+    points: false, 
+    height: '250px', 
+    backgroundColor: '#f9f9f9' 
+}"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>head</code></td>
+            <td>Object</td>
+            <td>Header config: <code>{ title, backgroundColor, color }</code>.</td>
+        </tr>
+        <tr>
+            <td><code>data</code></td>
+            <td>Array</td>
+            <td>An array of arrays, each representing a data set.</td>
+        </tr>
+        <tr>
+            <td><code>style</code></td>
+            <td>Array</td>
+            <td>Styling for each data set: <code>{ color }</code>.</td>
+        </tr>
+        <tr>
+            <td><code>graph</code></td>
+            <td>Object</td>
+            <td>Core config: <code>{ type, points, height, backgroundColor }</code>.</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,71 @@
+<h1 id="buttons">Buttons</h1>
+<p>Noshi provides a variety of button styles to handle different actions and states in your application.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>The <code>builder.button()</code> method creates a styled button element.</p>
+
+<code data-target="js" data-code="const btn = builder.button({
+    text: 'Click Me',
+    click: () => alert('Button Clicked!')
+});"></code>
+
+<h2 id="variants">Button Variants</h2>
+<p>You can use the <code>class</code> property to specify the button variant: <code>active</code>, <code>correct</code>, <code>warning</code>, <code>error</code>, or <code>dark</code>.</p>
+
+<code data-target="js" data-code="builder.button({ text: 'Primary', class: 'active' });
+builder.button({ text: 'Success', class: 'correct' });
+builder.button({ text: 'Warning', class: 'warning' });
+builder.button({ text: 'Error', class: 'error' });
+builder.button({ text: 'Dark', class: 'dark' });"></code>
+
+<h2 id="icons">Buttons with Icons</h2>
+<p>Noshi buttons support icons and can position them on the left or right of the text.</p>
+
+<code data-target="js" data-code="builder.button({ 
+    text: 'Download', 
+    icon: 'noshi-download', 
+    iconPos: 'left' 
+});"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>text</code></td>
+            <td>String</td>
+            <td>The button text.</td>
+        </tr>
+        <tr>
+            <td><code>icon</code></td>
+            <td>String</td>
+            <td>Icon class name.</td>
+        </tr>
+        <tr>
+            <td><code>iconPos</code></td>
+            <td>String</td>
+            <td>'left' (default) or 'right'.</td>
+        </tr>
+        <tr>
+            <td><code>class</code></td>
+            <td>String</td>
+            <td>Button style variant.</td>
+        </tr>
+        <tr>
+            <td><code>disabled</code></td>
+            <td>Boolean</td>
+            <td>Disables the button.</td>
+        </tr>
+        <tr>
+            <td><code>click</code></td>
+            <td>Function</td>
+            <td>Click event handler.</td>
+        </tr>
+    </tbody>
+</table>

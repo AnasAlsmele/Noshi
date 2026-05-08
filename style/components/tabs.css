@@ -1,0 +1,45 @@
+/* Tabs */
+.noshi-tabs-holder {
+    width: 100%;
+    margin: var(--noshi-spacing-md) 0;
+    border: 1px solid var(--noshi-gray);
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.noshi-tabs-nav {
+    display: flex;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid var(--noshi-gray);
+}
+
+.noshi-tab-item {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--noshi-text-muted);
+    transition: var(--noshi-transition);
+    border-bottom: 3px solid transparent;
+}
+
+.noshi-tab-item:hover {
+    color: var(--noshi-primary);
+    background-color: rgba(0, 119, 182, 0.02);
+}
+
+.noshi-tab-item.noshi-tab-active {
+    color: var(--noshi-primary);
+    border-bottom-color: var(--noshi-primary);
+    background-color: #fff;
+}
+
+.noshi-tab-pane {
+    display: none;
+    padding: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.noshi-tab-pane.noshi-tab-active {
+    display: block;
+}

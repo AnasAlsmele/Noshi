@@ -1,0 +1,38 @@
+<h1 id="badges">Badges</h1>
+<p>Badges are compact labels for displaying status, categories, or counts. They come in several semantic color variants and support dot indicators.</p>
+
+<h2 id="usage">Usage</h2>
+<pre class="docs-code">const b = new NoshiBuilder();
+
+b.badge({ text: 'Active',   type: 'success' });
+b.badge({ text: 'Pending',  type: 'warning' });
+b.badge({ text: 'Rejected', type: 'error'   });
+b.badge({ text: 'Info',     type: 'info'    });
+b.badge({ text: 'Admin',    type: 'dark'    });
+b.badge({ text: 'Draft',    type: 'gray'    });</pre>
+
+<h2 id="dot">Dot Indicator</h2>
+<p>Add a colored dot before the badge text using <code>dot: true</code>.</p>
+<pre class="docs-code">b.badge({ text: 'Online', type: 'success', dot: true });
+b.badge({ text: 'Away',   type: 'warning', dot: true });</pre>
+
+<h2 id="in-tables">In Tables</h2>
+<p>Badges work great as custom cell renderers inside <code>builder.table()</code>.</p>
+<pre class="docs-code">builder.table({
+    columns: [
+        { key: 'status', label: 'Status', render: (val) =>
+            b.badge({ text: val, type: val === 'active' ? 'success' : 'error', dot: true })
+        }
+    ],
+    data: [...]
+});</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Options</th></tr></thead>
+    <tbody>
+        <tr><td><code>text</code></td><td>String</td><td>Label text</td></tr>
+        <tr><td><code>type</code></td><td>String</td><td>info, success, warning, error, dark, gray</td></tr>
+        <tr><td><code>dot</code></td><td>Boolean</td><td>Show a colored dot prefix</td></tr>
+    </tbody>
+</table>

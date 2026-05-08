@@ -1,0 +1,67 @@
+<h1 id="cards">Cards</h1>
+<p>Cards are flexible containers for content, typically including an image, title, description, and an optional action button.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>The <code>builder.card()</code> method creates a modern, elevation-style card.</p>
+
+<code data-target="js" data-code="const card = builder.card({
+    title: 'Modern Architecture',
+    text: 'Explore the latest trends in urban design and sustainable building.',
+    image: 'https://example.com/building.jpg',
+    button: {
+        text: 'Read More',
+        action: () => window.location.href = '/article'
+    }
+});"></code>
+
+<h2 id="dark-mode">Dark Mode Cards</h2>
+<p>You can create dark-themed cards by setting the <code>mode</code> property to <code>'dark'</code>.</p>
+
+<code data-target="js" data-code="builder.card({
+    title: 'Midnight Collection',
+    text: 'A collection of premium night-time photography.',
+    mode: 'dark'
+});"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>title</code></td>
+            <td>String</td>
+            <td>The card title.</td>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>String</td>
+            <td>Main content text. Supports HTML.</td>
+        </tr>
+        <tr>
+            <td><code>image</code></td>
+            <td>String</td>
+            <td>URL of the card image.</td>
+        </tr>
+        <tr>
+            <td><code>mode</code></td>
+            <td>String</td>
+            <td>'light' (default) or 'dark'.</td>
+        </tr>
+        <tr>
+            <td><code>link</code></td>
+            <td>String</td>
+            <td>Makes the entire card a link.</td>
+        </tr>
+        <tr>
+            <td><code>button</code></td>
+            <td>Object</td>
+            <td>Config for the card button: <code>{ text, action, position }</code>.</td>
+        </tr>
+    </tbody>
+</table>

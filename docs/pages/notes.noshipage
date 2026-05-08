@@ -1,0 +1,45 @@
+<h1 id="notes">Notes</h1>
+<p>Notes are used to provide contextual feedback or highlight important information within the page layout.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Create a note with an optional icon and status class.</p>
+
+<code data-target="js" data-code="const infoNote = builder.note({
+    text: 'This is an information note for the user.',
+    icon: 'noshi-info'
+});"></code>
+
+<h2 id="statuses">Status Variants</h2>
+<p>Noshi supports <code>correct</code>, <code>warning</code>, and <code>error</code> statuses.</p>
+
+<code data-target="js" data-code="builder.note({ text: 'Operation successful!', class: 'correct' });
+builder.note({ text: 'Please check your input.', class: 'warning' });
+builder.note({ text: 'Critical system error.', class: 'error' });"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>text</code></td>
+            <td>String</td>
+            <td>The main content of the note.</td>
+        </tr>
+        <tr>
+            <td><code>class</code></td>
+            <td>String</td>
+            <td>'correct', 'warning', or 'error'.</td>
+        </tr>
+        <tr>
+            <td><code>icon</code></td>
+            <td>String</td>
+            <td>Icon class name.</td>
+        </tr>
+    </tbody>
+</table>

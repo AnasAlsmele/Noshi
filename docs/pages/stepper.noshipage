@@ -1,0 +1,52 @@
+<h1 id="stepper">Stepper</h1>
+<p>The Stepper component creates a multi-step wizard with visual step indicators, navigation buttons, and optional per-step validation.</p>
+
+<h2 id="usage">Usage</h2>
+<pre class="docs-code">const b = new NoshiBuilder();
+
+const wizard = b.stepper({
+    steps: [
+        {
+            title: 'Personal Info',
+            content: b.form({ fields: [
+                { label: 'Name',  name: 'name',  placeholder: 'Full name',  required: true },
+                { label: 'Email', name: 'email', placeholder: 'Email address', type: 'email', required: true }
+            ]}),
+            validate: () => {
+                // return false to block Next
+                return document.querySelector('[name="name"]').value.trim() !== '';
+            }
+        },
+        {
+            title: 'Review',
+            content: '&lt;p&gt;Please review your information before submitting.&lt;/p&gt;'
+        },
+        {
+            title: 'Done',
+            content: '&lt;p&gt;🎉 Submission complete!&lt;/p&gt;'
+        }
+    ],
+    completeText: 'Submit Application',
+    onComplete: () => {
+        alert('Form submitted!');
+    }
+});</pre>
+
+<h2 id="api">Stepper API</h2>
+<p>The returned element has programmatic control methods:</p>
+<pre class="docs-code">wizard.next();       // go to next step
+wizard.prev();       // go to previous step
+wizard.goTo(2);      // jump to step index 2</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>steps</code></td><td>Array</td><td>Array of step objects</td></tr>
+        <tr><td><code>steps[].title</code></td><td>String</td><td>Step label shown in the nav</td></tr>
+        <tr><td><code>steps[].content</code></td><td>HTMLElement|String</td><td>Step content</td></tr>
+        <tr><td><code>steps[].validate</code></td><td>Function</td><td>Returns boolean — blocks Next if false</td></tr>
+        <tr><td><code>completeText</code></td><td>String</td><td>Label on the last step button (default: "Finish ✓")</td></tr>
+        <tr><td><code>onComplete</code></td><td>Function</td><td>Called when the final step button is clicked</td></tr>
+    </tbody>
+</table>

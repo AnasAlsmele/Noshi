@@ -1,0 +1,22 @@
+<h1 id="selectors">Selectors</h1>
+<p>The <code>Noshi._</code> utility is a powerful replacement for <code>document.querySelector</code> that includes automatic error handling and multi-select capabilities.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Select a single element using standard CSS selectors.</p>
+
+<code data-target="js" data-code="const header = Noshi._('.main-header');
+const footer = Noshi._('#app-footer');"></code>
+
+<h2 id="multi-select">Multi-Select</h2>
+<p>Pass <code>true</code> as the second argument to return an array of all matching elements.</p>
+
+<code data-target="js" data-code="const allButtons = Noshi._('.btn', true);
+allButtons.forEach(btn => btn.style.display = 'none');"></code>
+
+<h2 id="error-handling">Silent Mode</h2>
+<p>By default, Noshi shows an error screen if the element is not found. Pass <code>false</code> as the third argument to suppress this error.</p>
+
+<code data-target="js" data-code="const optionalEl = Noshi._('#optional', false, false);"></code>
+
+<h2 id="signature">Function Signature</h2>
+<code data-target="js" data-code="Noshi._(selector, multi = false, showError = true)"></code>

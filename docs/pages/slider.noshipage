@@ -1,0 +1,31 @@
+<h1 id="slider">Slider</h1>
+<p>An auto-playing image slider with smooth fade transitions and dot navigation.</p>
+
+<h2 id="usage">Usage</h2>
+<pre class="docs-code">const b = new NoshiBuilder();
+
+const carousel = b.slider({
+    images: [
+        { src: 'img/slide1.jpg', alt: 'First slide' },
+        { src: 'img/slide2.jpg', alt: 'Second slide' },
+        { src: 'img/slide3.jpg', alt: 'Third slide' }
+    ],
+    height: '400px',
+    time: 5
+});</pre>
+
+<h2 id="simple">Simple Array of URLs</h2>
+<pre class="docs-code">b.slider({
+    images: ['img/a.jpg', 'img/b.jpg', 'img/c.jpg'],
+    height: '300px'
+});</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>images</code></td><td>Array</td><td>Array of <code>{ src, alt }</code> objects or plain URL strings</td></tr>
+        <tr><td><code>height</code></td><td>String</td><td>CSS height (default: <code>'300px'</code>)</td></tr>
+        <tr><td><code>time</code></td><td>Number</td><td>Seconds between slides (default: <code>4</code>)</td></tr>
+    </tbody>
+</table>

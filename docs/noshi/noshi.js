@@ -1,725 +1,967 @@
-(function(global) {
+﻿(function(global) {
     "use strict";
 
-    const noshi = {
-        activeNavs: {
-            target: "",
-            state: null
+    const VERSION = "2.0.0";
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       STYLE INJECTION ENGINE
+       Injects a <style> tag once per component ID.
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    const NoshiStyles = {
+        _injected: new Set(),
+        inject(id, css) {
+            if (this._injected.has(id)) return;
+            const s = document.createElement('style');
+            s.id = 'noshi-' + id;
+            s.textContent = css;
+            document.head.appendChild(s);
+            this._injected.add(id);
         },
-        version: "1.1.0"
+        remove(id) {
+            const el = document.getElementById('noshi-' + id);
+            if (el) el.remove();
+            this._injected.delete(id);
+        }
     };
 
-    /**
-     * Noshi Create Element (NoshiCE)
-     * Handles standard DOM element creation
-     */
+    /* â”€â”€ BASE CSS â”€â”€ */
+    const CSS_BASE = `:root{--p:#0077b6;--s:#588157;--err:#9e2a2b;--warn:#ffc971;--ok:#588157;--dark:#222;--light:#fdfdfd;--gray:#e5e5e5;--txt:#444;--muted:#888;--sh-sm:0 2px 4px rgba(0,0,0,.05);--sh-md:0 4px 12px rgba(0,0,0,.1);--sh-lg:0 10px 30px rgba(0,0,0,.12);--r-sm:6px;--r-md:10px;--r-lg:16px;--tr:all .25s ease;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--txt);display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+.noshi-dark-mode{--light:#1e1e1e;--gray:#333;--dark:#f0f0f0;--txt:#e0e0e0;--muted:#aaa;background:#121212}
+[dir=rtl] .input-holder,[dir=rtl] .btn-holder,[dir=rtl] .note-holder{flex-direction:row-reverse}
+.error-screen{padding:1em;margin:1em;background:#fff3f3;border:1px solid var(--err);color:var(--err);border-radius:var(--r-sm)}`;
+
+    /* â”€â”€ UTILITIES CSS â”€â”€ */
+    const CSS_UTILS = `.flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}.flex-wrap{flex-wrap:wrap}
+.jc-center{justify-content:center}.jc-end{justify-content:flex-end}.jc-between{justify-content:space-between}.jc-around{justify-content:space-around}
+.ai-center{align-items:center}.ai-end{align-items:flex-end}.ai-start{align-items:flex-start}
+.w25{width:25%}.w33{width:33.33%}.w50{width:50%}.w75{width:75%}.w100{width:100%}
+.h50{height:50vh}.h100{height:100vh}
+.left{text-align:left}.right{text-align:right}.center{text-align:center}.justify{text-align:justify}
+.bold{font-weight:700}.italic{font-style:italic}.underline{text-decoration:underline}
+.xsmall{font-size:.7em}.small{font-size:.85em}.large{font-size:1.2em}.xlarge{font-size:1.5em}
+.p1{padding:.5rem}.p2{padding:1rem}.p3{padding:1.5rem}.p4{padding:2rem}
+.m1{margin:.5rem}.m2{margin:1rem}.m3{margin:1.5rem}.m4{margin:2rem}
+.mt1{margin-top:.5rem}.mt2{margin-top:1rem}.mt3{margin-top:1.5rem}
+.mb1{margin-bottom:.5rem}.mb2{margin-bottom:1rem}.mb3{margin-bottom:1.5rem}
+.gap1{gap:.5rem}.gap2{gap:1rem}.gap3{gap:1.5rem}
+.rounded{border-radius:var(--r-sm)}.rounded-md{border-radius:var(--r-md)}
+.shadow{box-shadow:var(--sh-sm)}.shadow-md{box-shadow:var(--sh-md)}
+.cursor-pointer{cursor:pointer}.select-none{user-select:none}.overflow-hidden{overflow:hidden}
+.cred{color:var(--err)}.cblue{color:var(--p)}.cgreen{color:var(--ok)}.cgray{color:var(--muted)}
+.bgblue{background:var(--p)}.bggreen{background:var(--ok)}.bgred{background:var(--err)}.bggray{background:var(--gray)}`;
+
+    /* â”€â”€ ANIMATIONS CSS â”€â”€ */
+    const CSS_ANIM = `@keyframes noshi-spin{to{transform:rotate(360deg)}}
+@keyframes noshi-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes noshi-slide-up{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes noshi-slide-in-right{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes noshi-bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+@keyframes noshi-stripe{from{background-position:40px 0}to{background-position:0 0}}
+.noshi-fade-in{animation:noshi-fade-in .3s ease}.noshi-slide-up{animation:noshi-slide-up .3s ease}`;
+
+    /* â”€â”€ BUTTONS CSS â”€â”€ */
+    const CSS_BTN = `.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.25rem;border:none;border-radius:var(--r-sm);font-size:.95rem;font-weight:500;cursor:pointer;transition:var(--tr);white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-default{background:var(--gray);color:var(--txt)}.btn-default:hover{background:#d5d5d5}
+.btn-active{background:var(--p);color:#fff;box-shadow:0 3px 10px rgba(0,119,182,.3)}.btn-active:hover{filter:brightness(1.1)}
+.btn-correct{background:var(--ok);color:#fff}.btn-correct:hover{filter:brightness(1.1)}
+.btn-warning{background:var(--warn);color:var(--dark)}.btn-warning:hover{filter:brightness(1.05)}
+.btn-error{background:var(--err);color:#fff}.btn-error:hover{filter:brightness(1.1)}
+.btn-dark{background:var(--dark);color:#fff}.btn-dark:hover{filter:brightness(1.2)}
+.btn-outline{background:transparent;color:var(--p);border:1.5px solid var(--p)}.btn-outline:hover{background:var(--p);color:#fff}
+.btn-ghost{background:transparent;color:var(--muted)}.btn-ghost:hover{background:var(--gray);color:var(--txt)}
+.btn-sm{padding:.35rem .85rem;font-size:.82rem}.btn-lg{padding:.85rem 2rem;font-size:1.05rem}
+.btn-icon{padding:.6rem;border-radius:50%;width:2.2rem;height:2.2rem;justify-content:center}`;
+
+    /* â”€â”€ CARDS CSS â”€â”€ */
+    const CSS_CARD = `.card{display:flex;flex-direction:column;background:#fff;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-sm);transition:var(--tr);color:inherit}
+.card-hover:hover{box-shadow:var(--sh-md);transform:translateY(-3px)}
+.card-dark{background:var(--dark);color:#fff}
+.card-image{width:100%;object-fit:cover}
+.card-body{padding:1.25rem;flex:1}
+.card-title{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+.card-text{font-size:.9rem;color:var(--muted);line-height:1.6}
+.card-footer{padding:.75rem 1.25rem;border-top:1px solid var(--gray);display:flex}
+.card-dark .card-text{color:rgba(255,255,255,.6)}.card-dark .card-footer{border-color:rgba(255,255,255,.1)}`;
+
+    /* â”€â”€ INPUTS CSS â”€â”€ */
+    const CSS_INPUT = `.noshi-input{width:100%;padding:.65rem 1rem;border:1.5px solid var(--gray);border-radius:var(--r-sm);font-size:.95rem;color:var(--txt);background:#fff;outline:none;transition:var(--tr)}
+.noshi-input:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(0,119,182,.1)}
+.noshi-input::placeholder{color:#bbb}
+.noshi-input:disabled{background:var(--gray);cursor:not-allowed;opacity:.7}
+.noshi-input-holder{display:flex;align-items:center;border:1.5px solid var(--gray);border-radius:var(--r-sm);padding:.5rem 1rem;gap:.75rem;background:#fff;transition:var(--tr);cursor:pointer}
+.noshi-input-holder:hover{border-color:var(--p)}
+.noshi-input-label{flex:1;font-size:.95rem;cursor:pointer}
+input[type=checkbox],input[type=radio]{accent-color:var(--p);width:1.1rem;height:1.1rem;cursor:pointer}
+.noshi-field-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.75rem}
+.noshi-field-label{font-size:.85rem;font-weight:600}
+.noshi-field-hint{font-size:.78rem;color:var(--muted)}
+.noshi-field-error{font-size:.78rem;color:var(--err)}`;
+
+    /* â”€â”€ FORMS CSS â”€â”€ */
+    const CSS_FORM = `.noshi-form{display:flex;flex-direction:column;gap:.5rem}
+.noshi-form-title{font-size:1.25rem;font-weight:700;margin-bottom:.5rem}
+.noshi-form-btns{display:flex;gap:.75rem;margin-top:.5rem;flex-wrap:wrap}
+.noshi-select{width:100%;padding:.65rem 1rem;border:1.5px solid var(--gray);border-radius:var(--r-sm);font-size:.95rem;color:var(--txt);background:#fff;outline:none;cursor:pointer;transition:var(--tr);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23888' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
+.noshi-select:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(0,119,182,.1)}`;
+
+    /* â”€â”€ NOTES CSS â”€â”€ */
+    const CSS_NOTE = `.noshi-note{display:flex;align-items:stretch;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--gray);box-shadow:var(--sh-sm);margin:.5rem 0}
+.noshi-note-icon{display:flex;align-items:center;justify-content:center;min-width:48px;font-size:1.2rem;color:#fff;padding:0 .75rem;background:var(--dark)}
+.noshi-note-body{padding:.85rem 1rem;flex:1;font-size:.9rem;line-height:1.55;color:var(--txt)}
+.noshi-note-success .noshi-note-icon{background:var(--ok)}.noshi-note-success .noshi-note-body{background:rgba(88,129,87,.05)}
+.noshi-note-warning .noshi-note-icon{background:var(--warn);color:var(--dark)}.noshi-note-warning .noshi-note-body{background:rgba(255,201,113,.07)}
+.noshi-note-error .noshi-note-icon{background:var(--err)}.noshi-note-error .noshi-note-body{background:rgba(158,42,43,.04)}`;
+
+    /* â”€â”€ MODALS CSS â”€â”€ */
+    const CSS_MODAL = `.noshi-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:2000;animation:noshi-fade-in .25s ease}
+.noshi-modal{background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-lg);display:flex;flex-direction:column;overflow:hidden;width:90%;max-width:560px;animation:noshi-slide-up .3s ease}
+.noshi-modal-header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray)}
+.noshi-modal-header h3{font-size:1.15rem;font-weight:700}
+.noshi-modal-close{cursor:pointer;font-size:1.6rem;color:var(--muted);line-height:1;transition:var(--tr)}.noshi-modal-close:hover{color:var(--err)}
+.noshi-modal-body{padding:1.5rem;overflow-y:auto;max-height:65vh}
+.noshi-modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--gray);display:flex;justify-content:flex-end;gap:.75rem;background:#fafafa}`;
+
+    /* â”€â”€ TABS CSS â”€â”€ */
+    const CSS_TABS = `.noshi-tabs{border:1px solid var(--gray);border-radius:var(--r-md);overflow:hidden}
+.noshi-tabs-nav{display:flex;background:#f8f9fa;border-bottom:1px solid var(--gray);overflow-x:auto}
+.noshi-tab-btn{padding:.85rem 1.5rem;cursor:pointer;font-size:.93rem;font-weight:500;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;transition:var(--tr);background:none;border-top:none;border-left:none;border-right:none}
+.noshi-tab-btn:hover{color:var(--p);background:rgba(0,119,182,.03)}
+.noshi-tab-btn.active{color:var(--p);border-bottom-color:var(--p);background:#fff;font-weight:600}
+.noshi-tab-pane{display:none;padding:1.5rem;animation:noshi-fade-in .25s ease}.noshi-tab-pane.active{display:block}`;
+
+    /* â”€â”€ TOASTS CSS â”€â”€ */
+    const CSS_TOAST = `.noshi-toasts{position:fixed;bottom:1.5rem;right:1.5rem;display:flex;flex-direction:column;gap:.75rem;z-index:3000}
+.noshi-toast{display:flex;align-items:center;gap:.75rem;min-width:280px;max-width:380px;padding:.9rem 1.1rem;background:var(--dark);color:#fff;border-radius:var(--r-sm);box-shadow:var(--sh-md);animation:noshi-slide-in-right .3s ease}
+.noshi-toast-msg{flex:1;font-size:.9rem;line-height:1.4}
+.noshi-toast-close{cursor:pointer;font-size:1.1rem;opacity:.65;transition:var(--tr)}.noshi-toast-close:hover{opacity:1}
+.noshi-toast-info{border-left:4px solid var(--p)}.noshi-toast-success{border-left:4px solid var(--ok)}
+.noshi-toast-warning{border-left:4px solid var(--warn)}.noshi-toast-error{border-left:4px solid var(--err)}`;
+
+    /* â”€â”€ SLIDER CSS â”€â”€ */
+    const CSS_SLIDER = `.noshi-slider{position:relative;overflow:hidden;width:100%;height:300px;background:#111}
+.noshi-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;visibility:hidden;transition:opacity .6s ease;z-index:0}
+.noshi-slide.active{opacity:1;visibility:visible;z-index:1}
+.noshi-slider-dots{position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;z-index:2}
+.noshi-slider-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:var(--tr)}.noshi-slider-dot.active{background:#fff;width:24px;border-radius:4px}`;
+
+    /* â”€â”€ LOADING CSS â”€â”€ */
+    const CSS_LOAD = `.noshi-loading-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999}
+.noshi-spinner{width:44px;height:44px;border:4px solid var(--gray);border-top-color:var(--p);border-radius:50%;animation:noshi-spin 1s linear infinite}
+.noshi-dots-holder{display:flex;gap:.35rem}
+.noshi-dot{width:12px;height:12px;border-radius:50%;background:var(--p);animation:noshi-bounce 1.4s ease-in-out infinite}`;
+
+    /* â”€â”€ CODE CSS â”€â”€ */
+    const CSS_CODE = `.noshi-code{display:block;background:#1e1e2e;color:#cdd6f4;padding:1.25rem;border-radius:var(--r-sm);overflow-x:auto;font-family:'Fira Code',Consolas,monospace;font-size:.88rem;line-height:1.7;white-space:pre}
+code-line{display:block}html-tag-border{color:#89b4fa}html-tag-attr{color:#a6e3a1}html-tag-attr-val{color:#f38ba8}
+css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{color:#a6e3a1}js-bracket{color:#fab387}js-func{color:#89b4fa}`;
+
+    /* â”€â”€ GRAPH CSS â”€â”€ */
+    const CSS_GRAPH = `.noshi-graph{display:flex;flex-direction:column;border:1px solid var(--gray);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-sm)}
+.noshi-graph-head{padding:.75rem 1.25rem;font-weight:600;font-size:1rem;background:#f8f9fa;border-bottom:1px solid var(--gray)}
+.noshi-graph svg{display:block;width:100%}circle{transition:r .2s ease;cursor:pointer}`;
+
+    /* â”€â”€ TABLE CSS â”€â”€ */
+    const CSS_TABLE = `.noshi-table-wrap{border:1px solid var(--gray);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-sm)}
+.noshi-table-toolbar{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;background:#f8f9fa;border-bottom:1px solid var(--gray);gap:1rem;flex-wrap:wrap}
+.noshi-table-search{padding:.5rem .85rem;border:1.5px solid var(--gray);border-radius:var(--r-sm);font-size:.9rem;outline:none;transition:var(--tr);min-width:200px}.noshi-table-search:focus{border-color:var(--p)}
+.noshi-table{width:100%;border-collapse:collapse}
+.noshi-table th{padding:.75rem 1rem;text-align:left;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:#f8f9fa;border-bottom:1px solid var(--gray);white-space:nowrap}
+.noshi-table th.sortable{cursor:pointer;user-select:none}.noshi-table th.sortable:hover{color:var(--p)}
+.noshi-table th.sort-asc::after{content:" â†‘";color:var(--p)}.noshi-table th.sort-desc::after{content:" â†“";color:var(--p)}
+.noshi-table td{padding:.75rem 1rem;font-size:.9rem;border-bottom:1px solid var(--gray);color:var(--txt)}
+.noshi-table tr:last-child td{border-bottom:none}.noshi-table tr:hover td{background:rgba(0,119,182,.025)}
+.noshi-table-footer{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#f8f9fa;border-top:1px solid var(--gray);font-size:.85rem;color:var(--muted);flex-wrap:wrap;gap:.5rem}
+.noshi-table-pages{display:flex;gap:.35rem}
+.noshi-page-btn{padding:.3rem .65rem;border:1px solid var(--gray);border-radius:var(--r-sm);cursor:pointer;font-size:.82rem;background:#fff;transition:var(--tr)}.noshi-page-btn:hover{border-color:var(--p);color:var(--p)}.noshi-page-btn.active{background:var(--p);color:#fff;border-color:var(--p)}`;
+
+    /* â”€â”€ BADGES CSS â”€â”€ */
+    const CSS_BADGE = `.noshi-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .65rem;border-radius:20px;font-size:.75rem;font-weight:600;white-space:nowrap}
+.noshi-badge-info{background:rgba(0,119,182,.12);color:var(--p)}.noshi-badge-success{background:rgba(88,129,87,.12);color:var(--ok)}
+.noshi-badge-warning{background:rgba(255,201,113,.2);color:#a06000}.noshi-badge-error{background:rgba(158,42,43,.1);color:var(--err)}
+.noshi-badge-dark{background:var(--dark);color:#fff}.noshi-badge-gray{background:var(--gray);color:var(--muted)}
+.noshi-badge-dot::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor}`;
+
+    /* â”€â”€ PROGRESS CSS â”€â”€ */
+    const CSS_PROG = `.noshi-progress-wrap{width:100%}
+.noshi-progress-label{display:flex;justify-content:space-between;font-size:.83rem;color:var(--muted);margin-bottom:.4rem}
+.noshi-progress-track{width:100%;height:10px;background:var(--gray);border-radius:20px;overflow:hidden}
+.noshi-progress-bar{height:100%;border-radius:20px;transition:width .6s ease;background:var(--p)}
+.noshi-progress-striped .noshi-progress-bar{background-image:linear-gradient(45deg,rgba(255,255,255,.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.2) 75%,transparent 75%);background-size:40px 40px;animation:noshi-stripe .8s linear infinite}
+.noshi-progress-sm .noshi-progress-track{height:6px}.noshi-progress-lg .noshi-progress-track{height:16px}
+.noshi-progress-success .noshi-progress-bar{background:var(--ok)}.noshi-progress-warning .noshi-progress-bar{background:var(--warn)}.noshi-progress-error .noshi-progress-bar{background:var(--err)}`;
+
+    /* â”€â”€ STATS CSS â”€â”€ */
+    const CSS_STATS = `.noshi-stats-card{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;background:#fff;border-radius:var(--r-md);box-shadow:var(--sh-sm);border:1px solid var(--gray);transition:var(--tr)}.noshi-stats-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.noshi-stats-icon{width:48px;height:48px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.noshi-stats-icon-primary{background:rgba(0,119,182,.1);color:var(--p)}.noshi-stats-icon-success{background:rgba(88,129,87,.1);color:var(--ok)}.noshi-stats-icon-warning{background:rgba(255,201,113,.2);color:#a06000}.noshi-stats-icon-error{background:rgba(158,42,43,.1);color:var(--err)}
+.noshi-stats-body{flex:1}.noshi-stats-value{font-size:1.75rem;font-weight:700;line-height:1;color:var(--txt)}.noshi-stats-label{font-size:.83rem;color:var(--muted);margin-top:.25rem}
+.noshi-stats-trend{font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:.2rem;margin-top:.35rem}.noshi-trend-up{color:var(--ok)}.noshi-trend-down{color:var(--err)}`;
+
+    /* â”€â”€ ACCORDION CSS â”€â”€ */
+    const CSS_ACC = `.noshi-accordion{border:1px solid var(--gray);border-radius:var(--r-md);overflow:hidden}
+.noshi-accordion-item{border-bottom:1px solid var(--gray)}.noshi-accordion-item:last-child{border-bottom:none}
+.noshi-accordion-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;cursor:pointer;background:#fff;transition:var(--tr);user-select:none}
+.noshi-accordion-head:hover{background:#f8f9fa}.noshi-accordion-head.open{background:#f0f7ff;color:var(--p)}
+.noshi-accordion-title{font-weight:600;font-size:.95rem}
+.noshi-accordion-arrow{font-size:.75rem;transition:transform .3s ease;color:var(--muted)}.noshi-accordion-head.open .noshi-accordion-arrow{transform:rotate(180deg);color:var(--p)}
+.noshi-accordion-body{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .2s ease;padding:0 1.25rem}.noshi-accordion-body.open{max-height:600px;padding:1rem 1.25rem}
+.noshi-accordion-content{font-size:.9rem;color:var(--muted);line-height:1.65}`;
+
+    /* â”€â”€ TOOLTIP CSS â”€â”€ */
+    const CSS_TIP = `.noshi-tooltip-wrap{position:relative;display:inline-flex}
+.noshi-tooltip-box{position:absolute;background:rgba(30,30,30,.92);color:#fff;font-size:.78rem;padding:.35rem .75rem;border-radius:var(--r-sm);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s ease;z-index:1000}
+.noshi-tooltip-wrap:hover .noshi-tooltip-box{opacity:1}
+.noshi-tooltip-top .noshi-tooltip-box{bottom:calc(100% + 6px);left:50%;transform:translateX(-50%)}
+.noshi-tooltip-bottom .noshi-tooltip-box{top:calc(100% + 6px);left:50%;transform:translateX(-50%)}
+.noshi-tooltip-left .noshi-tooltip-box{right:calc(100% + 6px);top:50%;transform:translateY(-50%)}
+.noshi-tooltip-right .noshi-tooltip-box{left:calc(100% + 6px);top:50%;transform:translateY(-50%)}`;
+
+    /* â”€â”€ STEPPER CSS â”€â”€ */
+    const CSS_STEP = `.noshi-stepper{display:flex;flex-direction:column}
+.noshi-stepper-nav{display:flex;align-items:center;padding:1.5rem 2rem;background:#fff;border-bottom:1px solid var(--gray)}
+.noshi-step-item{display:flex;align-items:center;flex:1}.noshi-step-item:last-child{flex:0}
+.noshi-step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;transition:var(--tr);background:var(--gray);color:var(--muted)}
+.noshi-step-circle.active{background:var(--p);color:#fff;box-shadow:0 0 0 4px rgba(0,119,182,.15)}.noshi-step-circle.done{background:var(--ok);color:#fff}
+.noshi-step-info{margin-left:.6rem}.noshi-step-label{font-size:.82rem;font-weight:600;color:var(--muted);transition:var(--tr);white-space:nowrap}
+.noshi-step-label.active{color:var(--p)}.noshi-step-label.done{color:var(--ok)}
+.noshi-step-line{flex:1;height:2px;background:var(--gray);margin:0 .75rem;transition:background .4s ease}.noshi-step-line.done{background:var(--ok)}
+.noshi-stepper-content{padding:2rem}.noshi-step-pane{display:none;animation:noshi-fade-in .3s ease}.noshi-step-pane.active{display:block}
+.noshi-stepper-footer{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;border-top:1px solid var(--gray);background:#fafafa;gap:.75rem}`;
+
+    /* â”€â”€ PAGE CSS â”€â”€ */
+    const CSS_PAGE = `.noshi-page{display:flex;flex-direction:column;min-height:100vh}
+.noshi-page-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray);display:flex;align-items:center;padding:0 1.5rem;height:60px;gap:1rem;box-shadow:var(--sh-sm)}
+.noshi-page-brand{font-size:1.15rem;font-weight:700;color:var(--p)}
+.noshi-page-nav{display:flex;gap:.5rem;flex:1}.noshi-page-nav-link{padding:.4rem .8rem;border-radius:var(--r-sm);color:var(--muted);font-size:.9rem;transition:var(--tr);cursor:pointer}.noshi-page-nav-link:hover,.noshi-page-nav-link.active{background:rgba(0,119,182,.07);color:var(--p)}
+.noshi-page-body{display:flex;flex:1}
+.noshi-page-sidebar{width:240px;flex-shrink:0;background:#fff;border-right:1px solid var(--gray);padding:1.25rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
+.noshi-page-sidebar-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:.75rem 1.25rem .3rem}
+.noshi-page-sidebar-link{display:flex;align-items:center;gap:.6rem;padding:.55rem 1.25rem;font-size:.9rem;color:var(--txt);transition:var(--tr);cursor:pointer}.noshi-page-sidebar-link:hover{background:#f0f7ff;color:var(--p)}.noshi-page-sidebar-link.active{background:#e8f4ff;color:var(--p);font-weight:600;border-right:3px solid var(--p)}
+.noshi-page-content{flex:1;padding:2rem;overflow-y:auto}
+.noshi-page-footer{padding:1rem 2rem;border-top:1px solid var(--gray);text-align:center;font-size:.83rem;color:var(--muted);background:#fafafa}`;
+
+    /* â”€â”€ NAV CSS â”€â”€ */
+    const CSS_NAV = `.noshi-nav{display:flex;align-items:center;background:#fff;border-bottom:1px solid var(--gray);padding:0 1.5rem;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--sh-sm)}
+.noshi-nav-brand{font-size:1.2rem;font-weight:700;color:var(--p);margin-right:2rem}
+.noshi-nav-links{display:flex;gap:1rem;flex:1}.noshi-nav-link{padding:.4rem .75rem;border-radius:var(--r-sm);color:var(--muted);font-size:.93rem;transition:var(--tr)}.noshi-nav-link:hover,.noshi-nav-link.active{color:var(--p);background:rgba(0,119,182,.06)}
+.noshi-nav-actions{display:flex;gap:.5rem}
+.noshi-nav-menu-head{cursor:pointer;display:flex;align-items:center;gap:.4rem;position:relative}
+.noshi-nav-menu-body{display:none;position:absolute;top:100%;background:#fff;border:1px solid var(--gray);border-radius:var(--r-sm);box-shadow:var(--sh-md);min-width:180px;overflow:hidden;z-index:200}.noshi-nav-menu-body.open{display:flex;flex-direction:column;animation:noshi-slide-up .2s ease}
+.noshi-nav-menu-item{padding:.75rem 1rem;font-size:.9rem;transition:var(--tr);cursor:pointer}.noshi-nav-menu-item:hover{background:var(--gray)}`;
+
+    /* inject base styles immediately on load */
+    NoshiStyles.inject('base', CSS_BASE + CSS_UTILS + CSS_ANIM);
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NoshiCE â€” Standard DOM element factory
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function NoshiCE(props) {
         const tag = document.createElement(props.tag || 'div');
-        
-        Object.keys(props).forEach(prop => {
-            const value = props[prop];
-            
-            switch (prop) {
-                case "tag":
-                    break; // Already handled
-                case "child":
-                    if (Array.isArray(value)) {
-                        value.forEach(c => {
-                            if (c instanceof HTMLElement || c instanceof SVGElement) {
-                                tag.appendChild(c);
-                            }
-                        });
-                    }
+        Object.keys(props).forEach(k => {
+            const v = props[k];
+            switch (k) {
+                case 'tag': break;
+                case 'child':
+                    if (Array.isArray(v)) v.forEach(c => { if (c instanceof Element) tag.appendChild(c); });
                     break;
-                case "html":
-                    tag.innerHTML = value;
-                    break;
-                case "text":
-                    tag.textContent = value;
-                    break;
-                case "src":
-                    if (["script", "img", "iframe"].indexOf(props.tag) !== -1) {
-                        tag.setAttribute("src", value);
-                    }
-                    break;
-                case "select":
-                    if (value) tag.setAttribute("selected", "selected");
-                    break;
-                case "disabled":
-                    if (value) tag.disabled = true;
-                    break;
-                case "required":
-                    if (value) tag.required = true;
-                    break;
-                case "click":
-                    tag.addEventListener("click", value);
-                    break;
-                case "dbclick":
-                    tag.addEventListener("dblclick", value);
-                    break;
-                case "class":
-                    tag.className = value;
-                    break;
-                // Skip internal props used by NoshiBuilder
-                case "options": case "sort": case "images": case "slideTime": 
-                case "imageWidth": case "imageHeight": case "imagePos": 
-                case "cardTitle": case "cardText": case "image":
+                case 'html':    tag.innerHTML = v; break;
+                case 'text':    tag.textContent = v; break;
+                case 'class':   tag.className = v; break;
+                case 'click':   if (typeof v === 'function') tag.addEventListener('click', v); break;
+                case 'change':  if (typeof v === 'function') tag.addEventListener('change', v); break;
+                case 'input':   if (typeof v === 'function') tag.addEventListener('input', v); break;
+                case 'disabled': if (v) tag.disabled = true; break;
+                case 'required': if (v) tag.required = true; break;
+                case 'checked':  if (v) tag.checked = true; break;
+                case 'select':   if (v) tag.setAttribute('selected', 'selected'); break;
+                case 'src':
+                    if (['script','img','iframe','source'].includes(props.tag)) tag.setAttribute('src', v);
                     break;
                 default:
-                    if (value !== undefined && value !== null) {
-                        tag.setAttribute(prop, value);
-                    }
-                    break;
+                    if (v !== undefined && v !== null) tag.setAttribute(k, v);
             }
         });
-        
         this.tag = tag;
     }
-    /**
-     * Noshi Create Element Namespace (NoshiCENS)
-     * Handles SVG element creation
-     */
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NoshiCENS â€” SVG/namespaced element factory
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function NoshiCENS(props) {
-        const namespace = props.namespace || "http://www.w3.org/2000/svg";
-        const tagType = props.tag || "svg";
-        const tag = document.createElementNS(namespace, tagType);
-        
-        Object.keys(props).forEach(key => {
-            const value = props[key];
-            
-            switch (key) {
-                case "namespace":
-                case "tag":
+        const ns  = props.namespace || 'http://www.w3.org/2000/svg';
+        const tag = document.createElementNS(ns, props.tag || 'svg');
+        Object.keys(props).forEach(k => {
+            const v = props[k];
+            switch (k) {
+                case 'tag': case 'namespace': break;
+                case 'child':
+                    if (Array.isArray(v)) v.forEach(c => tag.appendChild(c));
                     break;
-                case "child":
-                    if (Array.isArray(value)) {
-                        value.forEach(c => tag.appendChild(c));
-                    } else {
-                        console.error("Noshi Error: 'child' must be an array for SVG elements");
-                    }
-                    break;
-                case "strokeWidth":
-                    tag.setAttributeNS(null, "stroke-width", value);
-                    break;
-                case "text":
-                    tag.textContent = value;
-                    break;
-                case "class":
-                    tag.setAttributeNS(null, "class", value);
-                    break;
-                default:
-                    tag.setAttributeNS(null, key, value);
-                    break;
+                case 'text':        tag.textContent = v; break;
+                case 'class':       tag.setAttributeNS(null, 'class', v); break;
+                case 'strokeWidth': tag.setAttributeNS(null, 'stroke-width', v); break;
+                default:            tag.setAttributeNS(null, k, v);
             }
         });
         this.tag = tag;
     }
-    /**
-     * NoshiBuilder
-     * Main toolkit for building high-level UI components
-     */
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NoshiBuilder â€” existing component methods
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     function NoshiBuilder() {
-        const et = new NoshiCE({ tag: "div" }).tag;
+        const _e = () => document.createElement('div');
 
+        /* â”€â”€ SELECT â”€â”€ */
         this.select = (info) => {
-            if (!info.options || info.options.length === 0) {
-                errorScreen("Error: select <b>options</b> can't be empty.");
-                return et;
-            }
-
-            if (info.sort === "az") info.options.sort();
-            if (info.sort === "za") info.options.sort().reverse();
-
-            const options = info.options.map((opt, i) => {
-                const val = info.mode === "index" ? i.toString() : opt;
-                return new NoshiCE({
-                    tag: "option",
-                    value: val,
-                    text: opt,
-                    select: info.value === opt
-                }).tag;
+            NoshiStyles.inject('forms', CSS_FORM);
+            if (!info.options || !info.options.length) { console.error('Noshi: select options empty'); return _e(); }
+            if (info.sort === 'az') info.options.sort();
+            const sel = new NoshiCE({ tag: 'select', class: 'noshi-select', id: info.id || '', name: info.name || '', disabled: info.disabled }).tag;
+            if (info.placeholder) sel.appendChild(new NoshiCE({ tag: 'option', value: '', text: info.placeholder, disabled: true, select: true }).tag);
+            info.options.forEach(o => {
+                const isObj = typeof o === 'object';
+                const opt = new NoshiCE({ tag: 'option', value: isObj ? o.value : o, text: isObj ? o.label : o, select: info.value === (isObj ? o.value : o) }).tag;
+                sel.appendChild(opt);
             });
-
-            const selectInfo = Object.assign({}, info, {
-                tag: "select",
-                child: options,
-                class: "select " + (info.class || "")
-            });
-
-            return new NoshiCE(selectInfo).tag;
+            if (info.change) sel.addEventListener('change', info.change);
+            return sel;
         };
 
+        /* â”€â”€ INPUT â”€â”€ */
         this.input = (info) => {
-            const inputInfo = Object.assign({}, info, { tag: "input" });
-            
-            if (info.type === "radio" || info.type === "checkbox") {
-                inputInfo.class = "input-" + info.type;
-                return new NoshiCE({
-                    tag: "div",
-                    class: "input-holder",
-                    child: [
-                        new NoshiCE({
-                            tag: "label",
-                            for: info.id,
-                            class: "input-label",
-                            text: info.text
-                        }).tag,
-                        new NoshiCE(inputInfo).tag
-                    ]
-                }).tag;
+            NoshiStyles.inject('inputs', CSS_INPUT);
+            const type = info.type || 'text';
+            if (type === 'checkbox' || type === 'radio') {
+                const id  = info.id || 'noshi-' + Math.random().toString(36).substr(2,6);
+                const inp = new NoshiCE({ tag:'input', type, id, name: info.name||'', value: info.value||'', checked: info.checked, required: info.required }).tag;
+                const lbl = new NoshiCE({ tag:'label', for: id, class:'noshi-input-label', text: info.text||'' }).tag;
+                return new NoshiCE({ tag:'div', class:'noshi-input-holder', child:[inp, lbl] }).tag;
             }
-
-            inputInfo.class = "input " + (info.class || "");
-            return new NoshiCE(inputInfo).tag;
+            return new NoshiCE({ tag:'input', class:'noshi-input', type, id: info.id||'', name: info.name||'', placeholder: info.placeholder||'', value: info.value||'', required: info.required, disabled: info.disabled }).tag;
         };
 
-        this.slider = (info) => {
-            if (!info || !info.images || !Array.isArray(info.images) || info.images.length === 0) {
-                errorScreen("Error: slider requires an <b>images</b> array.");
-                return et;
-            }
-
-            let imgStyle = "";
-            if (info.imageWidth) imgStyle += `width: ${typeof info.imageWidth === 'number' ? info.imageWidth + 'px' : info.imageWidth};`;
-            if (info.imageHeight) imgStyle += `height: ${typeof info.imageHeight === 'number' ? info.imageHeight + 'px' : info.imageHeight};`;
-            
-            if (info.imagePos === "top") imgStyle += "transform: none; top: 0; left: unset;";
-            else if (info.imagePos === "bottom") imgStyle += "transform: none; bottom: 0; top: unset; left: unset;";
-
-            const slideTime = (typeof info.slideTime === "number" && info.slideTime > 0) ? info.slideTime : 5;
-
-            const images = info.images.map(img => new NoshiCE({
-                tag: "img",
-                alt: img,
-                src: img,
-                class: "slider-img",
-                style: imgStyle
-            }).tag);
-
-            return new NoshiCE({
-                tag: "div",
-                class: "slider",
-                "data-slide-time": slideTime,
-                child: images,
-                ...info
-            }).tag;
-        };
-
-        this.form = (info) => {
-            if (!info || Object.keys(info).length === 0) {
-                errorScreen("Error: no information has been passed to <b>form</b>");
-                return et;
-            }
-
-            const formFields = [];
-            
-            if (info.title) {
-                formFields.push(new NoshiCE({
-                    tag: "p",
-                    class: "form-title",
-                    text: info.title
-                }).tag);
-            }
-
-            if (info.fields && Array.isArray(info.fields)) {
-                info.fields.forEach(fi => {
-                    const fieldRow = new NoshiCE({ tag: "div", class: "form-field-row" }).tag;
-                    const inpInfo = { ...fi };
-                    
-                    let field;
-                    if (fi.type === "select") {
-                        field = this.select(inpInfo);
-                    } else {
-                        field = this.input(inpInfo);
-                    }
-                    fieldRow.appendChild(field);
-                    formFields.push(fieldRow);
-                });
-            }
-
-            if (info.buttons && Array.isArray(info.buttons)) {
-                const btns = info.buttons.map(btn => new NoshiCE({
-                    tag: "button",
-                    text: btn.text || "Button",
-                    class: "form-btn" + (btn.active ? "-active" : ""),
-                    click: btn.function
-                }).tag);
-
-                formFields.push(new NoshiCE({
-                    tag: "div",
-                    class: "form-btns-holder",
-                    child: btns
-                }).tag);
-            }
-
-            return new NoshiCE({
-                tag: "form",
-                class: "form-holder",
-                method: info.method || "POST",
-                action: info.action || "",
-                style: info.formWidth ? `width:${info.formWidth};` : "",
-                child: formFields
-            }).tag;
-        };
-
-        this.card = (info) => {
-            const title = info.title || "Untitled";
-            const text = info.text || "No text";
-            const mode = info.mode === "dark" ? "-dark" : "";
-            const hover = info.link ? "-hover" : "";
-            const cardClass = `card-holder${mode}${hover}`;
-            const target = info.target === "blank" ? "_blank" : "_self";
-
-            const cardImage = info.image ? new NoshiCE({
-                tag: "img",
-                src: info.image,
-                alt: info.image,
-                style: `height: ${info.imageHeight || 'auto'}; width: ${info.imageWidth || '100%'};`,
-                class: "card-image"
-            }).tag : et;
-
-            const txtHolder = new NoshiCE({
-                tag: "div",
-                class: "card-txt-holder",
-                child: [
-                    new NoshiCE({ tag: "p", text: title, class: "card-title" }).tag,
-                    new NoshiCE({ tag: "p", text: text, class: "card-text" }).tag
-                ]
-            }).tag;
-
-            let cardButton = et;
-            if (info.button) {
-                const btnPos = info.button.position === "center" ? "center" : (info.button.position === "end" ? "flex-end" : "flex-start");
-                cardButton = new NoshiCE({
-                    tag: "div",
-                    class: "card-btn-holder",
-                    style: `justify-content:${btnPos};`,
-                    child: [new NoshiCE({
-                        tag: "button",
-                        class: "card-btn",
-                        text: info.button.text || "Click",
-                        click: info.button.action
-                    }).tag]
-                }).tag;
-            }
-
-            return new NoshiCE({
-                tag: "a",
-                href: info.link || "#",
-                target: target,
-                class: cardClass,
-                style: info.size === "fit" ? "align-self: flex-start;" : "",
-                child: [cardImage, txtHolder, cardButton]
-            }).tag;
-        };
-
-        this.note = (info) => {
-            if (!info.text) {
-                errorScreen("Error: you must set <b>text</b> property for note");
-                return et;
-            }
-
-            const typeClass = ["warning", "error", "correct"].includes(info.class) ? "-" + info.class : "";
-            
-            const txt = new NoshiCE({
-                tag: "p",
-                class: "note-text" + typeClass,
-                text: info.text
-            }).tag;
-
-            const ico = info.icon ? new NoshiCE({
-                tag: "i",
-                class: "note-icon" + typeClass + " " + info.icon
-            }).tag : et;
-
-            return new NoshiCE({
-                tag: "div",
-                class: "note-holder" + typeClass,
-                child: [ico, txt]
-            }).tag;
-        };
-
+        /* â”€â”€ BUTTON â”€â”€ */
         this.button = (info) => {
-            if (!info.text && !info.icon) {
-                errorScreen("Error: button requires <b>text</b> and/or <b>icon</b>");
-                return et;
-            }
-
-            const btnText = info.text ? new NoshiCE({ tag: "p", class: "btn-holder-text", text: info.text }).tag : et;
-            const btnIcon = info.icon ? new NoshiCE({ tag: "i", class: "btn-holder-icon " + info.icon }).tag : et;
-            
-            const btnChild = info.iconPos === "right" ? [btnText, btnIcon] : [btnIcon, btnText];
-            const btnClass = "btn-holder" + (["warning", "error", "correct", "active", "dark"].includes(info.class) ? "-" + info.class : "");
-
-            return new NoshiCE({
-                tag: "button",
-                class: btnClass,
-                disabled: !!info.disabled,
-                click: typeof info.click === "function" ? info.click : null,
-                child: btnChild
-            }).tag;
+            NoshiStyles.inject('buttons', CSS_BTN);
+            const cls = info.class ? `btn btn-${info.class}` : 'btn btn-default';
+            const children = [];
+            if (info.icon && info.iconPos !== 'right') children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
+            children.push(new NoshiCE({ tag:'span', text: info.text||'' }).tag);
+            if (info.icon && info.iconPos === 'right') children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
+            return new NoshiCE({ tag:'button', class: cls, disabled: info.disabled, click: info.click||null, child: children }).tag;
         };
 
-        this.code = (info) => {
-            if (!info.code) {
-                errorScreen("Error: code property missing");
-                return et;
-            }
-
-            let c = info.code.replace(/    /g, "&nbsp;&nbsp;&nbsp;&nbsp;");
-            const target = (info.target || "").toLowerCase();
-
-            if (target === "html") {
-                c = c.replace(/<|>/g, x => `<html-tag-border>${x}</html-tag-border>`)
-                     .replace(/\s[a-z]+=/gi, x => `<html-tag-attr>${x}</html-tag-attr>`)
-                     .replace(/["'][\s0-9a-z/.-]+['"]/gi, x => `<html-tag-attr-val>${x}</html-tag-attr-val>`);
-            } else if (target === "css") {
-                c = c.replace(/@[a-zA-Z0-9-"'\(\)\.\s]+;|@[a-zA-Z0-9-\s]+/g, x => `<css-head>${x}</css-head>`)
-                     .replace(/{|}/g, x => `<css-brackets>${x}</css-brackets>`)
-                     .replace(/[a-zA-Z0-9-]+:/g, x => `<css-property>${x.slice(0, -1)}</css-property>:`)
-                     .replace(/:[a-zA-Z0-9-\s\(\)\.]+/g, x => `<css-value>${x}</css-value>`);
-            } else if (target === "js") {
-                c = c.replace(/var |let |const |new /g, x => `<js-var>${x.trim()}</js-var> `)
-                     .replace(/['"][a-zA-Z!,0-9-:;<>\./\(\)\s]+['"]/g, x => `<js-txt>${x}</js-txt>`)
-                     .replace(/{|}/g, x => `<js-bracket>${x}</js-bracket>`)
-                     .replace(/[a-z]+\(\)|[a-z]+\(|\)/gi, x => `<js-func>${x}</js-func>`);
-            }
-
-            c = c.split('\n').map(line => `<code-line>${line}</code-line>`).join('');
-
-            return new NoshiCE({
-                tag: "code",
-                class: "noshi-code",
-                html: c
-            }).tag;
+        /* â”€â”€ NOTE â”€â”€ */
+        this.note = (info) => {
+            NoshiStyles.inject('notes', CSS_NOTE);
+            const type  = info.class || 'default';
+            const icon  = new NoshiCE({ tag:'div', class:'noshi-note-icon', html: info.icon ? `<i class="${info.icon}"></i>` : '&#9432;' }).tag;
+            const body  = new NoshiCE({ tag:'div', class:'noshi-note-body', html: info.text||'' }).tag;
+            return new NoshiCE({ tag:'div', class:`noshi-note noshi-note-${type}`, child:[icon, body] }).tag;
         };
 
-        this.graph = (info) => {
-            if (!info || !info.data || !Array.isArray(info.data)) {
-                errorScreen("Error: graph requires a <b>data</b> array.");
-                return et;
+        /* â”€â”€ CARD â”€â”€ */
+        this.card = (info) => {
+            NoshiStyles.inject('cards', CSS_CARD);
+            const children = [];
+            if (info.image) children.push(new NoshiCE({ tag:'img', class:'card-image', src: info.image, alt: info.title||'', style: info.imageHeight ? `height:${info.imageHeight}` : '' }).tag);
+            const bodyChildren = [];
+            if (info.title) bodyChildren.push(new NoshiCE({ tag:'div', class:'card-title', text: info.title }).tag);
+            if (info.text)  bodyChildren.push(new NoshiCE({ tag:'div', class:'card-text',  html: info.text  }).tag);
+            children.push(new NoshiCE({ tag:'div', class:'card-body', child: bodyChildren }).tag);
+            if (info.button) {
+                const btn = this.button({ text: info.button.text, class: 'active', click: info.button.action });
+                children.push(new NoshiCE({ tag:'div', class:'card-footer', child:[btn] }).tag);
             }
+            const mode = info.mode === 'dark' ? ' card-dark' : '';
+            const hover = info.hover !== false ? ' card-hover' : '';
+            const el = new NoshiCE({ tag: info.link ? 'a' : 'div', class:`card${mode}${hover}`, href: info.link||null, child: children }).tag;
+            return el;
+        };
 
-            const gHeight = info.graph && info.graph.height ? info.graph.height : "300px";
-            const gWidth = info.graph && info.graph.width ? info.graph.width : "100%";
-            const gBg = info.graph && info.graph.backgroundColor ? info.graph.backgroundColor : "var(--noshi-light)";
-
-            const height = parseInt(gHeight) - 40;
-            const width = 1000; // Internal SVG coordinate space
-            const colors = ["#0077b6", "#9e2a2b", "#588157", "#ffc971", "#purple", "#cyan"];
-
-            const svgElements = [];
-
-            info.data.forEach((dataSet, setIdx) => {
-                const color = (info.style && info.style[setIdx] && info.style[setIdx].color) || colors[setIdx % colors.length];
-                const step = width / (dataSet.length - 1);
-                const max = Math.max(...dataSet.flat()) || 1;
-
-                const points = dataSet.map((val, i) => {
-                    const x = i * step;
-                    const y = height - (val / max * height);
-                    return [x, y];
-                });
-
-                if (info.graph && info.graph.type === "area") {
-                    const polyPoints = [[0, height], ...points, [width, height]].map(p => p.join(",")).join(" ");
-                    svgElements.push(new NoshiCENS({
-                        tag: "polygon",
-                        points: polyPoints,
-                        fill: color,
-                        style: "opacity: 0.3"
-                    }).tag);
+        /* â”€â”€ FORM â”€â”€ */
+        this.form = (info) => {
+            NoshiStyles.inject('forms', CSS_FORM);
+            NoshiStyles.inject('inputs', CSS_INPUT);
+            const form = new NoshiCE({ tag:'form', class:'noshi-form', method: info.method||'POST' }).tag;
+            if (info.title) form.appendChild(new NoshiCE({ tag:'div', class:'noshi-form-title', text: info.title }).tag);
+            (info.fields||[]).forEach(f => {
+                const group = new NoshiCE({ tag:'div', class:'noshi-field-group' }).tag;
+                if (f.label) group.appendChild(new NoshiCE({ tag:'label', class:'noshi-field-label', text: f.label }).tag);
+                if (f.type === 'select') {
+                    group.appendChild(this.select({ options: f.options||[], name: f.name, placeholder: f.placeholder, value: f.value }));
+                } else {
+                    group.appendChild(this.input({ type: f.type||'text', name: f.name, placeholder: f.placeholder||'', value: f.value||'', required: f.required, id: f.id }));
                 }
+                if (f.hint) group.appendChild(new NoshiCE({ tag:'div', class:'noshi-field-hint', text: f.hint }).tag);
+                form.appendChild(group);
+            });
+            if (info.buttons && info.buttons.length) {
+                const btnRow = new NoshiCE({ tag:'div', class:'noshi-form-btns' }).tag;
+                info.buttons.forEach(b => {
+                    btnRow.appendChild(this.button({ text: b.text, class: b.active ? 'active' : 'default', click: b.function||null }));
+                });
+                form.appendChild(btnRow);
+            }
+            /* built-in validation */
+            form.validate = () => {
+                const errors = [];
+                form.querySelectorAll('[required]').forEach(el => {
+                    if (!el.value.trim()) {
+                        errors.push(`${el.name || el.id || 'Field'} is required`);
+                        el.classList.add('noshi-input-error');
+                    } else {
+                        el.classList.remove('noshi-input-error');
+                    }
+                    if (el.type === 'email' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) {
+                        errors.push(`${el.name || 'Email'} is invalid`);
+                        el.classList.add('noshi-input-error');
+                    }
+                });
+                return { valid: errors.length === 0, errors };
+            };
+            return form;
+        };
 
-                const pathData = "M " + points.map(p => p.join(" ")).join(" L ");
-                svgElements.push(new NoshiCENS({
-                    tag: "path",
-                    d: pathData,
-                    stroke: color,
-                    strokeWidth: 3,
-                    fill: "none"
-                }).tag);
+        /* â”€â”€ CODE â”€â”€ */
+        this.code = (info) => {
+            NoshiStyles.inject('code', CSS_CODE);
+            const block = new NoshiCE({ tag:'code', class:'noshi-code' }).tag;
+            let c = (info.code||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            const target = info.target || 'js';
+            if (target === 'html') {
+                c = c.replace(/(&lt;|&gt;)/g, m => `<html-tag-border>${m}</html-tag-border>`);
+                c = c.replace(/\s[a-z-]+=(?=['"])/gi, m => `<html-tag-attr>${m}</html-tag-attr>`);
+                c = c.replace(/(['"])[^'"]*\1/g, m => `<html-tag-attr-val>${m}</html-tag-attr-val>`);
+            } else if (target === 'js') {
+                c = c.replace(/\b(const|let|var|new|return|if|else|function|async|await|for|of|in)\b/g, m => `<js-var>${m}</js-var>`);
+                c = c.replace(/(['"``])[^'"``]*\1/g, m => `<js-txt>${m}</js-txt>`);
+                c = c.replace(/[{}]/g, m => `<js-bracket>${m}</js-bracket>`);
+            }
+            block.innerHTML = c.split('\n').map(l => `<code-line>${l}</code-line>`).join('');
+            return block;
+        };
 
-                if (info.graph && info.graph.points !== false) {
-                    points.forEach(p => {
-                        svgElements.push(new NoshiCENS({
-                            tag: "circle",
-                            cx: p[0],
-                            cy: p[1],
-                            r: 5,
-                            fill: color,
-                            stroke: "#fff",
-                            strokeWidth: 2
-                        }).tag);
+        /* â”€â”€ GRAPH â”€â”€ */
+        this.graph = (info) => {
+            NoshiStyles.inject('graph', CSS_GRAPH);
+            if (!info.data || !info.data.length) return _e();
+            const gH   = parseInt(info.graph && info.graph.height ? info.graph.height : 300);
+            const gW   = 1000;
+            const h    = gH - 40;
+            const clrs = ['#0077b6','#9e2a2b','#588157','#ffc971','#9b5de5','#00b4d8'];
+            const svgEls = [];
+
+            info.data.forEach((ds, si) => {
+                const clr  = (info.style && info.style[si] && info.style[si].color) || clrs[si % clrs.length];
+                const step = gW / Math.max(ds.length - 1, 1);
+                const max  = Math.max(...ds.flat(), 1);
+                const pts  = ds.map((v, i) => [i * step, h - (v / max * h)]);
+
+                if (info.graph && info.graph.type === 'area') {
+                    const polyPts = [[0,h], ...pts, [gW,h]].map(p => p.join(',')).join(' ');
+                    svgEls.push(new NoshiCENS({ tag:'polygon', points: polyPts, fill: clr, style:'opacity:.2' }).tag);
+                }
+                svgEls.push(new NoshiCENS({ tag:'path', d:'M '+pts.map(p=>p.join(' ')).join(' L '), stroke: clr, strokeWidth: 3, fill:'none' }).tag);
+                if (!info.graph || info.graph.points !== false) {
+                    pts.forEach(p => svgEls.push(new NoshiCENS({ tag:'circle', cx:p[0], cy:p[1], r:5, fill:clr, stroke:'#fff', strokeWidth:2 }).tag));
+                }
+            });
+
+            const svg = new NoshiCENS({ tag:'svg', viewBox:`0 0 ${gW} ${h+20}`, width:'100%', height: String(gH), child: svgEls }).tag;
+            const children = [];
+            if (info.head) children.push(new NoshiCE({ tag:'div', class:'noshi-graph-head', text: info.head.title||'', style:`background:${info.head.backgroundColor||'#f8f9fa'};color:${info.head.color||'var(--txt)'}` }).tag);
+            children.push(svg);
+            return new NoshiCE({ tag:'div', class:'noshi-graph', child: children }).tag;
+        };
+
+        /* â”€â”€ SLIDER â”€â”€ */
+        this.slider = (info) => {
+            NoshiStyles.inject('slider', CSS_SLIDER);
+            const slides = (info.images||[]).map((img, i) => {
+                const s = new NoshiCE({ tag:'img', class:`noshi-slide${i===0?' active':''}`, src: img.src||img, alt: img.alt||'', style:`height:${info.height||'300px'}` }).tag;
+                return s;
+            });
+            const dots = (info.images||[]).map((_, i) => new NoshiCE({ tag:'div', class:`noshi-slider-dot${i===0?' active':''}` }).tag);
+            const dotsEl = new NoshiCE({ tag:'div', class:'noshi-slider-dots', child: dots }).tag;
+            const wrap   = new NoshiCE({ tag:'div', class:'noshi-slider', style:`height:${info.height||'300px'}`, child:[...slides, dotsEl] }).tag;
+
+            let cur = 0;
+            const go = (n) => {
+                slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+                cur = (n + slides.length) % slides.length;
+                slides[cur].classList.add('active'); dots[cur].classList.add('active');
+            };
+            dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+            if (slides.length > 1) setInterval(() => go(cur + 1), (info.time || 4) * 1000);
+            return wrap;
+        };
+
+        /* â”€â”€ MODAL â”€â”€ */
+        this.modal = (info) => {
+            NoshiStyles.inject('modals', CSS_MODAL);
+            const overlay = new NoshiCE({ tag:'div', class:'noshi-overlay', style:'display:none' }).tag;
+            const modal   = new NoshiCE({ tag:'div', class:'noshi-modal', style: info.width ? `max-width:${info.width}` : '' }).tag;
+
+            if (info.title) {
+                const closeBtn = new NoshiCE({ tag:'span', class:'noshi-modal-close', html:'&times;' }).tag;
+                closeBtn.addEventListener('click', () => api.close());
+                overlay.addEventListener('click', e => { if (e.target === overlay) api.close(); });
+                modal.appendChild(new NoshiCE({ tag:'div', class:'noshi-modal-header', child:[
+                    new NoshiCE({ tag:'h3', text: info.title }).tag, closeBtn
+                ]}).tag);
+            }
+
+            const body = new NoshiCE({ tag:'div', class:'noshi-modal-body' }).tag;
+            if (info.content instanceof HTMLElement) body.appendChild(info.content);
+            else if (typeof info.content === 'string') body.innerHTML = info.content;
+            modal.appendChild(body);
+
+            if (info.footer) {
+                const foot = new NoshiCE({ tag:'div', class:'noshi-modal-footer' }).tag;
+                (Array.isArray(info.footer) ? info.footer : [info.footer]).forEach(el => foot.appendChild(el));
+                modal.appendChild(foot);
+            }
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+
+            const api = {
+                overlay,
+                open:  () => { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; },
+                close: () => { overlay.style.display = 'none';  document.body.style.overflow = ''; }
+            };
+            return api;
+        };
+
+        /* â”€â”€ TOAST â”€â”€ */
+        this.toast = (info) => {
+            NoshiStyles.inject('toasts', CSS_TOAST);
+            let container = document.getElementById('noshi-toasts');
+            if (!container) {
+                container = new NoshiCE({ tag:'div', class:'noshi-toasts', id:'noshi-toasts' }).tag;
+                document.body.appendChild(container);
+            }
+            const type  = info.type || 'info';
+            const close = new NoshiCE({ tag:'span', class:'noshi-toast-close', html:'&times;' }).tag;
+            const toast = new NoshiCE({ tag:'div', class:`noshi-toast noshi-toast-${type}`, child:[
+                new NoshiCE({ tag:'div', class:'noshi-toast-msg', text: info.message||'' }).tag,
+                close
+            ]}).tag;
+            close.addEventListener('click', () => toast.remove());
+            container.appendChild(toast);
+            if (info.duration !== 0) setTimeout(() => { if (toast.parentNode) toast.remove(); }, info.duration || 3500);
+        };
+
+        /* â”€â”€ TABS â”€â”€ */
+        this.tabs = (info) => {
+            NoshiStyles.inject('tabs', CSS_TABS);
+            const tabs  = info.tabs || [];
+            const nav   = new NoshiCE({ tag:'div', class:'noshi-tabs-nav' }).tag;
+            const body  = new NoshiCE({ tag:'div' }).tag;
+
+            tabs.forEach((tab, i) => {
+                const btn  = new NoshiCE({ tag:'button', class:`noshi-tab-btn${i===0?' active':''}`, text: tab.title }).tag;
+                const pane = new NoshiCE({ tag:'div', class:`noshi-tab-pane${i===0?' active':''}` }).tag;
+                if (tab.content instanceof HTMLElement) pane.appendChild(tab.content);
+                else pane.innerHTML = tab.content || '';
+
+                btn.addEventListener('click', () => {
+                    nav.querySelectorAll('.noshi-tab-btn').forEach(b => b.classList.remove('active'));
+                    body.querySelectorAll('.noshi-tab-pane').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    pane.classList.add('active');
+                });
+                nav.appendChild(btn);
+                body.appendChild(pane);
+            });
+            return new NoshiCE({ tag:'div', class:'noshi-tabs', child:[nav, body] }).tag;
+        };
+
+        /* â”€â”€ BADGE â”€â”€ */
+        this.badge = (info) => {
+            NoshiStyles.inject('badges', CSS_BADGE);
+            const el = new NoshiCE({ tag:'span', class:`noshi-badge noshi-badge-${info.type||'gray'}${info.dot?' noshi-badge-dot':''}`, text: info.text||'' }).tag;
+            return el;
+        };
+
+        /* â”€â”€ PROGRESS â”€â”€ */
+        this.progress = (info) => {
+            NoshiStyles.inject('progress', CSS_PROG);
+            const pct     = Math.round(Math.min(Math.max(info.value||0, 0), info.max||100) / (info.max||100) * 100);
+            const color   = info.color && info.color !== 'primary' ? `noshi-progress-${info.color}` : '';
+            const size    = info.size ? `noshi-progress-${info.size}` : '';
+            const striped = info.striped ? 'noshi-progress-striped' : '';
+            const bar     = new NoshiCE({ tag:'div', class:'noshi-progress-bar', style:`width:${pct}%` }).tag;
+            const track   = new NoshiCE({ tag:'div', class:'noshi-progress-track', child:[bar] }).tag;
+            const children = [];
+            if (info.label !== false) {
+                children.push(new NoshiCE({ tag:'div', class:'noshi-progress-label', child:[
+                    new NoshiCE({ tag:'span', text: typeof info.label==='string' ? info.label : '' }).tag,
+                    new NoshiCE({ tag:'span', text:`${pct}%` }).tag
+                ]}).tag);
+            }
+            children.push(track);
+            return new NoshiCE({ tag:'div', class:`noshi-progress-wrap ${color} ${size} ${striped}`.trim(), child: children }).tag;
+        };
+
+        /* â”€â”€ STATS CARD â”€â”€ */
+        this.statsCard = (info) => {
+            NoshiStyles.inject('stats', CSS_STATS);
+            const iconType = info.iconType || 'primary';
+            const iconEl   = new NoshiCE({ tag:'div', class:`noshi-stats-icon noshi-stats-icon-${iconType}` }).tag;
+            iconEl.textContent = info.emoji || '';
+            if (info.icon) iconEl.appendChild(new NoshiCE({ tag:'i', class: info.icon }).tag);
+
+            const bodyChildren = [
+                new NoshiCE({ tag:'div', class:'noshi-stats-value', text: String(info.value||'0') }).tag,
+                new NoshiCE({ tag:'div', class:'noshi-stats-label', text: info.label||'' }).tag
+            ];
+            if (info.trend) bodyChildren.push(new NoshiCE({ tag:'div', class:`noshi-stats-trend noshi-trend-${info.trendUp?'up':'down'}`, text:`${info.trendUp?'â–²':'â–¼'} ${info.trend}` }).tag);
+            return new NoshiCE({ tag:'div', class:'noshi-stats-card', child:[iconEl, new NoshiCE({ tag:'div', class:'noshi-stats-body', child: bodyChildren }).tag] }).tag;
+        };
+
+        /* â”€â”€ ACCORDION â”€â”€ */
+        this.accordion = (info) => {
+            NoshiStyles.inject('accordion', CSS_ACC);
+            const root = new NoshiCE({ tag:'div', class:'noshi-accordion' }).tag;
+            (info.items||[]).forEach((item, i) => {
+                const body  = new NoshiCE({ tag:'div', class:'noshi-accordion-body' }).tag;
+                if (item.content instanceof HTMLElement) body.appendChild(item.content);
+                else body.innerHTML = `<div class="noshi-accordion-content">${item.content||''}</div>`;
+
+                const arrow = new NoshiCE({ tag:'span', class:'noshi-accordion-arrow', text:'â–¼' }).tag;
+                const head  = new NoshiCE({ tag:'div', class:'noshi-accordion-head', child:[
+                    new NoshiCE({ tag:'span', class:'noshi-accordion-title', text: item.title||'' }).tag, arrow
+                ]}).tag;
+
+                head.addEventListener('click', () => {
+                    const isOpen = body.classList.contains('open');
+                    if (!info.multiple) {
+                        root.querySelectorAll('.noshi-accordion-body').forEach(b => b.classList.remove('open'));
+                        root.querySelectorAll('.noshi-accordion-head').forEach(h => h.classList.remove('open'));
+                    }
+                    body.classList.toggle('open', !isOpen);
+                    head.classList.toggle('open', !isOpen);
+                });
+                if (i === 0 && info.openFirst) { body.classList.add('open'); head.classList.add('open'); }
+                root.appendChild(new NoshiCE({ tag:'div', class:'noshi-accordion-item', child:[head, body] }).tag);
+            });
+            return root;
+        };
+
+        /* â”€â”€ TOOLTIP â”€â”€ */
+        this.tooltip = (element, info) => {
+            NoshiStyles.inject('tooltip', CSS_TIP);
+            const pos = info.position || 'top';
+            const box = new NoshiCE({ tag:'span', class:'noshi-tooltip-box', text: info.text||'' }).tag;
+            return new NoshiCE({ tag:'span', class:`noshi-tooltip-wrap noshi-tooltip-${pos}`, child:[element, box] }).tag;
+        };
+
+        /* â”€â”€ TABLE â”€â”€ */
+        this.table = (info) => {
+            NoshiStyles.inject('tables', CSS_TABLE);
+            let allData = info.data || [], filtered = [...allData];
+            let sortKey = null, sortDir = 'asc', page = 1;
+            const perPage = info.pagination || 0;
+            const wrap = new NoshiCE({ tag:'div', class:'noshi-table-wrap' }).tag;
+
+            let searchInput = null;
+            if (info.search) {
+                searchInput = new NoshiCE({ tag:'input', class:'noshi-table-search', placeholder: info.searchPlaceholder||'Searchâ€¦', type:'text' }).tag;
+                searchInput.addEventListener('input', () => { page = 1; applyFilter(); });
+                wrap.appendChild(new NoshiCE({ tag:'div', class:'noshi-table-toolbar', child:[searchInput] }).tag);
+            }
+
+            const table = document.createElement('table'); table.className = 'noshi-table';
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            (info.columns||[]).forEach(col => {
+                const th = document.createElement('th'); th.textContent = col.label||col.key;
+                if (col.sortable) {
+                    th.classList.add('sortable');
+                    th.addEventListener('click', () => {
+                        if (sortKey === col.key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+                        else { sortKey = col.key; sortDir = 'asc'; }
+                        headerRow.querySelectorAll('th').forEach(t => t.classList.remove('sort-asc','sort-desc'));
+                        th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+                        render();
                     });
                 }
+                headerRow.appendChild(th);
             });
+            thead.appendChild(headerRow); table.appendChild(thead);
+            const tbody = document.createElement('tbody'); table.appendChild(tbody);
+            wrap.appendChild(table);
 
-            const svg = new NoshiCENS({
-                tag: "svg",
-                viewBox: `0 0 ${width} ${height + 20}`,
-                width: "100%",
-                height: gHeight,
-                style: `background-color: ${gBg};`,
-                child: svgElements
-            }).tag;
+            const footer  = new NoshiCE({ tag:'div', class:'noshi-table-footer' }).tag;
+            const countEl = new NoshiCE({ tag:'span' }).tag;
+            const pagesEl = new NoshiCE({ tag:'div', class:'noshi-table-pages' }).tag;
+            footer.appendChild(countEl); footer.appendChild(pagesEl);
+            if (perPage) wrap.appendChild(footer);
 
-            const header = info.head ? new NoshiCE({
-                tag: "div",
-                class: "graph-head pad-05 bold",
-                text: info.head.title || "Graph",
-                style: `background: ${info.head.backgroundColor || 'var(--noshi-gray)'}; color: ${info.head.color || 'var(--noshi-text)'};`
-            }).tag : et;
-
-            return new NoshiCE({
-                tag: "div",
-                class: "graph-holder",
-                style: `border: 1px solid var(--noshi-gray); margin: 1em 0;`,
-                child: [header, svg]
-            }).tag;
+            function applyFilter() {
+                const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                filtered = q ? allData.filter(r => Object.values(r).some(v => String(v).toLowerCase().includes(q))) : [...allData];
+                render();
+            }
+            function render() {
+                let rows = [...filtered];
+                if (sortKey) rows.sort((a,b) => { const av=a[sortKey],bv=b[sortKey]; return av<bv ? (sortDir==='asc'?-1:1) : av>bv ? (sortDir==='asc'?1:-1) : 0; });
+                let display = rows;
+                if (perPage) {
+                    const total = rows.length, tp = Math.max(1, Math.ceil(total/perPage));
+                    page = Math.min(page, tp);
+                    const s = (page-1)*perPage; display = rows.slice(s, s+perPage);
+                    countEl.textContent = `${s+1}â€“${Math.min(s+perPage,total)} of ${total}`;
+                    pagesEl.innerHTML = '';
+                    for (let p=1;p<=tp;p++) { const btn=new NoshiCE({tag:'button',class:`noshi-page-btn${p===page?' active':''}`,text:String(p)}).tag; btn.addEventListener('click',()=>{page=p;render();}); pagesEl.appendChild(btn); }
+                }
+                tbody.innerHTML = '';
+                if (!display.length) { const tr=document.createElement('tr'),td=document.createElement('td'); td.colSpan=(info.columns||[]).length; td.textContent=info.emptyText||'No results.'; td.style.cssText='text-align:center;padding:2rem;color:var(--muted)'; tr.appendChild(td); tbody.appendChild(tr); return; }
+                display.forEach(row => {
+                    const tr = document.createElement('tr');
+                    if (info.onRowClick) { tr.style.cursor='pointer'; tr.addEventListener('click',()=>info.onRowClick(row)); }
+                    (info.columns||[]).forEach(col => {
+                        const td=document.createElement('td'); const val=row[col.key];
+                        if (typeof col.render==='function') { const r=col.render(val,row); if (r instanceof HTMLElement) td.appendChild(r); else td.innerHTML=r; }
+                        else td.textContent=val!=null?String(val):'â€”';
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+            }
+            wrap.setData = d => { allData=d; filtered=[...d]; page=1; render(); };
+            wrap.refresh  = () => applyFilter();
+            applyFilter();
+            return wrap;
         };
-    }
-    /**
-     * Slider Logic
-     */
-    const _sliders = () => {
-        const sliders = _("slider", true, false);
-        if (!sliders) return;
 
-        Array.from(sliders).forEach(slider => {
-            const children = slider.childNodes;
-            const type = slider.getAttribute("type");
-            const time = Number(slider.getAttribute("data-slide-time")) || 5;
-            
-            if (children.length <= 1) return;
+        /* â”€â”€ STEPPER â”€â”€ */
+        this.stepper = (info) => {
+            NoshiStyles.inject('stepper', CSS_STEP);
+            NoshiStyles.inject('buttons', CSS_BTN);
+            const steps = info.steps||[]; let cur = 0;
+            const circles=[], labels=[], panes=[], lines=[];
 
-            let current = 0;
-            const slide = () => {
-                const prev = current;
-                current = (current + 1) % children.length;
-                
-                children[prev].style.opacity = "0";
-                children[prev].style.zIndex = "-1";
-                children[prev].style.visibility = "hidden";
-
-                children[current].style.opacity = "1";
-                children[current].style.zIndex = "1";
-                children[current].style.visibility = "visible";
-            };
-
-            // Initial state
-            Array.from(children).forEach((child, i) => {
-                child.style.transition = "opacity 0.5s ease";
-                if (i === 0) {
-                    child.style.opacity = "1";
-                    child.style.zIndex = "1";
-                    child.style.visibility = "visible";
-                } else {
-                    child.style.opacity = "0";
-                    child.style.zIndex = "-1";
-                    child.style.visibility = "hidden";
-                }
+            const nav = new NoshiCE({ tag:'div', class:'noshi-stepper-nav' }).tag;
+            steps.forEach((s, i) => {
+                const circ = new NoshiCE({ tag:'div', class:'noshi-step-circle', text:String(i+1) }).tag;
+                const lbl  = new NoshiCE({ tag:'div', class:'noshi-step-label', text: s.title }).tag;
+                circles.push(circ); labels.push(lbl);
+                nav.appendChild(new NoshiCE({ tag:'div', class:'noshi-step-item', child:[circ, new NoshiCE({tag:'div',class:'noshi-step-info',child:[lbl]}).tag] }).tag);
+                if (i < steps.length-1) { const line=new NoshiCE({tag:'div',class:'noshi-step-line'}).tag; lines.push(line); nav.appendChild(line); }
+                const pane=new NoshiCE({tag:'div',class:'noshi-step-pane'}).tag;
+                if (s.content instanceof HTMLElement) pane.appendChild(s.content); else pane.innerHTML=s.content||'';
+                panes.push(pane);
             });
 
-            window.setInterval(slide, time * 1000);
-        });
-    };
+            const content = new NoshiCE({ tag:'div', class:'noshi-stepper-content', child: panes }).tag;
+            const prevBtn = new NoshiCE({ tag:'button', class:'btn btn-ghost', text:'â† Back' }).tag;
+            const nextBtn = new NoshiCE({ tag:'button', class:'btn btn-active', text:'Next â†’' }).tag;
+            const counter = new NoshiCE({ tag:'span', class:'small' }).tag;
+            const footer  = new NoshiCE({ tag:'div', class:'noshi-stepper-footer', child:[prevBtn, counter, nextBtn] }).tag;
 
-    /**
-     * Loading State
-     */
-    const loading = (info = {}) => {
-        const existing = _("noshi-loading-holder", false, false);
-        if (existing) {
-            existing.remove();
-            return;
-        }
-
-        const holder = new NoshiCE({
-            tag: "div",
-            id: "noshi-loading-holder",
-            class: "noshi-loading-holder",
-            style: `width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: fixed; left: 0; top: 0; z-index: 10000; background-color: ${info.backgroundColor || 'rgba(255,255,255,0.8)'};`
-        }).tag;
-
-        let content;
-        switch (info.type) {
-            case "circle":
-                content = new NoshiCE({
-                    tag: "div",
-                    style: "width: 40px; height: 40px; border: 4px solid var(--noshi-gray); border-top-color: var(--noshi-primary); border-radius: 50%; animation: rotate360 1s infinite linear;"
-                }).tag;
-                break;
-            case "dots":
-                const dots = [1, 2, 3, 4].map(i => new NoshiCE({
-                    tag: "div",
-                    style: `width: 12px; height: 12px; margin: 0 5px; border-radius: 50%; background-color: var(--noshi-primary); animation: loading-dots 1s infinite; animation-delay: ${i * 0.2}s;`
-                }).tag);
-                content = new NoshiCE({ tag: "div", class: "loading-dots-holder", style: "display: flex;", child: dots }).tag;
-                break;
-            default:
-                content = new NoshiCE({ tag: "p", text: info.text || "Loading...", class: "xlarge bold" }).tag;
-        }
-
-        holder.appendChild(content);
-        document.body.appendChild(holder);
-    };
-
-    /**
-     * AJAX (Promise-based)
-     */
-    const ajax = (config) => {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const method = (config.method || "GET").toUpperCase();
-            const url = config.url;
-            
-            xhr.open(method, url, true);
-            
-            if (config.headers) {
-                Object.keys(config.headers).forEach(key => xhr.setRequestHeader(key, config.headers[key]));
-            }
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        resolve(xhr.responseText);
-                    } else {
-                        reject({ status: xhr.status, text: xhr.statusText });
-                    }
-                }
+            const update = () => {
+                circles.forEach((c,i) => { c.className='noshi-step-circle'+(i===cur?' active':i<cur?' done':''); c.textContent=i<cur?'âœ“':String(i+1); });
+                labels.forEach((l,i) => l.className='noshi-step-label'+(i===cur?' active':i<cur?' done':''));
+                lines.forEach((l,i) => l.classList.toggle('done', i<cur));
+                panes.forEach((p,i) => p.classList.toggle('active', i===cur));
+                prevBtn.style.visibility = cur===0?'hidden':'visible';
+                nextBtn.textContent = cur===steps.length-1 ? (info.completeText||'Finish âœ“') : 'Next â†’';
+                counter.textContent = `Step ${cur+1} of ${steps.length}`;
             };
 
-            xhr.onerror = () => reject({ status: xhr.status, text: "Network Error" });
-            
-            xhr.send(config.data || null);
-        });
-    };
+            prevBtn.addEventListener('click', () => { if (cur>0){cur--;update();} });
+            nextBtn.addEventListener('click', () => {
+                if (cur<steps.length-1) { const v=steps[cur].validate; if(v&&!v()) return; cur++; update(); }
+                else if (info.onComplete) info.onComplete();
+            });
 
-    /**
-     * Selector Helper
-     */
-    const _ = (selector, multi = false, err = true) => {
+            const root = new NoshiCE({ tag:'div', class:'noshi-stepper', child:[nav, content, footer] }).tag;
+            root.goTo = n => { cur=Math.max(0,Math.min(n,steps.length-1)); update(); };
+            update();
+            return root;
+        };
+
+    } /* end NoshiBuilder */
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NOSHI STORE â€” reactive state manager
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    const store = (function() {
+        const _s = {}, _l = {}, _c = {};
+        function _notify(key) {
+            const val = _s[key];
+            (_l[key]||[]).forEach(fn => { try { fn(val, key); } catch(e) { console.error('Noshi.store:', e); } });
+            Object.keys(_c).forEach(ck => { if (_c[ck].deps.includes(key)) { _s[ck] = _c[ck].fn(_s); _notify(ck); } });
+        }
+        return {
+            set(k, v)          { _s[k]=v; _notify(k); return this; },
+            get(k)             { return _s[k]; },
+            getAll()           { return Object.assign({}, _s); },
+            on(k, fn)          { if (!_l[k]) _l[k]=[]; _l[k].push(fn); if (_s[k]!==undefined) fn(_s[k],k); return () => this.off(k,fn); },
+            off(k, fn)         { if (_l[k]) _l[k]=_l[k].filter(f=>f!==fn); return this; },
+            clear(k)           { if(k){delete _l[k];delete _s[k];}else{Object.keys(_l).forEach(k=>delete _l[k]);Object.keys(_s).forEach(k=>delete _s[k]);} return this; },
+            update(k, fn)      { return this.set(k, fn(_s[k])); },
+            compute(k, deps, fn){ _c[k]={deps,fn}; _s[k]=fn(_s); _notify(k); return this; },
+            persist(k, def)    { const saved=localStorage.getItem('noshi_'+k); this.set(k, saved!==null?JSON.parse(saved):def); this.on(k, v=>localStorage.setItem('noshi_'+k,JSON.stringify(v))); return this; },
+            bind(k, el, prop)  { if (el) this.on(k, v=>{ el[prop]=v; }); return this; },
+            batch(obj)         { Object.keys(obj).forEach(k=>{ _s[k]=obj[k]; }); Object.keys(obj).forEach(k=>_notify(k)); return this; }
+        };
+    })();
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       UTILITIES
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    const _ = (selector, multi=false, err=true) => {
         try {
-            const results = multi ? document.querySelectorAll(selector) : document.querySelector(selector);
-            if (!results && err) {
-                errorScreen(`Error: Element '${selector}' not found.`);
-            }
-            return results;
-        } catch (e) {
-            // Fallback for ID/Class search if selector is not a valid CSS selector
+            const r = multi ? document.querySelectorAll(selector) : document.querySelector(selector);
+            if (!r && err) console.error(`Noshi: element "${selector}" not found`);
+            return r;
+        } catch(e) {
             const byId = document.getElementById(selector);
             if (byId) return multi ? [byId] : byId;
-            
-            const byClass = document.getElementsByClassName(selector);
-            if (byClass.length > 0) return multi ? byClass : byClass[0];
-
-            if (err) errorScreen(`Error: Selector '${selector}' failed.`);
+            if (err) console.error(`Noshi: selector "${selector}" failed`);
             return null;
         }
     };
 
-    /**
-     * Error Screen
-     */
     const errorScreen = (msg) => {
-        console.error("Noshi Error:", msg);
-        const errDiv = new NoshiCE({
-            tag: "div",
-            class: "error-screen",
-            html: `<b>Noshi Error:</b> ${msg}`
-        }).tag;
-        document.body.appendChild(errDiv);
+        const el = new NoshiCE({ tag:'div', class:'error-screen', html:`<b>Noshi Error:</b> ${msg}` }).tag;
+        document.body.appendChild(el);
+        console.error('Noshi Error:', msg);
     };
 
-    /**
-     * Language Loader
-     */
-    const _setLang = () => {
-        try {
-            const lang = document.documentElement.lang || "en";
-            // Check if we are in an example folder or root
-            const isExample = window.location.pathname.includes('/examples/');
-            const basePath = isExample ? '../' : './';
-            
-            const script = new NoshiCE({
-                tag: "script",
-                src: `${basePath}lang/${lang}.js`,
-                type: "application/javascript"
-            }).tag;
-            document.head.appendChild(script);
-            document.body.setAttribute("data-noshi-lang", lang);
-        } catch (e) {
-            console.warn("Noshi: Language loader failed, falling back to default.", e);
+    const ajax = (config) => new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const method = (config.method || 'GET').toUpperCase();
+        xhr.open(method, config.url, true);
+        if (config.headers) Object.keys(config.headers).forEach(k => xhr.setRequestHeader(k, config.headers[k]));
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                const isLocal = window.location.protocol === 'file:';
+                if ((xhr.status >= 200 && xhr.status < 300) || (isLocal && xhr.status === 0))
+                    resolve(xhr.responseText);
+                else
+                    reject({ status: xhr.status, text: xhr.statusText || 'Network Error' });
+            }
+        };
+        xhr.onerror = () => reject({ status: xhr.status, text: 'Network Error' });
+        xhr.send(config.data || null);
+    });
+
+    const loading = (info={}) => {
+        const existing = document.getElementById('noshi-loading');
+        if (existing) { existing.remove(); document.body.style.overflow=''; return; }
+        NoshiStyles.inject('loading', CSS_LOAD);
+        const overlay = new NoshiCE({ tag:'div', id:'noshi-loading', class:'noshi-loading-overlay', style:`background:${info.backgroundColor||'rgba(255,255,255,0.85)'}` }).tag;
+        let content;
+        if (info.type === 'circle')      content = new NoshiCE({ tag:'div', class:'noshi-spinner' }).tag;
+        else if (info.type === 'dots') {
+            const dots = [1,2,3].map(i => { const d=new NoshiCE({tag:'div',class:'noshi-dot',style:`animation-delay:${i*.2}s`}).tag; return d; });
+            content = new NoshiCE({ tag:'div', class:'noshi-dots-holder', child:dots }).tag;
+        } else content = new NoshiCE({ tag:'p', class:'xlarge bold', text: info.text||'Loadingâ€¦' }).tag;
+        overlay.appendChild(content);
+        document.body.appendChild(overlay);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const toggleDarkMode = (state) => {
+        const isDark = state !== undefined ? state : !document.body.classList.contains('noshi-dark-mode');
+        document.body.classList.toggle('noshi-dark-mode', isDark);
+        localStorage.setItem('noshi-dark', isDark);
+        return isDark;
+    };
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NOSHI.PAGE() â€” full page scaffolding
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    const page = (info) => {
+        NoshiStyles.inject('page', CSS_PAGE);
+        const root = new NoshiCE({ tag:'div', class:'noshi-page' }).tag;
+
+        if (info.header) {
+            const h = info.header;
+            const hChildren = [];
+            if (h.brand) hChildren.push(new NoshiCE({ tag:'div', class:'noshi-page-brand', text: h.brand }).tag);
+            if (h.nav)   hChildren.push(new NoshiCE({ tag:'nav', class:'noshi-page-nav', child: h.nav.map(n => new NoshiCE({ tag:'a', class:`noshi-page-nav-link${n.active?' active':''}`, href:n.href||'#', text:n.label }).tag) }).tag);
+            if (h.actions) hChildren.push(new NoshiCE({ tag:'div', style:'display:flex;gap:.5rem', child: h.actions }).tag);
+            root.appendChild(new NoshiCE({ tag:'header', class:'noshi-page-header', child: hChildren }).tag);
         }
+
+        const bodyEl = new NoshiCE({ tag:'div', class:'noshi-page-body' }).tag;
+
+        if (info.sidebar) {
+            const sb = new NoshiCE({ tag:'aside', class:'noshi-page-sidebar' }).tag;
+            (info.sidebar.sections||[]).forEach(section => {
+                if (section.title) sb.appendChild(new NoshiCE({ tag:'div', class:'noshi-page-sidebar-title', text:section.title }).tag);
+                (section.items||[]).forEach(item => {
+                    const ch = [];
+                    if (item.icon) ch.push(new NoshiCE({ tag:'i', class:item.icon }).tag);
+                    ch.push(new NoshiCE({ tag:'span', text:item.label }).tag);
+                    sb.appendChild(new NoshiCE({ tag: item.href?'a':'div', class:`noshi-page-sidebar-link${item.active?' active':''}`, href:item.href||null, child:ch, click:item.click||null }).tag);
+                });
+            });
+            bodyEl.appendChild(sb);
+        }
+
+        const contentEl = new NoshiCE({ tag:'main', class:'noshi-page-content' }).tag;
+        if (info.content instanceof HTMLElement) contentEl.appendChild(info.content);
+        else if (typeof info.content === 'string') contentEl.innerHTML = info.content;
+        bodyEl.appendChild(contentEl);
+        root.appendChild(bodyEl);
+
+        if (info.footer) root.appendChild(new NoshiCE({ tag:'footer', class:'noshi-page-footer', text: info.footer.text||'' }).tag);
+
+        document.body.innerHTML = '';
+        document.body.appendChild(root);
+        return { page: root, content: contentEl };
     };
 
-    /**
-     * Navigation Logic
-     */
-    const _activeNavs = () => {
-        const navs = _(".nav-menu-head", true, false);
-        if (!navs) return;
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       INIT & EXPORTS
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    const startNoshi = (funcs) => {
+        const list = Array.isArray(funcs) ? funcs : [funcs];
+        const run  = () => list.forEach(f => typeof f === 'function' && f());
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+        else run();
+    };
 
-        navs.forEach(nav => {
-            nav.addEventListener("click", () => {
-                const targetId = nav.getAttribute("data-target");
-                const target = _(`#${targetId}`) || _(`.${targetId}`);
-                
-                if (!target) return;
-
-                const isOpen = nav.getAttribute("data-status") === "true";
-                
-                // Close others if needed
-                if (!isOpen && noshi.activeNavs.target) {
-                    const prevTarget = _(`#${noshi.activeNavs.target}`) || _(`.${noshi.activeNavs.target}`);
-                    if (prevTarget) prevTarget.style.display = "none";
-                    if (noshi.activeNavs.state) noshi.activeNavs.state.setAttribute("data-status", "false");
-                }
-
-                if (isOpen) {
-                    target.style.display = "none";
-                    nav.setAttribute("data-status", "false");
-                    noshi.activeNavs.target = "";
-                    noshi.activeNavs.state = null;
-                } else {
-                    target.style.display = "flex";
-                    nav.setAttribute("data-status", "true");
-                    noshi.activeNavs.target = targetId;
-                    noshi.activeNavs.state = nav;
-                }
+    const _initNavs = () => {
+        document.querySelectorAll('[data-noshi-menu]').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const target = document.getElementById(trigger.getAttribute('data-noshi-menu'));
+                if (target) target.classList.toggle('open');
             });
         });
     };
 
-    /**
-     * Initialize Noshi
-     */
-    const startNoshi = (funcs) => {
-        const list = Array.isArray(funcs) ? funcs : [funcs];
-        const run = () => list.forEach(f => typeof f === "function" && f());
-
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", run);
-        } else {
-            run();
-        }
+    const _initDark = () => {
+        if (localStorage.getItem('noshi-dark') === 'true') toggleDarkMode(true);
     };
 
-    // Export to global namespace
-    global.noshi = noshi;
-    global.NoshiCE = NoshiCE;
-    global.NoshiCENS = NoshiCENS;
+    global.NoshiCE      = NoshiCE;
+    global.NoshiCENS    = NoshiCENS;
     global.NoshiBuilder = NoshiBuilder;
+    global.NoshiStyles  = NoshiStyles;
     global.Noshi = {
+        version: VERSION,
+        _,
         ajax,
         loading,
-        _,
-        errorScreen,
-        start: startNoshi
+        toggleDarkMode,
+        page,
+        store,
+        start: startNoshi,
+        errorScreen
     };
 
-    // Auto-start core features
-    startNoshi([_setLang, _activeNavs, _sliders]);
+    startNoshi([_initNavs, _initDark]);
 
-})(typeof window !== "undefined" ? window : this);
+})(typeof window !== 'undefined' ? window : this);

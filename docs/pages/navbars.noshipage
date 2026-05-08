@@ -1,0 +1,56 @@
+<h1 id="navbars">Navbars</h1>
+<p>Noshi navbars are sticky top navigation bars with brand, links, dropdown menus, and action buttons.</p>
+
+<h2 id="html">HTML Navbar</h2>
+<p>You can build a navbar in pure HTML using Noshi classes:</p>
+<pre class="docs-code">&lt;nav class="noshi-nav"&gt;
+    &lt;span class="noshi-nav-brand"&gt;MyApp&lt;/span&gt;
+    &lt;div class="noshi-nav-links"&gt;
+        &lt;a href="/" class="noshi-nav-link active"&gt;Home&lt;/a&gt;
+        &lt;a href="/about" class="noshi-nav-link"&gt;About&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="noshi-nav-actions"&gt;
+        &lt;!-- action buttons here --&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</pre>
+
+<h2 id="dropdown">Dropdown Menus</h2>
+<p>Add a dropdown using the <code>data-noshi-menu</code> attribute on a trigger element:</p>
+<pre class="docs-code">&lt;div class="noshi-nav-menu-head" data-noshi-menu="user-menu"&gt;
+    Account ▾
+&lt;/div&gt;
+&lt;div class="noshi-nav-menu-body" id="user-menu"&gt;
+    &lt;div class="noshi-nav-menu-item"&gt;Profile&lt;/div&gt;
+    &lt;div class="noshi-nav-menu-item"&gt;Settings&lt;/div&gt;
+    &lt;div class="noshi-nav-menu-item"&gt;Logout&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+<h2 id="page-nav">Via Noshi.page()</h2>
+<p>The recommended way is to define the navbar inside <code>Noshi.page()</code>:</p>
+<pre class="docs-code">Noshi.page({
+    header: {
+        brand: 'MyApp',
+        nav: [
+            { label: 'Home',     href: '/', active: true },
+            { label: 'Products', href: '/products' }
+        ],
+        actions: [b.button({ text: 'Sign In', class: 'active' })]
+    },
+    ...
+});</pre>
+
+<h2 id="classes">CSS Classes Reference</h2>
+<table>
+    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>.noshi-nav</code></td><td>Root nav container (sticky, 60px height)</td></tr>
+        <tr><td><code>.noshi-nav-brand</code></td><td>Brand/logo text</td></tr>
+        <tr><td><code>.noshi-nav-links</code></td><td>Flex row of nav links</td></tr>
+        <tr><td><code>.noshi-nav-link</code></td><td>Individual nav link</td></tr>
+        <tr><td><code>.noshi-nav-link.active</code></td><td>Active state</td></tr>
+        <tr><td><code>.noshi-nav-actions</code></td><td>Right-side action area</td></tr>
+        <tr><td><code>.noshi-nav-menu-head</code></td><td>Dropdown trigger</td></tr>
+        <tr><td><code>.noshi-nav-menu-body</code></td><td>Dropdown content panel</td></tr>
+        <tr><td><code>.noshi-nav-menu-item</code></td><td>Dropdown menu item</td></tr>
+    </tbody>
+</table>

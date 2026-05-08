@@ -1,0 +1,42 @@
+<h1 id="tabs">Tabs</h1>
+<p>The Tabs component helps you organize content into multiple views that can be toggled through a navigation bar.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Provide an array of tab objects, each with a <code>title</code> and <code>content</code>.</p>
+
+<code data-target="js" data-code="const tabbedContent = builder.tabs({
+    tabs: [
+        { 
+            title: 'General', 
+            content: new NoshiCE({ tag: 'p', text: 'General settings content.' }).tag 
+        },
+        { 
+            title: 'Security', 
+            content: new NoshiCE({ tag: 'p', text: 'Security settings content.' }).tag 
+        },
+        { 
+            title: 'Advanced', 
+            content: new NoshiCE({ tag: 'p', text: 'Advanced configuration options.' }).tag 
+        }
+    ]
+});
+
+document.body.appendChild(tabbedContent);"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>tabs</code></td>
+            <td>Array</td>
+            <td>An array of objects: <code>{ title: string, content: Element|Array }</code>.</td>
+        </tr>
+    </tbody>
+</table>

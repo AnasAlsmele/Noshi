@@ -1,0 +1,48 @@
+<h1 id="page-scaffold">Page Scaffold</h1>
+<p><code>Noshi.page()</code> scaffolds a complete application layout — header, sidebar, content area, and footer — in a single call. This is the fastest way to build a full web app or admin panel.</p>
+
+<h2 id="basic">Basic Usage</h2>
+<pre class="docs-code">const { page, content } = Noshi.page({
+    header: {
+        brand: 'MyApp',
+        nav: [
+            { label: 'Dashboard', href: '/', active: true },
+            { label: 'Settings',  href: '/settings' }
+        ],
+        actions: [myButton]
+    },
+    sidebar: {
+        sections: [{
+            title: 'Main Menu',
+            items: [
+                { label: 'Dashboard', emoji: '📊', active: true, click: () => loadDashboard() },
+                { label: 'Users',     emoji: '👥', href: '/users' },
+                { label: 'Settings',  emoji: '⚙️', href: '/settings' }
+            ]
+        }]
+    },
+    content: myContentElement,
+    footer: { text: '© 2026 MyApp. All rights reserved.' }
+});</pre>
+
+<h2 id="dynamic">Updating Content Dynamically</h2>
+<p>The returned <code>content</code> element is the main content area. You can update it at any time.</p>
+<pre class="docs-code">const { content } = Noshi.page({ ... });
+
+// Replace content later
+content.innerHTML = '';
+content.appendChild(myNewView);</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>header.brand</code></td><td>String</td><td>App name shown in top-left</td></tr>
+        <tr><td><code>header.nav</code></td><td>Array</td><td>Nav links: <code>[{ label, href, active }]</code></td></tr>
+        <tr><td><code>header.actions</code></td><td>Array</td><td>Buttons/elements on the right side of the header</td></tr>
+        <tr><td><code>sidebar.sections</code></td><td>Array</td><td>Sidebar sections: <code>[{ title, items }]</code></td></tr>
+        <tr><td><code>sidebar.sections[].items</code></td><td>Array</td><td>Each item: <code>{ label, icon, emoji, href, active, click }</code></td></tr>
+        <tr><td><code>content</code></td><td>HTMLElement|String</td><td>Initial content of the main area</td></tr>
+        <tr><td><code>footer.text</code></td><td>String</td><td>Footer text</td></tr>
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+<h1 id="loading">Loading States</h1>
+<p>Noshi includes a global loading state system that can be easily toggled to provide feedback during long-running operations.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Call <code>Noshi.loading()</code> to show or hide the loading overlay.</p>
+
+<code data-target="js" data-code="// Show default loader
+Noshi.loading();
+
+// Hide loader
+Noshi.loading();"></code>
+
+<h2 id="variants">Loader Variants</h2>
+<p>You can choose between different animation styles: <code>circle</code>, <code>dots</code>, or custom <code>text</code>.</p>
+
+<code data-target="js" data-code="Noshi.loading({ type: 'circle' });
+Noshi.loading({ type: 'dots' });
+Noshi.loading({ text: 'Please wait, processing data...' });"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>type</code></td>
+            <td>String</td>
+            <td>'circle' or 'dots'.</td>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>String</td>
+            <td>Custom text message (overrides type).</td>
+        </tr>
+        <tr>
+            <td><code>backgroundColor</code></td>
+            <td>String</td>
+            <td>Custom overlay color (e.g., 'rgba(0,0,0,0.5)').</td>
+        </tr>
+    </tbody>
+</table>

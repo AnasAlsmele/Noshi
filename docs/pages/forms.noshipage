@@ -1,0 +1,64 @@
+<h1 id="forms">Forms</h1>
+<p>The Form component allows you to quickly build complex, data-driven forms using a simple configuration object.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Define fields and buttons to generate a complete, styled form.</p>
+
+<code data-target="js" data-code="const loginForm = builder.form({
+    title: 'Login to Account',
+    fields: [
+        { type: 'text', placeholder: 'Username', name: 'user', required: true },
+        { type: 'password', placeholder: 'Password', name: 'pass', required: true }
+    ],
+    buttons: [
+        { text: 'Sign In', active: true, function: (e) => {
+            e.preventDefault();
+            // Handle login
+        }},
+        { text: 'Forgot Password?', function: () => { /* ... */ }}
+    ]
+});"></code>
+
+<h2 id="supported-fields">Supported Fields</h2>
+<p>Noshi forms support standard inputs, passwords, emails, checkboxes, radio buttons, and select dropdowns.</p>
+
+<code data-target="js" data-code="{ type: 'select', options: ['USA', 'UK', 'UAE'], name: 'country' },
+{ type: 'checkbox', text: 'Stay logged in', name: 'remember' }"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>title</code></td>
+            <td>String</td>
+            <td>Optional form header title.</td>
+        </tr>
+        <tr>
+            <td><code>fields</code></td>
+            <td>Array</td>
+            <td>Array of field objects.</td>
+        </tr>
+        <tr>
+            <td><code>buttons</code></td>
+            <td>Array</td>
+            <td>Array of button objects: <code>{ text, active, function }</code>.</td>
+        </tr>
+        <tr>
+            <td><code>formWidth</code></td>
+            <td>String</td>
+            <td>Custom width for the form.</td>
+        </tr>
+        <tr>
+            <td><code>method</code></td>
+            <td>String</td>
+            <td>HTTP method (default: 'POST').</td>
+        </tr>
+    </tbody>
+</table>

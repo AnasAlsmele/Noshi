@@ -1,0 +1,54 @@
+<h1 id="tables">Tables</h1>
+<p>The smart data table supports client-side sorting, searching, and pagination out of the box — no configuration required beyond your data.</p>
+
+<h2 id="basic">Basic Usage</h2>
+<pre class="docs-code">const b = new NoshiBuilder();
+
+const table = b.table({
+    columns: [
+        { key: 'name',   label: 'Name',   sortable: true },
+        { key: 'role',   label: 'Role'   },
+        { key: 'status', label: 'Status', render: (val) =>
+            b.badge({ text: val, type: val === 'active' ? 'success' : 'gray', dot: true })
+        }
+    ],
+    data: [
+        { name: 'Anas',  role: 'Admin',  status: 'active'   },
+        { name: 'Ali',   role: 'Editor', status: 'inactive' },
+        { name: 'Sara',  role: 'Viewer', status: 'active'   }
+    ],
+    search: true,
+    pagination: 10,
+    onRowClick: (row) => console.log('Clicked:', row)
+});</pre>
+
+<h2 id="live-update">Live Data Update</h2>
+<p>The table element exposes a <code>setData()</code> method for live updates.</p>
+<pre class="docs-code">const table = b.table({ columns: [...], data: [] });
+
+// Later, after an AJAX call:
+const freshData = await Noshi.ajax({ url: '/api/users' });
+table.setData(JSON.parse(freshData));</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>columns</code></td><td>Array</td><td><code>{ key, label, sortable, render }</code></td></tr>
+        <tr><td><code>data</code></td><td>Array</td><td>Array of data objects</td></tr>
+        <tr><td><code>search</code></td><td>Boolean</td><td>Show search input</td></tr>
+        <tr><td><code>pagination</code></td><td>Number</td><td>Rows per page (0 = no pagination)</td></tr>
+        <tr><td><code>onRowClick</code></td><td>Function</td><td>Called with the row object when clicked</td></tr>
+        <tr><td><code>emptyText</code></td><td>String</td><td>Message when no results found</td></tr>
+        <tr><td><code>searchPlaceholder</code></td><td>String</td><td>Placeholder text for search input</td></tr>
+    </tbody>
+</table>
+
+<h2 id="api">Table API</h2>
+<table>
+    <thead><tr><th>Method</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>.setData(array)</code></td><td>Replace all data and re-render</td></tr>
+        <tr><td><code>.refresh()</code></td><td>Re-apply current filter and sort</td></tr>
+    </tbody>
+</table>

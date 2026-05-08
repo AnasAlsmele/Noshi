@@ -1,0 +1,59 @@
+<h1 id="ajax">AJAX</h1>
+<p>The <code>Noshi.ajax</code> utility provides a modern, Promise-based way to perform asynchronous HTTP requests.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Use <code>async/await</code> for clean, readable data fetching.</p>
+
+<code data-target="js" data-code="try {
+    const response = await Noshi.ajax({
+        url: 'https://api.example.com/data',
+        method: 'GET'
+    });
+    const data = JSON.parse(response);
+    console.log(data);
+} catch (err) {
+    Noshi.errorScreen('Request failed: ' + err.text);
+}"></code>
+
+<h2 id="post-requests">POST Requests</h2>
+<p>You can send data and custom headers in your requests.</p>
+
+<code data-target="js" data-code="await Noshi.ajax({
+    url: '/api/submit',
+    method: 'POST',
+    data: JSON.stringify({ id: 123 }),
+    headers: { 'Content-Type': 'application/json' }
+});"></code>
+
+<h2 id="configuration">Configuration Object</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>url</code></td>
+            <td>String</td>
+            <td>The target URL.</td>
+        </tr>
+        <tr>
+            <td><code>method</code></td>
+            <td>String</td>
+            <td>'GET', 'POST', 'PUT', 'DELETE', etc.</td>
+        </tr>
+        <tr>
+            <td><code>data</code></td>
+            <td>Any</td>
+            <td>Body data to be sent.</td>
+        </tr>
+        <tr>
+            <td><code>headers</code></td>
+            <td>Object</td>
+            <td>Custom HTTP headers.</td>
+        </tr>
+    </tbody>
+</table>

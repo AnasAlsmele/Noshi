@@ -1,0 +1,45 @@
+<h1 id="toasts">Toasts</h1>
+<p>Toasts are non-intrusive notifications that appear at the bottom of the screen to provide quick feedback to the user.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Toasts are triggered directly and disappear automatically after a set duration.</p>
+
+<code data-target="js" data-code="builder.toast({
+    message: 'Data saved successfully!',
+    type: 'success',
+    duration: 3000
+});"></code>
+
+<h2 id="types">Notification Types</h2>
+<p>There are four built-in toast types: <code>info</code>, <code>success</code>, <code>warning</code>, and <code>error</code>.</p>
+
+<code data-target="js" data-code="builder.toast({ message: 'Low disk space.', type: 'warning' });
+builder.toast({ message: 'Connection lost.', type: 'error' });"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>message</code></td>
+            <td>String</td>
+            <td>The message to display.</td>
+        </tr>
+        <tr>
+            <td><code>type</code></td>
+            <td>String</td>
+            <td>One of: 'info', 'success', 'warning', 'error'.</td>
+        </tr>
+        <tr>
+            <td><code>duration</code></td>
+            <td>Number</td>
+            <td>Duration in milliseconds (default: 3000). Set to 0 for persistent toasts.</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,23 +1,37 @@
 <h1 id="installation">Installation</h1>
-<p class="np">To install <b>Noshi</b> follow the steps below.</p>
-<ul class="nl">
-<li><p class="np">Download and extract <a href="https://github.com/AnasMusic/Noshi/archive/main.zip" target="_blank">Noshi</a> inside your project.</p></li>
-<li>
-<p class="np">Include '<b>noshi.css</b>' and '<b>noshi.js</b>' at the end of the header section.</p>
-<code class="ncode" data-target="html" data-code="
-<head>
-    other links and scripts
-    ...
-    ...
-    <link rel='stylesheet' href='Noshi-main/noshi.css'>
-    <script src='Noshi-main/noshi.js' type='application/javascript'></script>
-</head>">
-</code>
-</li>
-<li><p class="np">Enjoy.</p></li>
-</ul>
-<space></space>
-<h1 id="what_next">What's Next</h1>
-<p class="np">After ensuring that <b>Noshi</b> is connected to your website, you can now move to learn each component and how it looks like.</p>
-<space></space>
-<p class="np-note-green">Components, <a href="index.html?page=components" target="_self">learn more</a>.</p>
+<p>Noshi is designed to be easy to integrate into any project. Just follow these simple steps.</p>
+
+<h2 id="manual-installation">Manual Installation</h2>
+<p>1. Download the latest version of Noshi or clone the repository.</p>
+<p>2. Copy <code>noshi.css</code> and <code>noshi.js</code> into your project's assets folder.</p>
+<p>3. Include them in your HTML <code>&lt;head&gt;</code> section:</p>
+
+<code data-target="html" data-code="<link rel='stylesheet' href='css/noshi.css'>
+<script src='js/noshi.js'></script>"></code>
+
+<h2 id="using-the-toolkit">Using the Toolkit</h2>
+<p>Once included, you can start building your application within the <code>Noshi.start()</code> block:</p>
+
+<code data-target="js" data-code="Noshi.start(() => {
+    const builder = new NoshiBuilder();
+    
+    // Your app logic here
+    const app = builder.button({ text: 'Launch App', class: 'active' });
+    document.body.appendChild(app);
+});"></code>
+
+<h2 id="project-structure">Recommended Project Structure</h2>
+<p>For larger projects, we recommend a structure that keeps your code separate from the toolkit:</p>
+
+<code data-target="text" data-code="/my-project
+  /assets
+    /noshi
+      noshi.js
+      noshi.css
+      /style
+      /lang
+  /js
+    app.js
+  /css
+    styles.css
+  index.html"></code>

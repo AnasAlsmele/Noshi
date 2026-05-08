@@ -27,6 +27,20 @@
     --noshi-transition: all 0.3s ease;
 }
 
+/* Dark Mode Overrides */
+.noshi-dark-mode {
+    --noshi-light: #1a1a1a;
+    --noshi-gray: #333333;
+    --noshi-dark: #f8f9fa;
+    --noshi-text: #f0f0f0;
+    --noshi-text-muted: #a0a0a0;
+}
+
+.noshi-dark-mode body, 
+.noshi-dark-mode .docs-main {
+    background-color: #121212;
+}
+
 /* width */
 .w5{width: 5%;}
 .w10{width: 10%;}
@@ -86,6 +100,24 @@
 .ai-start{align-items: flex-start;}
 .ai-end{align-items: flex-end;}
 
+/* RTL Support */
+[dir="rtl"], .rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .left, .rtl .left { text-align: right; }
+[dir="rtl"] .right, .rtl .right { text-align: left; }
+
+[dir="rtl"] .note-holder, 
+[dir="rtl"] .btn-holder {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .input-holder {
+    flex-direction: row-reverse;
+}
+
 /* font type */
 .bold{font-weight: bold;}
 .italic{font-style: italic;}
@@ -131,6 +163,7 @@
 .bggmg{background-image: linear-gradient(45deg, magenta, gold);}
 .bggpg{background-image: linear-gradient(45deg, lightpink, seagreen);}
 .bgggb{background-image: linear-gradient(45deg, seagreen, lightblue);}
+.bggbw{background-image: linear-gradient(45deg, black, white);}
 .bggbw{background-image: linear-gradient(45deg, black, white);}
 .bggpp{background-image: linear-gradient(45deg, lightpink, purple);}
 .bgggp{background-image: linear-gradient(45deg, gold, purple);}

@@ -1,0 +1,58 @@
+<h1 id="inputs">Inputs</h1>
+<p>Noshi provides modern, styled input elements that include focus states and support for various types.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Create a standard text input using <code>builder.input()</code>.</p>
+
+<code data-target="js" data-code="const nameInput = builder.input({
+    placeholder: 'Enter your name',
+    id: 'name-field',
+    name: 'user_name'
+});"></code>
+
+<h2 id="special-types">Checkboxes & Radios</h2>
+<p>Noshi automatically wraps checkboxes and radio buttons in a holder with a clickable label for a better user experience.</p>
+
+<code data-target="js" data-code="const check = builder.input({
+    type: 'checkbox',
+    text: 'I agree to the terms',
+    id: 'terms-check'
+});"></code>
+
+<h2 id="configuration">Configuration Options</h2>
+<table class="noshi-table">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>type</code></td>
+            <td>String</td>
+            <td>Standard HTML input types (text, password, checkbox, etc.).</td>
+        </tr>
+        <tr>
+            <td><code>placeholder</code></td>
+            <td>String</td>
+            <td>Placeholder text for text-based inputs.</td>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td>String</td>
+            <td>Label text for checkboxes and radios.</td>
+        </tr>
+        <tr>
+            <td><code>value</code></td>
+            <td>String</td>
+            <td>Initial value.</td>
+        </tr>
+        <tr>
+            <td><code>required</code></td>
+            <td>Boolean</td>
+            <td>Adds the required attribute.</td>
+        </tr>
+    </tbody>
+</table>

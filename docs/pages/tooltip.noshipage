@@ -1,0 +1,28 @@
+<h1 id="tooltip">Tooltip</h1>
+<p>Tooltips display helpful hint text when hovering over any element.</p>
+
+<h2 id="usage">Usage</h2>
+<pre class="docs-code">const b = new NoshiBuilder();
+const btn = b.button({ text: 'Delete', class: 'error' });
+
+// Wrap any element with a tooltip
+const withTip = b.tooltip(btn, { text: 'Permanently delete this record', position: 'top' });
+document.body.appendChild(withTip);</pre>
+
+<h2 id="positions">Positions</h2>
+<pre class="docs-code">b.tooltip(el, { text: 'Tooltip above',  position: 'top'    });
+b.tooltip(el, { text: 'Tooltip below',  position: 'bottom' });
+b.tooltip(el, { text: 'Tooltip left',   position: 'left'   });
+b.tooltip(el, { text: 'Tooltip right',  position: 'right'  });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>text</code></td><td>String</td><td>Tooltip message</td></tr>
+        <tr><td><code>position</code></td><td>String</td><td>top (default), bottom, left, right</td></tr>
+    </tbody>
+</table>
+
+<h2 id="note">Note</h2>
+<p><code>builder.tooltip()</code> wraps the element in a <code>&lt;span&gt;</code> container and returns the wrapper. Append the wrapper — not the original element — to the DOM.</p>
