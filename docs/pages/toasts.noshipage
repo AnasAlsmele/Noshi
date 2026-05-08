@@ -1,0 +1,48 @@
+<h1 id="toasts">Toasts</h1>
+<p>Non-blocking notification messages that slide in from the bottom-right and auto-dismiss.</p>
+
+<h2 id="types">Types</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:.75rem;flex-wrap:wrap';
+['info','success','warning','error'].forEach(type => {
+    const btn = b.button({
+        text: type.charAt(0).toUpperCase() + type.slice(1),
+        class: type === 'error' ? 'error' : type === 'success' ? 'correct' : type === 'warning' ? 'warning' : 'outline',
+        click: () => b.toast({ message: `This is a ${type} notification!`, type })
+    });
+    wrap.appendChild(btn);
+});
+return wrap;
+</script>
+<pre class="docs-code">b.toast({ message: 'Saved successfully!',   type: 'success' });
+b.toast({ message: 'Something went wrong.', type: 'error'   });
+b.toast({ message: 'Heads up!',             type: 'warning' });
+b.toast({ message: 'New message received.', type: 'info'    });</pre>
+
+<h2 id="duration">Custom Duration</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:.75rem;flex-wrap:wrap';
+wrap.appendChild(b.button({ text: '⚡ Quick (1s)',     class: 'outline', click: () => b.toast({ message: 'Quick toast — gone in 1s!',     type: 'info',    duration: 1000 }) }));
+wrap.appendChild(b.button({ text: '⏳ Persistent',     class: 'outline', click: () => b.toast({ message: 'Close me manually with ×',      type: 'warning', duration: 0    }) }));
+wrap.appendChild(b.button({ text: '✅ Long (8s)',       class: 'outline', click: () => b.toast({ message: 'This stays for 8 seconds.',      type: 'success', duration: 8000 }) }));
+return wrap;
+</script>
+<pre class="docs-code">// stays 1 second
+b.toast({ message: 'Quick!', type: 'info', duration: 1000 });
+
+// persistent — close manually
+b.toast({ message: 'Persistent', type: 'warning', duration: 0 });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>message</code></td><td>String</td><td>Notification text</td></tr>
+        <tr><td><code>type</code></td><td>String</td><td>info, success, warning, error</td></tr>
+        <tr><td><code>duration</code></td><td>Number</td><td>Auto-dismiss in ms (default: 3500, set 0 to disable)</td></tr>
+    </tbody>
+</table>

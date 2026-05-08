@@ -1,0 +1,60 @@
+<h1 id="store">Noshi.store()</h1>
+<p>A lightweight reactive state manager built into Noshi. No extra libraries needed. Share data across components and react to changes automatically.</p>
+
+<h2 id="basic">Basic Usage</h2>
+<pre class="docs-code">// Set and get values
+Noshi.store.set('count', 0);
+Noshi.store.get('count'); // 0
+
+// Subscribe to changes
+const unsub = Noshi.store.on('count', (val) => {
+    document.querySelector('#counter').textContent = val;
+});
+
+// Update value
+Noshi.store.update('count', n => n + 1);
+
+// Stop listening
+unsub();</pre>
+
+<h2 id="computed">Computed Values</h2>
+<p>Derived values that automatically recalculate when their dependencies change.</p>
+<pre class="docs-code">Noshi.store.set('price', 100);
+Noshi.store.set('tax', 0.15);
+
+Noshi.store.compute('total', ['price', 'tax'], (s) =>
+    s.price + (s.price * s.tax)
+);
+
+Noshi.store.on('total', val => console.log('Total:', val)); // 115</pre>
+
+<h2 id="persist">Persistence</h2>
+<p>Automatically sync a key to <code>localStorage</code>.</p>
+<pre class="docs-code">Noshi.store.persist('theme', 'light');
+Noshi.store.set('theme', 'dark'); // saved to localStorage automatically</pre>
+
+<h2 id="bind">DOM Binding</h2>
+<p>Live-bind a store value directly to any DOM element property.</p>
+<pre class="docs-code">Noshi.store.bind('username', document.querySelector('#welcome-msg'), 'textContent');
+Noshi.store.set('username', 'Anas'); // #welcome-msg updates instantly</pre>
+
+<h2 id="batch">Batch Updates</h2>
+<pre class="docs-code">Noshi.store.batch({ count: 0, user: null, loading: false });</pre>
+
+<h2 id="api">Full API Reference</h2>
+<table>
+    <thead><tr><th>Method</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>set(key, val)</code></td><td>Set a value and notify listeners</td></tr>
+        <tr><td><code>get(key)</code></td><td>Get current value</td></tr>
+        <tr><td><code>getAll()</code></td><td>Snapshot of all state</td></tr>
+        <tr><td><code>on(key, fn)</code></td><td>Subscribe (returns unsubscribe fn)</td></tr>
+        <tr><td><code>off(key, fn)</code></td><td>Unsubscribe a listener</td></tr>
+        <tr><td><code>update(key, fn)</code></td><td>Functional update: <code>n => n + 1</code></td></tr>
+        <tr><td><code>compute(key, deps, fn)</code></td><td>Auto-computed derived value</td></tr>
+        <tr><td><code>persist(key, default)</code></td><td>Sync to localStorage</td></tr>
+        <tr><td><code>bind(key, el, prop)</code></td><td>Live-bind to DOM element property</td></tr>
+        <tr><td><code>batch(obj)</code></td><td>Set many keys at once</td></tr>
+        <tr><td><code>clear(key?)</code></td><td>Remove listeners and state</td></tr>
+    </tbody>
+</table>

@@ -1,0 +1,97 @@
+<h1 id="ajax">AJAX</h1>
+<p><code>Noshi.ajax()</code> is a lightweight Promise-based HTTP utility. No fetch boilerplate, no dependencies.</p>
+
+<h2 id="basic">Basic GET Request</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const output = document.createElement('pre');
+output.style.cssText = 'background:#0d1117;color:#a5d6ff;padding:1rem;border-radius:8px;font-size:.8rem;white-space:pre-wrap;max-height:200px;overflow:auto;width:100%';
+output.textContent = 'Click the button to fetch data...';
+
+const btn = b.button({
+    text: '📡 Fetch Users (JSONPlaceholder)',
+    class: 'active',
+    click: async () => {
+        btn.disabled = true; btn.textContent = 'Loading...';
+        try {
+            const raw = await Noshi.ajax({ url: 'https://jsonplaceholder.typicode.com/users' });
+            const users = JSON.parse(raw);
+            output.textContent = users.slice(0,3).map(u => `👤 ${u.name} — ${u.email}`).join('\n');
+        } catch(e) {
+            output.textContent = 'Error: ' + e.message;
+        }
+        btn.disabled = false; btn.textContent = '📡 Fetch Users (JSONPlaceholder)';
+    }
+});
+const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+wrap.appendChild(btn); wrap.appendChild(output);
+return wrap;
+</script>
+<pre class="docs-code">const data = await Noshi.ajax({ url: '/api/users' });
+const users = JSON.parse(data);
+console.log(users);</pre>
+
+<h2 id="post">POST Request</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const out = document.createElement('pre');
+out.style.cssText = 'background:#0d1117;color:#a5d6ff;padding:1rem;border-radius:8px;font-size:.8rem;white-space:pre-wrap;width:100%';
+out.textContent = 'Click to POST data...';
+
+const btn = b.button({
+    text: '📤 POST Data',
+    class: 'correct',
+    click: async () => {
+        btn.disabled = true; btn.textContent = 'Posting...';
+        try {
+            const raw = await Noshi.ajax({
+                url: 'https://jsonplaceholder.typicode.com/posts',
+                method: 'POST',
+                body: JSON.stringify({ title: 'Hello Noshi', body: 'A post from Noshi.ajax!', userId: 1 }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const res = JSON.parse(raw);
+            out.textContent = 'Response (id: ' + res.id + '):\n' + JSON.stringify(res, null, 2);
+        } catch(e) { out.textContent = 'Error: ' + e; }
+        btn.disabled = false; btn.textContent = '📤 POST Data';
+    }
+});
+const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+wrap.appendChild(btn); wrap.appendChild(out);
+return wrap;
+</script>
+<pre class="docs-code">const res = await Noshi.ajax({
+    url: '/api/posts',
+    method: 'POST',
+    body: JSON.stringify({ title: 'Hello', userId: 1 }),
+    headers: { 'Content-Type': 'application/json' }
+});</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>url</code></td><td>String</td><td>Request URL (required)</td></tr>
+        <tr><td><code>method</code></td><td>String</td><td>GET (default), POST, PUT, PATCH, DELETE</td></tr>
+        <tr><td><code>body</code></td><td>String</td><td>Request body (use <code>JSON.stringify()</code> for JSON)</td></tr>
+        <tr><td><code>headers</code></td><td>Object</td><td>Custom HTTP headers</td></tr>
+    </tbody>
+</table>
+
+<h2 id="error-handling">Error Handling</h2>
+<pre class="docs-code">try {
+    const data = await Noshi.ajax({ url: '/api/data' });
+    renderData(JSON.parse(data));
+} catch (err) {
+    console.error('Request failed:', err);
+    b.toast({ message: 'Failed to load data', type: 'error' });
+}</pre>
+
+<h2 id="with-loading">Combined with Loading Overlay</h2>
+<pre class="docs-code">Noshi.loading.show('Fetching data...');
+try {
+    const raw = await Noshi.ajax({ url: '/api/report' });
+    renderChart(JSON.parse(raw));
+} finally {
+    Noshi.loading.hide();
+}</pre>

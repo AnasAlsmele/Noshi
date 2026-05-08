@@ -1,0 +1,52 @@
+<h1 id="modals">Modals</h1>
+<p>Overlay dialogs with a blurred backdrop, smooth animations, and fully customizable content and footer.</p>
+
+<h2 id="basic">Basic Modal</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const modal = b.modal({
+    title: 'Confirm Action',
+    content: 'Are you sure you want to delete this record? This cannot be undone.',
+    footer: [
+        b.button({ text: 'Cancel',  class: 'ghost',  click: () => modal.close() }),
+        b.button({ text: 'Delete',  class: 'error',  click: () => { alert('Deleted!'); modal.close(); } })
+    ]
+});
+const openBtn = b.button({ text: 'Open Modal', class: 'active', click: () => modal.open() });
+return openBtn;
+</script>
+<pre class="docs-code">const modal = b.modal({
+    title:   'Confirm Action',
+    content: 'Are you sure?',
+    footer: [
+        b.button({ text: 'Cancel', class: 'ghost', click: () => modal.close() }),
+        b.button({ text: 'Delete', class: 'error',  click: () => modal.close() })
+    ]
+});
+// control it:
+modal.open();
+modal.close();</pre>
+
+<h2 id="custom-width">Custom Width</h2>
+<pre class="docs-code">b.modal({ title: 'Wide Modal', content: myEl, width: '800px' });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>title</code></td><td>String</td><td>Modal header title</td></tr>
+        <tr><td><code>content</code></td><td>HTMLElement|String</td><td>Main body content</td></tr>
+        <tr><td><code>footer</code></td><td>Array|HTMLElement</td><td>Footer elements (usually buttons)</td></tr>
+        <tr><td><code>width</code></td><td>String</td><td>Max width (default: 560px)</td></tr>
+    </tbody>
+</table>
+
+<h2 id="api">Modal API</h2>
+<table>
+    <thead><tr><th>Method</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>modal.open()</code></td><td>Show the modal</td></tr>
+        <tr><td><code>modal.close()</code></td><td>Hide the modal</td></tr>
+        <tr><td><code>modal.overlay</code></td><td>Access the overlay element directly</td></tr>
+    </tbody>
+</table>

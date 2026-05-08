@@ -1,0 +1,81 @@
+<h1 id="stepper">Stepper</h1>
+<p>Multi-step wizard with visual step indicators, navigation buttons, and optional per-step validation.</p>
+
+<h2 id="basic">Basic Stepper</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+
+const step1 = document.createElement('div');
+step1.innerHTML = '<p style="margin-bottom:1rem;color:var(--muted)">Fill in your personal details.</p>';
+const nameInput = b.input({ type: 'text', placeholder: 'Full name', id: 'demo-name' });
+const emailInput = b.input({ type: 'email', placeholder: 'Email address', id: 'demo-email' });
+step1.appendChild(nameInput);
+step1.style.display = 'flex';
+step1.style.flexDirection = 'column';
+step1.style.gap = '.75rem';
+step1.appendChild(emailInput);
+
+const step2 = document.createElement('div');
+step2.style.cssText = 'display:flex;flex-direction:column;gap:.75rem';
+step2.innerHTML = '<p style="color:var(--muted)">Choose your plan.</p>';
+['Starter — Free','Pro — $9/mo','Enterprise — $49/mo'].forEach(plan => {
+    step2.appendChild(b.input({ type: 'radio', name: 'demo-plan', text: plan, value: plan }));
+});
+
+const step3 = document.createElement('div');
+step3.innerHTML = '<p style="font-size:1.3rem;text-align:center;padding:1rem 0">🎉</p><p style="text-align:center;color:var(--muted)">All done! Your account has been created.</p>';
+
+return b.stepper({
+    steps: [
+        {
+            title: 'Account',
+            content: step1,
+            validate: () => {
+                const n = document.getElementById('demo-name');
+                if (!n || !n.value.trim()) { alert('Please enter your name'); return false; }
+                return true;
+            }
+        },
+        { title: 'Plan',    content: step2 },
+        { title: 'Done',    content: step3 }
+    ],
+    completeText: '🚀 Create Account',
+    onComplete: () => b.toast({ message: 'Account created!', type: 'success' })
+});
+</script>
+<pre class="docs-code">b.stepper({
+    steps: [
+        {
+            title: 'Account',
+            content: myFormEl,
+            validate: () => {
+                // return false to block Next
+                return nameInput.value.trim() !== '';
+            }
+        },
+        { title: 'Review', content: reviewEl },
+        { title: 'Done',   content: successEl }
+    ],
+    completeText: 'Submit',
+    onComplete: () => submitMyForm()
+});</pre>
+
+<h2 id="api">Stepper API</h2>
+<pre class="docs-code">const wizard = b.stepper({ steps: [...] });
+
+wizard.goTo(2);   // jump to step index (0-based)
+wizard.next();    // move to next step
+wizard.prev();    // move to previous step</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>steps</code></td><td>Array</td><td>Array of step objects</td></tr>
+        <tr><td><code>steps[].title</code></td><td>String</td><td>Step label in the indicator bar</td></tr>
+        <tr><td><code>steps[].content</code></td><td>HTMLElement|String</td><td>Step content</td></tr>
+        <tr><td><code>steps[].validate</code></td><td>Function</td><td>Returns <code>false</code> to block advancing</td></tr>
+        <tr><td><code>completeText</code></td><td>String</td><td>Last step button label (default: "Finish ✓")</td></tr>
+        <tr><td><code>onComplete</code></td><td>Function</td><td>Called when last step button is clicked</td></tr>
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+<h1 id="darkmode">Dark Mode</h1>
+<p>Noshi has a built-in dark mode system that toggles a CSS class on <code>body</code> and persists the user's preference automatically.</p>
+
+<h2 id="toggle">Toggling Dark Mode</h2>
+<pre class="docs-code">// Toggle (returns true if now dark)
+const isDark = Noshi.toggleDarkMode();
+
+// Force on or off
+Noshi.toggleDarkMode(true);   // force dark
+Noshi.toggleDarkMode(false);  // force light</pre>
+
+<h2 id="button">Dark Mode Button Example</h2>
+<pre class="docs-code">const b = new NoshiBuilder();
+
+const btn = b.button({
+    text: '🌙',
+    class: 'ghost',
+    click: () => {
+        const isDark = Noshi.toggleDarkMode();
+        btn.textContent = isDark ? '☀️' : '🌙';
+    }
+});</pre>
+
+<h2 id="how">How It Works</h2>
+<ul>
+    <li>Adds/removes the <code>.noshi-dark-mode</code> class on <code>document.body</code></li>
+    <li>All CSS variables automatically override to dark values</li>
+    <li>Preference is saved to <code>localStorage</code> and restored on next page load</li>
+    <li>No extra CSS files needed — dark mode variables are embedded in <code>noshi.js</code></li>
+</ul>
+
+<h2 id="custom">Custom Dark Styles</h2>
+<p>Target <code>.noshi-dark-mode</code> in your own CSS to override any element:</p>
+<pre class="docs-code">.noshi-dark-mode .my-card {
+    background: #1e1e2e;
+    color: #fff;
+}</pre>

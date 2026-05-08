@@ -1,0 +1,60 @@
+<h1 id="buttons">Buttons</h1>
+<p>Buttons are the primary interactive element. Noshi provides 9 variants covering every common use case.</p>
+
+<h2 id="variants">Variants</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return [
+    b.button({ text: 'Default',  class: 'default'  }),
+    b.button({ text: 'Primary',  class: 'active'   }),
+    b.button({ text: 'Success',  class: 'correct'  }),
+    b.button({ text: 'Warning',  class: 'warning'  }),
+    b.button({ text: 'Danger',   class: 'error'    }),
+    b.button({ text: 'Dark',     class: 'dark'     }),
+    b.button({ text: 'Outline',  class: 'outline'  }),
+    b.button({ text: 'Ghost',    class: 'ghost'    })
+];
+</script>
+<pre class="docs-code">b.button({ text: 'Primary', class: 'active'  });
+b.button({ text: 'Danger',  class: 'error'   });
+b.button({ text: 'Outline', class: 'outline' });
+b.button({ text: 'Ghost',   class: 'ghost'   });</pre>
+
+<h2 id="sizes">Sizes</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const sm = b.button({ text: 'Small',   class: 'active btn-sm' });
+const md = b.button({ text: 'Default', class: 'active'        });
+const lg = b.button({ text: 'Large',   class: 'active btn-lg' });
+return [sm, md, lg];
+</script>
+<pre class="docs-code">b.button({ text: 'Small',   class: 'active btn-sm' });
+b.button({ text: 'Default', class: 'active'        });
+b.button({ text: 'Large',   class: 'active btn-lg' });</pre>
+
+<h2 id="disabled">Disabled</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.button({ text: 'Disabled', class: 'active', disabled: true });
+</script>
+<pre class="docs-code">b.button({ text: 'Disabled', class: 'active', disabled: true });</pre>
+
+<h2 id="with-click">With Click Handler</h2>
+<pre class="docs-code">b.button({
+    text:  'Submit',
+    class: 'active',
+    click: () => Noshi.toast({ message: 'Submitted!', type: 'success' })
+});</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>text</code></td><td>String</td><td>Button label</td></tr>
+        <tr><td><code>class</code></td><td>String</td><td>Variant: default, active, correct, warning, error, dark, outline, ghost</td></tr>
+        <tr><td><code>click</code></td><td>Function</td><td>Click event handler</td></tr>
+        <tr><td><code>disabled</code></td><td>Boolean</td><td>Disables the button</td></tr>
+        <tr><td><code>icon</code></td><td>String</td><td>Icon class (left by default)</td></tr>
+        <tr><td><code>iconPos</code></td><td>String</td><td>'right' to put icon after text</td></tr>
+    </tbody>
+</table>

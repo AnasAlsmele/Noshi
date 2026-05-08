@@ -1,0 +1,31 @@
+<h1 id="stats">Stats Card</h1>
+<p>Dashboard KPI cards for displaying key metrics with an icon, value, label, and trend indicator.</p>
+
+<h2 id="basic">Basic</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const grid = document.createElement('div');
+grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;width:100%';
+grid.appendChild(b.statsCard({ emoji: '👥', value: '1,240', label: 'Total Users',  trend: '+12%', trendUp: true,  iconType: 'primary' }));
+grid.appendChild(b.statsCard({ emoji: '💰', value: '$8.4k', label: 'Revenue',      trend: '+5%',  trendUp: true,  iconType: 'success' }));
+grid.appendChild(b.statsCard({ emoji: '📦', value: '320',   label: 'Orders',       trend: '-2%',  trendUp: false, iconType: 'warning' }));
+grid.appendChild(b.statsCard({ emoji: '❌', value: '3',     label: 'Errors',       trend: '+1',   trendUp: false, iconType: 'error'   }));
+return grid;
+</script>
+<pre class="docs-code">b.statsCard({
+    emoji: '👥', value: '1,240',
+    label: 'Total Users', trend: '+12%', trendUp: true
+});</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>value</code></td><td>String</td><td>The main metric</td></tr>
+        <tr><td><code>label</code></td><td>String</td><td>Description below the value</td></tr>
+        <tr><td><code>emoji</code></td><td>String</td><td>Emoji for the icon box</td></tr>
+        <tr><td><code>iconType</code></td><td>String</td><td>primary, success, warning, error</td></tr>
+        <tr><td><code>trend</code></td><td>String</td><td>Trend text (e.g. "+12%")</td></tr>
+        <tr><td><code>trendUp</code></td><td>Boolean</td><td>true = green ▲, false = red ▼</td></tr>
+    </tbody>
+</table>

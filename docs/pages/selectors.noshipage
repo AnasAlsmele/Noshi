@@ -1,0 +1,71 @@
+<h1 id="selectors">Selectors</h1>
+<p>Noshi ships lightweight DOM selector helpers — short aliases for <code>querySelector</code> / <code>querySelectorAll</code> with bonus utilities.</p>
+
+<h2 id="basic">Basic Selectors</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const out = document.createElement('pre');
+out.id = 'sel-demo-output';
+out.style.cssText = 'background:#0d1117;color:#a5d6ff;padding:1rem;border-radius:8px;font-size:.82rem;white-space:pre-wrap;width:100%;margin-top:.5rem';
+out.textContent = 'Click a button to run a selector demo...';
+
+const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+
+const btns = document.createElement('div'); btns.style.cssText = 'display:flex;gap:.5rem;flex-wrap:wrap';
+
+btns.appendChild(b.button({ text: 'Noshi.$()', class: 'outline', click: () => {
+    const el = Noshi.$('#sel-demo-output');
+    out.textContent = 'Noshi.$(\'#sel-demo-output\') found:\n  tagName: ' + el.tagName + '\n  id: ' + el.id;
+}}));
+btns.appendChild(b.button({ text: 'Noshi.$$()', class: 'outline', click: () => {
+    const els = Noshi.$$('button');
+    out.textContent = 'Noshi.$(\'button\') found ' + els.length + ' button(s) in the document.';
+}}));
+btns.appendChild(b.button({ text: 'Noshi.create()', class: 'outline', click: () => {
+    out.textContent = 'Noshi.create("div", { class:"my-div", text:"Hello" }) creates:\n<div class="my-div">Hello</div>';
+}}));
+
+wrap.appendChild(btns); wrap.appendChild(out);
+return wrap;
+</script>
+<pre class="docs-code">// Single element (like querySelector)
+const header = Noshi.$('.noshi-nav');
+
+// All matching elements (like querySelectorAll → Array)
+const buttons = Noshi.$$('.btn');
+buttons.forEach(btn => btn.classList.add('active'));
+
+// Scoped to a parent
+const row = Noshi.$('.table-row');
+const cells = Noshi.$$('td', row);</pre>
+
+<h2 id="create">Noshi.create()</h2>
+<pre class="docs-code">const el = Noshi.create('div', {
+    class: 'my-card',
+    id:    'card-1',
+    style: 'padding: 1rem',
+    text:  'Card content'
+});
+document.body.appendChild(el);</pre>
+
+<h2 id="on">Event Helpers</h2>
+<pre class="docs-code">// Attach event to single element
+Noshi.on('#submit-btn', 'click', (e) => handleSubmit(e));
+
+// Attach to multiple elements
+Noshi.onAll('.tab-btn', 'click', function() {
+    Noshi.$$('.tab-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+});</pre>
+
+<h2 id="api">API Reference</h2>
+<table>
+    <thead><tr><th>Method</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>Noshi.$(selector, parent?)</code></td><td>Returns first matching element (like <code>querySelector</code>)</td></tr>
+        <tr><td><code>Noshi.$$(selector, parent?)</code></td><td>Returns Array of all matching elements</td></tr>
+        <tr><td><code>Noshi.create(tag, attrs)</code></td><td>Create and return a configured DOM element</td></tr>
+        <tr><td><code>Noshi.on(selector, event, fn)</code></td><td>Attach event listener to first match</td></tr>
+        <tr><td><code>Noshi.onAll(selector, event, fn)</code></td><td>Attach event listener to all matches</td></tr>
+    </tbody>
+</table>

@@ -1,0 +1,206 @@
+<h1 id="inputs">Inputs</h1>
+<p>Noshi provides a unified <code>builder.input()</code> factory for every HTML input type, plus a rich <code>builder.datepicker()</code> component.</p>
+
+<h2 id="text-types">Text Inputs</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+[
+    { type: 'text',     placeholder: 'Full name'          },
+    { type: 'email',    placeholder: 'Email address'      },
+    { type: 'password', placeholder: 'Password'           },
+    { type: 'tel',      placeholder: 'Phone number'       },
+    { type: 'url',      placeholder: 'https://example.com'},
+    { type: 'search',   placeholder: 'Search...'          },
+    { type: 'number',   placeholder: 'Age', min: 0, max: 120 },
+].forEach(cfg => wrap.appendChild(b.input(cfg)));
+return wrap;
+</script>
+<pre class="docs-code">b.input({ type: 'text',     placeholder: 'Full name'     });
+b.input({ type: 'email',    placeholder: 'Email address' });
+b.input({ type: 'password', placeholder: 'Password'      });
+b.input({ type: 'number',   min: 0, max: 100             });</pre>
+
+<h2 id="textarea">Textarea</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.input({ type: 'textarea', placeholder: 'Write your message here...', rows: 5 });
+</script>
+<pre class="docs-code">b.input({ type: 'textarea', placeholder: 'Your message', rows: 5 });
+b.input({ type: 'textarea', resize: false }); // disable manual resize</pre>
+
+<h2 id="checkbox-radio">Checkbox & Radio</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.5rem';
+wrap.appendChild(b.input({ type: 'checkbox', text: 'I agree to the terms and conditions', name: 'agree' }));
+wrap.appendChild(b.input({ type: 'checkbox', text: 'Subscribe to newsletter', name: 'subscribe', checked: true }));
+const sep = document.createElement('hr'); sep.style.cssText='margin:.5rem 0;border:none;border-top:1px solid var(--gray)';
+wrap.appendChild(sep);
+['Developer','Designer','Manager'].forEach(r => wrap.appendChild(b.input({ type: 'radio', name: 'demo-role', text: r, value: r.toLowerCase() })));
+return wrap;
+</script>
+<pre class="docs-code">b.input({ type: 'checkbox', text: 'Accept terms', name: 'agree', checked: true });
+b.input({ type: 'radio',    text: 'Option A',     name: 'choice', value: 'a'  });
+b.input({ type: 'radio',    text: 'Option B',     name: 'choice', value: 'b'  });</pre>
+
+<h2 id="toggle">Toggle Switch</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem';
+wrap.appendChild(b.input({ type: 'toggle', text: 'Enable notifications', checked: true  }));
+wrap.appendChild(b.input({ type: 'toggle', text: 'Dark mode'                            }));
+wrap.appendChild(b.input({ type: 'toggle', text: 'Auto-save drafts',     checked: true  }));
+return wrap;
+</script>
+<pre class="docs-code">b.input({ type: 'toggle', text: 'Enable notifications', checked: true });
+b.input({ type: 'toggle', text: 'Dark mode', change: (e) => Noshi.toggleDarkMode() });</pre>
+
+<h2 id="range">Range Slider</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:1.25rem;width:100%';
+wrap.appendChild(b.input({ type: 'range', label: 'Volume', min: 0, max: 100, value: 60, unit: '%' }));
+wrap.appendChild(b.input({ type: 'range', label: 'Price Range', min: 0, max: 1000, value: 350, step: 50, unit: '$' }));
+return wrap;
+</script>
+<pre class="docs-code">b.input({ type: 'range', label: 'Volume', min: 0, max: 100, value: 60, unit: '%' });</pre>
+
+<h2 id="color">Color Picker</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.input({ type: 'color', value: '#0077b6', change: (v) => console.log(v) });
+</script>
+<pre class="docs-code">b.input({ type: 'color', value: '#0077b6', change: (hex) => console.log('Color:', hex) });</pre>
+
+<h2 id="file">File Input</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+wrap.appendChild(b.input({ type: 'file', placeholder: 'Choose any file...' }));
+wrap.appendChild(b.input({ type: 'file', placeholder: 'Upload images (multiple)', accept: 'image/*', multiple: true }));
+return wrap;
+</script>
+<pre class="docs-code">b.input({ type: 'file', placeholder: 'Choose file...', accept: 'image/*', multiple: true });</pre>
+
+<h2 id="datalist">Autocomplete / Datalist</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.input({
+    type: 'datalist',
+    placeholder: 'Search a country...',
+    options: ['Afghanistan','Albania','Algeria','Argentina','Australia','Austria','Belgium','Brazil','Canada','China','Denmark','Egypt','France','Germany','India','Japan','Mexico','Morocco','Netherlands','Pakistan','Russia','Saudi Arabia','Spain','Turkey','United Kingdom','United States']
+});
+</script>
+<pre class="docs-code">b.input({
+    type: 'datalist',
+    placeholder: 'Type to search...',
+    options: ['Option A', 'Option B', 'Option C']
+});</pre>
+
+<h2 id="date-types">Native Date Inputs</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+[
+    { type: 'date',           placeholder: 'Date'              },
+    { type: 'time',           placeholder: 'Time'              },
+    { type: 'datetime-local', placeholder: 'Date & Time'       },
+    { type: 'month',          placeholder: 'Month'             },
+    { type: 'week',           placeholder: 'Week'              }
+].forEach(c => wrap.appendChild(b.input(c)));
+return wrap;
+</script>
+<pre class="docs-code">b.input({ type: 'date'           });
+b.input({ type: 'time'           });
+b.input({ type: 'datetime-local' });
+b.input({ type: 'month'          });
+b.input({ type: 'week'           });</pre>
+
+<h2 id="datepicker">Rich Date Picker</h2>
+<p>The <code>builder.datepicker()</code> component provides a premium styled calendar with single, range, and inline modes, month/year navigation, and a keyboard-friendly interface.</p>
+
+<h3 id="dp-single">Single Date</h3>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.datepicker({
+    placeholder: 'Pick a date...',
+    onChange: (date) => console.log('Selected:', date)
+});
+</script>
+<pre class="docs-code">b.datepicker({ placeholder: 'Pick a date...', onChange: (date) => console.log(date) });</pre>
+
+<h3 id="dp-range">Date Range</h3>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.datepicker({
+    mode: 'range',
+    placeholder: 'Select start → end date',
+    onChange: (range) => console.log('From:', range.start, 'To:', range.end)
+});
+</script>
+<pre class="docs-code">b.datepicker({
+    mode: 'range',
+    onChange: ({ start, end }) => fetchData(start, end)
+});</pre>
+
+<h3 id="dp-inline">Inline Calendar</h3>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.datepicker({ mode: 'inline', onChange: (date) => console.log(date) });
+</script>
+<pre class="docs-code">b.datepicker({ mode: 'inline', onChange: (date) => console.log(date) });</pre>
+
+<h3 id="dp-preselected">Pre-selected Date & Custom Format</h3>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.datepicker({ value: '2025-01-15', format: 'DD/MM/YYYY' });
+</script>
+<pre class="docs-code">b.datepicker({ value: '2025-01-15', format: 'DD/MM/YYYY' });</pre>
+
+<h2 id="dp-api">Datepicker API</h2>
+<table>
+    <thead><tr><th>Method</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>.getValue()</code></td><td>Returns selected Date (or <code>{ start, end }</code> for range mode)</td></tr>
+        <tr><td><code>.setValue('2025-06-01')</code></td><td>Programmatically select a date</td></tr>
+        <tr><td><code>.clear()</code></td><td>Clear the selection</td></tr>
+    </tbody>
+</table>
+
+<h2 id="dp-config">Datepicker Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>mode</code></td><td>String</td><td>single (default), range, inline</td></tr>
+        <tr><td><code>format</code></td><td>String</td><td>Date format: YYYY-MM-DD (default), DD/MM/YYYY, etc.</td></tr>
+        <tr><td><code>placeholder</code></td><td>String</td><td>Input placeholder text</td></tr>
+        <tr><td><code>value</code></td><td>String</td><td>Pre-selected date string</td></tr>
+        <tr><td><code>onChange</code></td><td>Function</td><td>Called with selected Date or range object</td></tr>
+    </tbody>
+</table>
+
+<h2 id="input-config">Input Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Applies To</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>type</code></td><td>All</td><td>text, email, password, number, tel, url, search, date, time, month, week, datetime-local, textarea, checkbox, radio, toggle, range, color, file, datalist</td></tr>
+        <tr><td><code>placeholder</code></td><td>Most</td><td>Placeholder text</td></tr>
+        <tr><td><code>value</code></td><td>Most</td><td>Initial value</td></tr>
+        <tr><td><code>name / id</code></td><td>All</td><td>Name and ID attributes</td></tr>
+        <tr><td><code>required / disabled / readonly</code></td><td>Most</td><td>Boolean attributes</td></tr>
+        <tr><td><code>min / max / step</code></td><td>number, range, date</td><td>Value constraints</td></tr>
+        <tr><td><code>rows</code></td><td>textarea</td><td>Number of visible rows</td></tr>
+        <tr><td><code>multiple / accept</code></td><td>file</td><td>Multiple selection, file type filter</td></tr>
+        <tr><td><code>options</code></td><td>datalist</td><td>Autocomplete option list</td></tr>
+        <tr><td><code>text</code></td><td>checkbox, radio, toggle</td><td>Label text next to the control</td></tr>
+        <tr><td><code>unit</code></td><td>range</td><td>Unit suffix shown in value display</td></tr>
+        <tr><td><code>change</code></td><td>All</td><td>Change/input event callback</td></tr>
+    </tbody>
+</table>

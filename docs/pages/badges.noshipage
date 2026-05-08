@@ -1,0 +1,40 @@
+<h1 id="badges">Badges</h1>
+<p>Compact labels for displaying status, categories, or counts.</p>
+
+<h2 id="variants">Variants</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return [
+    b.badge({ text: 'Info',     type: 'info'    }),
+    b.badge({ text: 'Success',  type: 'success' }),
+    b.badge({ text: 'Warning',  type: 'warning' }),
+    b.badge({ text: 'Error',    type: 'error'   }),
+    b.badge({ text: 'Admin',    type: 'dark'    }),
+    b.badge({ text: 'Draft',    type: 'gray'    })
+];
+</script>
+<pre class="docs-code">b.badge({ text: 'Info',    type: 'info'    });
+b.badge({ text: 'Success', type: 'success' });
+b.badge({ text: 'Warning', type: 'warning' });
+b.badge({ text: 'Error',   type: 'error'   });</pre>
+
+<h2 id="dot">Dot Indicator</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return [
+    b.badge({ text: 'Online',  type: 'success', dot: true }),
+    b.badge({ text: 'Away',    type: 'warning', dot: true }),
+    b.badge({ text: 'Offline', type: 'gray',    dot: true })
+];
+</script>
+<pre class="docs-code">b.badge({ text: 'Online', type: 'success', dot: true });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Options</th></tr></thead>
+    <tbody>
+        <tr><td><code>text</code></td><td>String</td><td>Label text</td></tr>
+        <tr><td><code>type</code></td><td>String</td><td>info, success, warning, error, dark, gray</td></tr>
+        <tr><td><code>dot</code></td><td>Boolean</td><td>Show a colored dot prefix</td></tr>
+    </tbody>
+</table>

@@ -1,0 +1,54 @@
+<h1 id="slider">Slider</h1>
+<p>Auto-playing image carousel with fade transitions and dot navigation.</p>
+
+<h2 id="basic">Basic Slider</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.slider({
+    images: [
+        { src: 'https://picsum.photos/seed/noshi-a/800/300', alt: 'Slide 1' },
+        { src: 'https://picsum.photos/seed/noshi-b/800/300', alt: 'Slide 2' },
+        { src: 'https://picsum.photos/seed/noshi-c/800/300', alt: 'Slide 3' }
+    ],
+    height: '260px',
+    time: 3
+});
+</script>
+<pre class="docs-code">b.slider({
+    images: [
+        { src: 'img/slide1.jpg', alt: 'Slide 1' },
+        { src: 'img/slide2.jpg', alt: 'Slide 2' },
+        { src: 'img/slide3.jpg', alt: 'Slide 3' }
+    ],
+    height: '400px',
+    time: 5          // seconds between slides
+});</pre>
+
+<h2 id="url-array">Simple URL Array</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.slider({
+    images: [
+        'https://picsum.photos/seed/s1/800/280',
+        'https://picsum.photos/seed/s2/800/280',
+        'https://picsum.photos/seed/s3/800/280'
+    ],
+    height: '220px',
+    time: 2
+});
+</script>
+<pre class="docs-code">// Simple array of URL strings
+b.slider({
+    images: ['img/a.jpg', 'img/b.jpg', 'img/c.jpg'],
+    height: '300px'
+});</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>images</code></td><td>Array</td><td><code>{ src, alt }</code> objects or plain URL strings</td></tr>
+        <tr><td><code>height</code></td><td>String</td><td>CSS height (default: <code>'300px'</code>)</td></tr>
+        <tr><td><code>time</code></td><td>Number</td><td>Seconds between auto-advance (default: <code>4</code>)</td></tr>
+    </tbody>
+</table>

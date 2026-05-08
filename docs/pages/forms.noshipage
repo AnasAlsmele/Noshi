@@ -1,0 +1,91 @@
+<h1 id="forms">Forms</h1>
+<p>The <code>builder.form()</code> method renders a fully validated, styled form from a configuration object — no manual HTML needed.</p>
+
+<h2 id="basic">Basic Form</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.form({
+    title: 'Create Account',
+    fields: [
+        { label: 'Full Name',  name: 'name',  placeholder: 'Enter your name',  required: true },
+        { label: 'Email',      name: 'email', placeholder: 'you@example.com',  type: 'email', required: true },
+        { label: 'Password',   name: 'pass',  placeholder: 'At least 8 chars', type: 'password', required: true },
+        { label: 'Role', name: 'role', type: 'select', placeholder: '— Choose role —',
+          options: ['Developer', 'Designer', 'Manager', 'Analyst'] }
+    ],
+    buttons: [
+        { text: 'Register', active: true, function: () => b.toast({ message: 'Account created!', type: 'success' }) }
+    ]
+});
+</script>
+<pre class="docs-code">b.form({
+    title: 'Create Account',
+    fields: [
+        { label: 'Name',  name: 'name',  placeholder: 'Full name',  required: true },
+        { label: 'Email', name: 'email', type: 'email',              required: true },
+        { label: 'Role',  name: 'role',  type: 'select',
+          options: ['Developer', 'Designer', 'Manager'] }
+    ],
+    buttons: [
+        { text: 'Submit', active: true, function: () => handleSubmit() }
+    ]
+});</pre>
+
+<h2 id="validation">Built-in Validation</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const form = b.form({
+    fields: [
+        { label: 'Username', name: 'user', placeholder: 'Enter username', required: true },
+        { label: 'Email',    name: 'mail', placeholder: 'Email address',  type: 'email', required: true }
+    ],
+    buttons: [
+        {
+            text: 'Validate & Submit', active: true,
+            function: () => {
+                const errors = form.validate();
+                if (errors.length === 0) {
+                    b.toast({ message: 'Form is valid! Submitting...', type: 'success' });
+                } else {
+                    b.toast({ message: errors.join(', '), type: 'error' });
+                }
+            }
+        }
+    ]
+});
+return form;
+</script>
+<pre class="docs-code">const form = b.form({ fields: [...], buttons: [...] });
+
+// Validate programmatically — returns array of error messages
+const errors = form.validate();
+if (errors.length === 0) submitData();
+else showErrors(errors);</pre>
+
+<h2 id="hints">Field Hints</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.form({
+    fields: [
+        { label: 'Username', name: 'user', placeholder: 'johndoe', hint: 'Only letters, numbers, and underscores' },
+        { label: 'Password', name: 'pass', type: 'password', placeholder: '••••••••', hint: 'Minimum 8 characters, include a number' }
+    ],
+    buttons: [{ text: 'Continue', active: true }]
+});
+</script>
+<pre class="docs-code">{ label: 'Email', name: 'email', hint: 'We will never share your email' }</pre>
+
+<h2 id="field-config">Field Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>label</code></td><td>String</td><td>Field label shown above the input</td></tr>
+        <tr><td><code>name</code></td><td>String</td><td>Input name attribute</td></tr>
+        <tr><td><code>type</code></td><td>String</td><td>text (default), email, password, number, select</td></tr>
+        <tr><td><code>placeholder</code></td><td>String</td><td>Placeholder text</td></tr>
+        <tr><td><code>value</code></td><td>String</td><td>Default value</td></tr>
+        <tr><td><code>required</code></td><td>Boolean</td><td>Mark as required (validated by <code>form.validate()</code>)</td></tr>
+        <tr><td><code>hint</code></td><td>String</td><td>Helper text shown below the field</td></tr>
+        <tr><td><code>options</code></td><td>Array</td><td>For type: 'select' — array of strings or <code>{ value, label }</code></td></tr>
+    </tbody>
+</table>

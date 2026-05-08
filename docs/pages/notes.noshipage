@@ -1,0 +1,28 @@
+<h1 id="notes">Notes</h1>
+<p>Notes highlight important information with an icon and semantic status color.</p>
+
+<h2 id="variants">Variants</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+wrap.appendChild(b.note({ text: 'This is a default note for general information.' }));
+wrap.appendChild(b.note({ text: 'Operation completed successfully.', class: 'success' }));
+wrap.appendChild(b.note({ text: 'Please review before continuing.', class: 'warning' }));
+wrap.appendChild(b.note({ text: 'A critical error has occurred.', class: 'error' }));
+return wrap;
+</script>
+<pre class="docs-code">b.note({ text: 'Default note.' });
+b.note({ text: 'Success message.', class: 'success' });
+b.note({ text: 'Warning message.', class: 'warning' });
+b.note({ text: 'Error message.',   class: 'error'   });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>text</code></td><td>String</td><td>Note content (supports HTML)</td></tr>
+        <tr><td><code>class</code></td><td>String</td><td>success, warning, error (default is neutral)</td></tr>
+        <tr><td><code>icon</code></td><td>String</td><td>CSS class for a custom icon</td></tr>
+    </tbody>
+</table>

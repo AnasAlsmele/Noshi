@@ -1,0 +1,45 @@
+<h1 id="progress">Progress</h1>
+<p>Animated progress bars for displaying completion percentages, upload states, or KPIs.</p>
+
+<h2 id="basic">Basic</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:1rem;width:100%';
+wrap.appendChild(b.progress({ value: 80, label: 'Profile Complete' }));
+wrap.appendChild(b.progress({ value: 55, label: 'Tasks Done',   color: 'success' }));
+wrap.appendChild(b.progress({ value: 35, label: 'Upload',       color: 'warning', striped: true }));
+wrap.appendChild(b.progress({ value: 20, label: 'Storage Used', color: 'error'   }));
+return wrap;
+</script>
+<pre class="docs-code">b.progress({ value: 80, label: 'Profile Complete' });
+b.progress({ value: 55, color: 'success', label: 'Tasks Done' });
+b.progress({ value: 35, color: 'warning', striped: true });
+b.progress({ value: 20, color: 'error' });</pre>
+
+<h2 id="sizes">Sizes</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:1rem;width:100%';
+wrap.appendChild(b.progress({ value: 60, size: 'sm', label: 'Small' }));
+wrap.appendChild(b.progress({ value: 60, label: 'Default' }));
+wrap.appendChild(b.progress({ value: 60, size: 'lg', label: 'Large' }));
+return wrap;
+</script>
+<pre class="docs-code">b.progress({ value: 60, size: 'sm' });
+b.progress({ value: 60 });
+b.progress({ value: 60, size: 'lg' });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>value</code></td><td>Number</td><td>Current value (0–max)</td></tr>
+        <tr><td><code>max</code></td><td>Number</td><td>Maximum value (default: 100)</td></tr>
+        <tr><td><code>label</code></td><td>String|false</td><td>Label text. Set to <code>false</code> to hide.</td></tr>
+        <tr><td><code>color</code></td><td>String</td><td>primary, success, warning, error</td></tr>
+        <tr><td><code>size</code></td><td>String</td><td>sm, lg (default is medium)</td></tr>
+        <tr><td><code>striped</code></td><td>Boolean</td><td>Animated striped pattern</td></tr>
+    </tbody>
+</table>

@@ -1,0 +1,45 @@
+<h1 id="accordion">Accordion</h1>
+<p>Collapsible content sections, perfect for FAQs, settings, and expandable lists.</p>
+
+<h2 id="basic">Basic</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.accordion({
+    openFirst: true,
+    items: [
+        { title: 'What is Noshi?',      content: 'A lightweight front-end toolkit. One JS file, zero dependencies.' },
+        { title: 'Does it need CSS?',   content: 'No! All styles inject automatically when a component is first used.' },
+        { title: 'Can I use it in PHP projects?', content: 'Absolutely. Just include <code>noshi.js</code> in any HTML page.' }
+    ]
+});
+</script>
+<pre class="docs-code">b.accordion({
+    openFirst: true,
+    items: [
+        { title: 'What is Noshi?', content: 'A lightweight toolkit.' },
+        { title: 'Is it free?',    content: 'Yes, open source.' }
+    ]
+});</pre>
+
+<h2 id="multiple">Allow Multiple Open</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.accordion({
+    multiple: true,
+    items: [
+        { title: 'Section A', content: 'Both sections can be open at the same time.' },
+        { title: 'Section B', content: 'Pass <code>multiple: true</code> to enable this.' }
+    ]
+});
+</script>
+<pre class="docs-code">b.accordion({ multiple: true, items: [...] });</pre>
+
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>items</code></td><td>Array</td><td><code>{ title, content }</code> — content can be HTML or HTMLElement</td></tr>
+        <tr><td><code>openFirst</code></td><td>Boolean</td><td>Open the first item by default</td></tr>
+        <tr><td><code>multiple</code></td><td>Boolean</td><td>Allow multiple items open simultaneously</td></tr>
+    </tbody>
+</table>
