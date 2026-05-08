@@ -1,31 +1,33 @@
 <h1 id="badges">Badges</h1>
-<p>Badges are compact labels for displaying status, categories, or counts. They come in several semantic color variants and support dot indicators.</p>
+<p>Compact labels for displaying status, categories, or counts.</p>
 
-<h2 id="usage">Usage</h2>
-<pre class="docs-code">const b = new NoshiBuilder();
-
-b.badge({ text: 'Active',   type: 'success' });
-b.badge({ text: 'Pending',  type: 'warning' });
-b.badge({ text: 'Rejected', type: 'error'   });
-b.badge({ text: 'Info',     type: 'info'    });
-b.badge({ text: 'Admin',    type: 'dark'    });
-b.badge({ text: 'Draft',    type: 'gray'    });</pre>
+<h2 id="variants">Variants</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return [
+    b.badge({ text: 'Info',     type: 'info'    }),
+    b.badge({ text: 'Success',  type: 'success' }),
+    b.badge({ text: 'Warning',  type: 'warning' }),
+    b.badge({ text: 'Error',    type: 'error'   }),
+    b.badge({ text: 'Admin',    type: 'dark'    }),
+    b.badge({ text: 'Draft',    type: 'gray'    })
+];
+</script>
+<pre class="docs-code">b.badge({ text: 'Info',    type: 'info'    });
+b.badge({ text: 'Success', type: 'success' });
+b.badge({ text: 'Warning', type: 'warning' });
+b.badge({ text: 'Error',   type: 'error'   });</pre>
 
 <h2 id="dot">Dot Indicator</h2>
-<p>Add a colored dot before the badge text using <code>dot: true</code>.</p>
-<pre class="docs-code">b.badge({ text: 'Online', type: 'success', dot: true });
-b.badge({ text: 'Away',   type: 'warning', dot: true });</pre>
-
-<h2 id="in-tables">In Tables</h2>
-<p>Badges work great as custom cell renderers inside <code>builder.table()</code>.</p>
-<pre class="docs-code">builder.table({
-    columns: [
-        { key: 'status', label: 'Status', render: (val) =>
-            b.badge({ text: val, type: val === 'active' ? 'success' : 'error', dot: true })
-        }
-    ],
-    data: [...]
-});</pre>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return [
+    b.badge({ text: 'Online',  type: 'success', dot: true }),
+    b.badge({ text: 'Away',    type: 'warning', dot: true }),
+    b.badge({ text: 'Offline', type: 'gray',    dot: true })
+];
+</script>
+<pre class="docs-code">b.badge({ text: 'Online', type: 'success', dot: true });</pre>
 
 <h2 id="config">Configuration</h2>
 <table>

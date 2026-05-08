@@ -1,54 +1,30 @@
 <h1 id="stats">Stats Card</h1>
 <p>Dashboard KPI cards for displaying key metrics with an icon, value, label, and trend indicator.</p>
 
-<h2 id="usage">Usage</h2>
-<pre class="docs-code">const b = new NoshiBuilder();
-
-b.statsCard({
-    emoji:    '👥',
-    value:    '1,240',
-    label:    'Total Users',
-    trend:    '+12%',
-    trendUp:  true
-});
-
-b.statsCard({
-    emoji:    '💰',
-    value:    '$8,400',
-    label:    'Revenue',
-    trend:    '-3%',
-    trendUp:  false,
-    iconType: 'warning'
+<h2 id="basic">Basic</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const grid = document.createElement('div');
+grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;width:100%';
+grid.appendChild(b.statsCard({ emoji: '👥', value: '1,240', label: 'Total Users',  trend: '+12%', trendUp: true,  iconType: 'primary' }));
+grid.appendChild(b.statsCard({ emoji: '💰', value: '$8.4k', label: 'Revenue',      trend: '+5%',  trendUp: true,  iconType: 'success' }));
+grid.appendChild(b.statsCard({ emoji: '📦', value: '320',   label: 'Orders',       trend: '-2%',  trendUp: false, iconType: 'warning' }));
+grid.appendChild(b.statsCard({ emoji: '❌', value: '3',     label: 'Errors',       trend: '+1',   trendUp: false, iconType: 'error'   }));
+return grid;
+</script>
+<pre class="docs-code">b.statsCard({
+    emoji: '👥', value: '1,240',
+    label: 'Total Users', trend: '+12%', trendUp: true
 });</pre>
-
-<h2 id="icon-types">Icon Types</h2>
-<pre class="docs-code">b.statsCard({ emoji: '📦', value: '320', label: 'Orders',   iconType: 'primary' });
-b.statsCard({ emoji: '✅', value: '98%', label: 'Uptime',   iconType: 'success' });
-b.statsCard({ emoji: '⚠️', value: '12',  label: 'Warnings', iconType: 'warning' });
-b.statsCard({ emoji: '❌', value: '3',   label: 'Errors',   iconType: 'error'   });</pre>
-
-<h2 id="grid">Dashboard Grid Example</h2>
-<pre class="docs-code">const grid = document.createElement('div');
-grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;';
-
-[
-    { emoji:'👥', value:'1,240', label:'Users',    trend:'+12%', trendUp:true,  iconType:'primary' },
-    { emoji:'💰', value:'$8.4k', label:'Revenue',  trend:'+5%',  trendUp:true,  iconType:'success' },
-    { emoji:'📦', value:'320',   label:'Orders',   trend:'-2%',  trendUp:false, iconType:'warning' },
-    { emoji:'⭐', value:'4.8',   label:'Rating',   trend:'+0.2', trendUp:true,  iconType:'error'   }
-].forEach(s => grid.appendChild(b.statsCard(s)));
-
-document.body.appendChild(grid);</pre>
 
 <h2 id="config">Configuration</h2>
 <table>
     <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr><td><code>value</code></td><td>String</td><td>The main metric value</td></tr>
-        <tr><td><code>label</code></td><td>String</td><td>Description label below the value</td></tr>
-        <tr><td><code>emoji</code></td><td>String</td><td>Emoji icon shown in the icon box</td></tr>
-        <tr><td><code>icon</code></td><td>String</td><td>CSS class for a Noshi icon (alternative to emoji)</td></tr>
-        <tr><td><code>iconType</code></td><td>String</td><td>Icon background color: primary, success, warning, error</td></tr>
+        <tr><td><code>value</code></td><td>String</td><td>The main metric</td></tr>
+        <tr><td><code>label</code></td><td>String</td><td>Description below the value</td></tr>
+        <tr><td><code>emoji</code></td><td>String</td><td>Emoji for the icon box</td></tr>
+        <tr><td><code>iconType</code></td><td>String</td><td>primary, success, warning, error</td></tr>
         <tr><td><code>trend</code></td><td>String</td><td>Trend text (e.g. "+12%")</td></tr>
         <tr><td><code>trendUp</code></td><td>Boolean</td><td>true = green ▲, false = red ▼</td></tr>
     </tbody>

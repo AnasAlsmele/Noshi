@@ -1,45 +1,28 @@
 <h1 id="notes">Notes</h1>
-<p>Notes are used to provide contextual feedback or highlight important information within the page layout.</p>
+<p>Notes highlight important information with an icon and semantic status color.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>Create a note with an optional icon and status class.</p>
+<h2 id="variants">Variants</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem;width:100%';
+wrap.appendChild(b.note({ text: 'This is a default note for general information.' }));
+wrap.appendChild(b.note({ text: 'Operation completed successfully.', class: 'success' }));
+wrap.appendChild(b.note({ text: 'Please review before continuing.', class: 'warning' }));
+wrap.appendChild(b.note({ text: 'A critical error has occurred.', class: 'error' }));
+return wrap;
+</script>
+<pre class="docs-code">b.note({ text: 'Default note.' });
+b.note({ text: 'Success message.', class: 'success' });
+b.note({ text: 'Warning message.', class: 'warning' });
+b.note({ text: 'Error message.',   class: 'error'   });</pre>
 
-<code data-target="js" data-code="const infoNote = builder.note({
-    text: 'This is an information note for the user.',
-    icon: 'noshi-info'
-});"></code>
-
-<h2 id="statuses">Status Variants</h2>
-<p>Noshi supports <code>correct</code>, <code>warning</code>, and <code>error</code> statuses.</p>
-
-<code data-target="js" data-code="builder.note({ text: 'Operation successful!', class: 'correct' });
-builder.note({ text: 'Please check your input.', class: 'warning' });
-builder.note({ text: 'Critical system error.', class: 'error' });"></code>
-
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>text</code></td>
-            <td>String</td>
-            <td>The main content of the note.</td>
-        </tr>
-        <tr>
-            <td><code>class</code></td>
-            <td>String</td>
-            <td>'correct', 'warning', or 'error'.</td>
-        </tr>
-        <tr>
-            <td><code>icon</code></td>
-            <td>String</td>
-            <td>Icon class name.</td>
-        </tr>
+        <tr><td><code>text</code></td><td>String</td><td>Note content (supports HTML)</td></tr>
+        <tr><td><code>class</code></td><td>String</td><td>success, warning, error (default is neutral)</td></tr>
+        <tr><td><code>icon</code></td><td>String</td><td>CSS class for a custom icon</td></tr>
     </tbody>
 </table>

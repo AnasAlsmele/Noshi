@@ -1,167 +1,348 @@
 /**
  * Noshi v2.0 — Docs Site JS
+ * Features: search, syntax highlight, copy button, live demos,
+ *           heading anchors, prev/next nav, mobile sidebar, Ctrl+K
  */
-(function() {
-    const params   = new URL(window.location.href).searchParams;
-    let current    = params.get('page') || 'welcome';
+(function () {
+    const params  = new URL(window.location.href).searchParams;
+    let current   = params.get('page') || 'welcome';
 
-    /* ── Navigation map ── */
+    /* ── Full ordered nav list ── */
     const NAV = [
         { title: 'Getting Started', items: [
-            { id: 'welcome',   label: 'Welcome'       },
-            { id: 'install',   label: 'Installation'  }
+            { id: 'welcome',   label: 'Welcome'        },
+            { id: 'install',   label: 'Installation'   }
         ]},
         { title: 'Layout', items: [
-            { id: 'page',      label: 'Page Scaffold' },
-            { id: 'navbars',   label: 'Navbar'        }
+            { id: 'page',      label: 'Page Scaffold'  },
+            { id: 'navbars',   label: 'Navbar'         }
         ]},
         { title: 'Components', items: [
-            { id: 'buttons',   label: 'Buttons'   },
-            { id: 'cards',     label: 'Cards'     },
-            { id: 'badges',    label: 'Badges'    },
-            { id: 'notes',     label: 'Notes'     },
-            { id: 'modals',    label: 'Modals'    },
-            { id: 'tabs',      label: 'Tabs'      },
-            { id: 'toasts',    label: 'Toasts'    },
-            { id: 'accordion', label: 'Accordion' },
-            { id: 'tooltip',   label: 'Tooltip'   },
-            { id: 'stepper',   label: 'Stepper'   },
-            { id: 'slider',    label: 'Slider'    },
-            { id: 'graphs',    label: 'Graphs'    }
+            { id: 'buttons',   label: 'Buttons'        },
+            { id: 'cards',     label: 'Cards'          },
+            { id: 'badges',    label: 'Badges'         },
+            { id: 'notes',     label: 'Notes'          },
+            { id: 'modals',    label: 'Modals'         },
+            { id: 'tabs',      label: 'Tabs'           },
+            { id: 'toasts',    label: 'Toasts'         },
+            { id: 'accordion', label: 'Accordion'      },
+            { id: 'tooltip',   label: 'Tooltip'        },
+            { id: 'stepper',   label: 'Stepper'        },
+            { id: 'slider',    label: 'Slider'         },
+            { id: 'graphs',    label: 'Graphs'         }
         ]},
         { title: 'Forms & Data', items: [
-            { id: 'forms',    label: 'Forms'      },
-            { id: 'inputs',   label: 'Inputs'     },
-            { id: 'tables',   label: 'Tables'     },
-            { id: 'progress', label: 'Progress'   },
-            { id: 'stats',    label: 'Stats Card' }
+            { id: 'forms',     label: 'Forms'          },
+            { id: 'inputs',    label: 'Inputs'         },
+            { id: 'tables',    label: 'Tables'         },
+            { id: 'progress',  label: 'Progress'       },
+            { id: 'stats',     label: 'Stats Card'     }
         ]},
         { title: 'Utilities', items: [
-            { id: 'ajax',      label: 'AJAX'       },
-            { id: 'loading',   label: 'Loading'    },
-            { id: 'store',     label: 'Store'      },
-            { id: 'selectors', label: 'Selectors'  },
-            { id: 'darkmode',  label: 'Dark Mode'  },
-            { id: 'statics',   label: 'Statics'    }
+            { id: 'ajax',      label: 'AJAX'           },
+            { id: 'loading',   label: 'Loading'        },
+            { id: 'store',     label: 'Store'          },
+            { id: 'selectors', label: 'Selectors'      },
+            { id: 'darkmode',  label: 'Dark Mode'      },
+            { id: 'statics',   label: 'Statics'        }
         ]}
     ];
 
-    /* ── Build sidebar ── */
+    /* flat ordered list for prev/next */
+    const ALL_PAGES = NAV.flatMap(s => s.items);
+
+    /* ── Build Sidebar ── */
     const sidebar = document.getElementById('d-sidebar');
+
+    /* Search box */
+    const searchWrap  = document.createElement('div');
+    searchWrap.className = 'd-search-wrap';
+    const searchInput = document.createElement('input');
+    searchInput.type        = 'text';
+    searchInput.className   = 'd-search';
+    searchInput.placeholder = 'Search docs… (Ctrl+K)';
+    const searchHint  = document.createElement('div');
+    searchHint.className    = 'd-search-hint';
+    searchHint.textContent  = 'Ctrl + K';
+    searchWrap.appendChild(searchInput);
+    searchWrap.appendChild(searchHint);
+    sidebar.appendChild(searchWrap);
+
+    /* Build links */
+    const linkMap = {};
     NAV.forEach(section => {
         const title = document.createElement('div');
-        title.className = 'd-section-title';
+        title.className   = 'd-section-title';
         title.textContent = section.title;
         sidebar.appendChild(title);
 
         section.items.forEach(item => {
             const a = document.createElement('a');
-            a.className = 'd-nav-link' + (item.id === current ? ' active' : '');
+            a.className  = 'd-nav-link' + (item.id === current ? ' active' : '');
             a.textContent = item.label;
-            a.href = '?page=' + item.id;
-            a.id = 'nav-' + item.id;
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                navigateTo(item.id);
-            });
+            a.href        = '?page=' + item.id;
+            a.id          = 'nav-' + item.id;
+            a.addEventListener('click', e => { e.preventDefault(); navigateTo(item.id); });
             sidebar.appendChild(a);
+            linkMap[item.id] = a;
         });
+    });
+
+    /* Search filter */
+    searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim().toLowerCase();
+        Object.entries(linkMap).forEach(([id, el]) => {
+            el.classList.toggle('hidden', q !== '' && !el.textContent.toLowerCase().includes(q));
+        });
+        /* show/hide section titles */
+        sidebar.querySelectorAll('.d-section-title').forEach(t => {
+            let next = t.nextElementSibling;
+            let anyVisible = false;
+            while (next && !next.classList.contains('d-section-title')) {
+                if (!next.classList.contains('hidden')) anyVisible = true;
+                next = next.nextElementSibling;
+            }
+            t.style.display = anyVisible || q === '' ? '' : 'none';
+        });
+    });
+
+    /* Ctrl+K shortcut */
+    document.addEventListener('keydown', e => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+        }
     });
 
     /* ── Dark mode ── */
     const darkBtn = document.getElementById('dark-toggle');
-    const isDark  = localStorage.getItem('noshi-dark') === 'true';
-    if (isDark) { document.documentElement.classList.add('dark'); darkBtn.textContent = '☀️'; }
-
+    if (localStorage.getItem('noshi-dark') === 'true') {
+        document.documentElement.classList.add('dark');
+        darkBtn.textContent = '☀️';
+    }
     darkBtn.addEventListener('click', () => {
         const on = document.documentElement.classList.toggle('dark');
         darkBtn.textContent = on ? '☀️' : '🌙';
         localStorage.setItem('noshi-dark', on);
     });
 
+    /* ── Mobile sidebar ── */
+    const menuBtn = document.getElementById('menu-toggle');
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+        if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== menuBtn)
+            sidebar.classList.remove('open');
+    });
+
     /* ── Navigate ── */
     function navigateTo(pageId) {
         current = pageId;
         window.history.pushState({}, '', '?page=' + pageId);
-        document.querySelectorAll('.d-nav-link').forEach(el => el.classList.remove('active'));
-        const activeLink = document.getElementById('nav-' + pageId);
-        if (activeLink) {
-            activeLink.classList.add('active');
-            activeLink.scrollIntoView({ block: 'nearest' });
-        }
+        Object.values(linkMap).forEach(el => el.classList.remove('active'));
+        const activeLink = linkMap[pageId];
+        if (activeLink) { activeLink.classList.add('active'); activeLink.scrollIntoView({ block: 'nearest' }); }
+        sidebar.classList.remove('open');
         loadPage(pageId);
     }
 
-    /* ── Load page ── */
-    const pageArea = document.getElementById('page-area');
-    const tocEl    = document.getElementById('d-toc');
-
-    async function loadPage(id) {
-        pageArea.style.opacity = '0';
-        try {
-            const html = await Noshi.ajax({ url: './pages/' + id + '.noshipage' });
-            pageArea.innerHTML = html;
-            pageArea.style.animation = 'none';
-            requestAnimationFrame(() => {
-                pageArea.style.animation = '';
-                pageArea.style.opacity   = '1';
-            });
-            buildTOC();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch(err) {
-            pageArea.innerHTML = `
-                <h1>Page Not Found</h1>
-                <p style="color:var(--c-muted);margin-top:1rem">
-                    Could not load <code>${id}</code>.
-                    Make sure you are running on a local server:
-                    <code>php -S localhost:8000 -t "c:/wamp64/www/Noshi"</code>
-                </p>`;
-            pageArea.style.opacity = '1';
-            tocEl.innerHTML = '';
-        }
+    /* ── Syntax highlighter ── */
+    function highlight(raw) {
+        let c = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        /* comments first (before strings eat them) */
+        c = c.replace(/(\/\/[^\n]*)/g, '\x00cmt\x00$1\x00end\x00');
+        c = c.replace(/(\/\*[\s\S]*?\*\/)/g, '\x00cmt\x00$1\x00end\x00');
+        /* strings */
+        c = c.replace(/((?:`[^`]*`|'[^'\\]*(?:\\[\s\S][^'\\]*)*'|"[^"\\]*(?:\\[\s\S][^"\\]*)*"))/g, '\x00str\x00$1\x00end\x00');
+        /* keywords */
+        const KW = 'const|let|var|function|return|if|else|new|class|async|await|for|of|in|this|true|false|null|undefined|import|export|default|typeof|try|catch|throw';
+        c = c.replace(new RegExp(`\\b(${KW})\\b`, 'g'), '\x00kw\x00$1\x00end\x00');
+        /* numbers */
+        c = c.replace(/\b(\d+\.?\d*)\b/g, '\x00num\x00$1\x00end\x00');
+        /* method calls */
+        c = c.replace(/\.([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g, '.\x00fn\x00$1\x00end\x00');
+        /* object keys */
+        c = c.replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\s*):/g, '\x00key\x00$1\x00end\x00:');
+        /* replace tokens */
+        const MAP = { cmt:'hl-cmt', str:'hl-str', kw:'hl-kw', num:'hl-num', fn:'hl-fn', key:'hl-key' };
+        c = c.replace(/\x00(\w+)\x00([\s\S]*?)\x00end\x00/g, (_, type, val) => `<span class="${MAP[type]||''}">${val}</span>`);
+        return c;
     }
 
-    /* ── TOC ── */
+    /* ── Process code blocks: highlight + copy button ── */
+    function processCodeBlocks() {
+        pageArea.querySelectorAll('pre.docs-code').forEach(pre => {
+            /* wrap */
+            const wrap = document.createElement('div');
+            wrap.className = 'code-wrap';
+            pre.parentNode.insertBefore(wrap, pre);
+            wrap.appendChild(pre);
+            /* highlight */
+            pre.innerHTML = highlight(pre.textContent);
+            /* copy button */
+            const btn = document.createElement('button');
+            btn.className   = 'copy-btn';
+            btn.textContent = 'Copy';
+            btn.addEventListener('click', () => {
+                const text = pre.textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(() => showCopied(btn));
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = text; document.body.appendChild(ta);
+                    ta.select(); document.execCommand('copy');
+                    ta.remove(); showCopied(btn);
+                }
+            });
+            wrap.appendChild(btn);
+        });
+    }
+    function showCopied(btn) {
+        btn.textContent = '✓ Copied!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    }
+
+    /* ── Run live demos ── */
+    function runDemos() {
+        pageArea.querySelectorAll('script.noshi-demo').forEach(script => {
+            const box = document.createElement('div');
+            box.className = 'preview-box';
+            const lbl = document.createElement('div');
+            lbl.className   = 'preview-label';
+            lbl.textContent = '⚡ Live Preview';
+            box.appendChild(lbl);
+            try {
+                const b      = new NoshiBuilder();
+                const result = new Function('builder', 'b', 'Noshi', 'NoshiBuilder', script.textContent)(b, b, Noshi, NoshiBuilder);
+                if (result instanceof HTMLElement) {
+                    box.appendChild(result);
+                } else if (Array.isArray(result)) {
+                    result.forEach(el => { if (el instanceof HTMLElement) box.appendChild(el); });
+                }
+            } catch (e) {
+                const err = document.createElement('span');
+                err.style.cssText = 'color:#ff7b72;font-size:.82rem;font-family:monospace';
+                err.textContent   = '⚠ Demo error: ' + e.message;
+                box.appendChild(err);
+            }
+            script.parentNode.insertBefore(box, script);
+        });
+    }
+
+    /* ── Add anchor links to headings ── */
+    function addAnchors() {
+        pageArea.querySelectorAll('h2[id], h3[id]').forEach(h => {
+            if (h.querySelector('.anchor-link')) return;
+            const a = document.createElement('a');
+            a.className = 'anchor-link';
+            a.href      = '#' + h.id;
+            a.textContent = '¶';
+            a.title     = 'Link to this section';
+            h.appendChild(a);
+        });
+    }
+
+    /* ── Prev / Next navigation ── */
+    function addPrevNext() {
+        const idx  = ALL_PAGES.findIndex(p => p.id === current);
+        const prev = ALL_PAGES[idx - 1];
+        const next = ALL_PAGES[idx + 1];
+        if (!prev && !next) return;
+
+        const nav = document.createElement('div');
+        nav.className = 'page-nav';
+
+        if (prev) {
+            const a = document.createElement('a');
+            a.className = 'page-nav-btn prev';
+            a.href      = '?page=' + prev.id;
+            a.innerHTML = `<small>Previous</small><span>${prev.label}</span>`;
+            a.addEventListener('click', e => { e.preventDefault(); navigateTo(prev.id); });
+            nav.appendChild(a);
+        }
+        if (next) {
+            const a = document.createElement('a');
+            a.className = 'page-nav-btn next';
+            a.href      = '?page=' + next.id;
+            a.innerHTML = `<small>Next</small><span>${next.label}</span>`;
+            a.addEventListener('click', e => { e.preventDefault(); navigateTo(next.id); });
+            nav.appendChild(a);
+        }
+        pageArea.appendChild(nav);
+    }
+
+    /* ── TOC with IntersectionObserver ── */
+    const tocEl = document.getElementById('d-toc');
     function buildTOC() {
         tocEl.innerHTML = '';
         const headings = pageArea.querySelectorAll('h2, h3');
         if (headings.length < 2) return;
 
         const title = document.createElement('div');
-        title.className = 'd-toc-title';
+        title.className   = 'd-toc-title';
         title.textContent = 'On This Page';
         tocEl.appendChild(title);
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                const link = tocEl.querySelector(`[data-target="${entry.target.id}"]`);
-                if (link) link.classList.toggle('active', entry.isIntersecting);
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                const l = tocEl.querySelector(`[data-target="${e.target.id}"]`);
+                if (l) l.classList.toggle('active', e.isIntersecting);
             });
-        }, { rootMargin: '-10% 0px -80% 0px' });
+        }, { rootMargin: '-5% 0px -80% 0px' });
 
         headings.forEach((h, i) => {
             if (!h.id) h.id = 'h-' + i;
             const a = document.createElement('a');
             a.className = 'd-toc-link' + (h.tagName === 'H3' ? ' h3' : '');
-            a.textContent = h.textContent;
-            a.href = '#' + h.id;
+            a.textContent = h.textContent.replace('¶', '').trim();
+            a.href        = '#' + h.id;
             a.setAttribute('data-target', h.id);
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                h.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
+            a.addEventListener('click', e => { e.preventDefault(); h.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
             tocEl.appendChild(a);
-            observer.observe(h);
+            obs.observe(h);
         });
+    }
+
+    /* ── Load page ── */
+    const pageArea = document.getElementById('page-area');
+
+    async function loadPage(id) {
+        pageArea.style.opacity = '0';
+        tocEl.innerHTML        = '';
+        try {
+            const html = await Noshi.ajax({ url: './pages/' + id + '.noshipage' });
+            pageArea.innerHTML    = html;
+            pageArea.style.animation = 'none';
+            requestAnimationFrame(() => {
+                pageArea.style.animation = '';
+                pageArea.style.opacity   = '1';
+            });
+            runDemos();
+            processCodeBlocks();
+            addAnchors();
+            buildTOC();
+            addPrevNext();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+            pageArea.innerHTML = `
+                <h1 style="color:var(--c-text)">Page Not Found</h1>
+                <p style="color:var(--c-muted);margin-top:1rem;line-height:1.7">
+                    Could not load <code>${id}.noshipage</code>.<br>
+                    Make sure you are running on a local server:<br>
+                    <code>php -S localhost:8000 -t "c:/wamp64/www/Noshi"</code>
+                </p>`;
+            pageArea.style.opacity = '1';
+        }
     }
 
     /* ── Browser back/forward ── */
     window.addEventListener('popstate', () => {
         const p = new URL(window.location.href).searchParams.get('page') || 'welcome';
         current = p;
-        document.querySelectorAll('.d-nav-link').forEach(el => el.classList.remove('active'));
-        const l = document.getElementById('nav-' + p);
-        if (l) l.classList.add('active');
+        Object.values(linkMap).forEach(el => el.classList.remove('active'));
+        if (linkMap[p]) linkMap[p].classList.add('active');
         loadPage(p);
     });
 

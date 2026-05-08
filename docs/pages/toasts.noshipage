@@ -1,45 +1,40 @@
 <h1 id="toasts">Toasts</h1>
-<p>Toasts are non-intrusive notifications that appear at the bottom of the screen to provide quick feedback to the user.</p>
+<p>Non-blocking notification messages that slide in from the bottom-right and auto-dismiss.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>Toasts are triggered directly and disappear automatically after a set duration.</p>
+<h2 id="types">Types</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:.75rem;flex-wrap:wrap';
+const types = ['info','success','warning','error'];
+types.forEach(type => {
+    const btn = b.button({
+        text: type.charAt(0).toUpperCase() + type.slice(1),
+        class: 'outline',
+        click: () => b.toast({ message: `This is a ${type} toast!`, type })
+    });
+    wrap.appendChild(btn);
+});
+return wrap;
+</script>
+<pre class="docs-code">b.toast({ message: 'Saved successfully!',    type: 'success' });
+b.toast({ message: 'Something went wrong.',  type: 'error'   });
+b.toast({ message: 'Heads up!',              type: 'warning' });
+b.toast({ message: 'New message received.',  type: 'info'    });</pre>
 
-<code data-target="js" data-code="builder.toast({
-    message: 'Data saved successfully!',
-    type: 'success',
-    duration: 3000
-});"></code>
+<h2 id="duration">Custom Duration</h2>
+<pre class="docs-code">// stays for 6 seconds
+b.toast({ message: 'Long toast', type: 'info', duration: 6000 });
 
-<h2 id="types">Notification Types</h2>
-<p>There are four built-in toast types: <code>info</code>, <code>success</code>, <code>warning</code>, and <code>error</code>.</p>
+// stays until manually closed
+b.toast({ message: 'Persistent', type: 'warning', duration: 0 });</pre>
 
-<code data-target="js" data-code="builder.toast({ message: 'Low disk space.', type: 'warning' });
-builder.toast({ message: 'Connection lost.', type: 'error' });"></code>
-
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>message</code></td>
-            <td>String</td>
-            <td>The message to display.</td>
-        </tr>
-        <tr>
-            <td><code>type</code></td>
-            <td>String</td>
-            <td>One of: 'info', 'success', 'warning', 'error'.</td>
-        </tr>
-        <tr>
-            <td><code>duration</code></td>
-            <td>Number</td>
-            <td>Duration in milliseconds (default: 3000). Set to 0 for persistent toasts.</td>
-        </tr>
+        <tr><td><code>message</code></td><td>String</td><td>Notification text</td></tr>
+        <tr><td><code>type</code></td><td>String</td><td>info, success, warning, error</td></tr>
+        <tr><td><code>duration</code></td><td>Number</td><td>Auto-dismiss ms (default: 3500, 0 = no dismiss)</td></tr>
     </tbody>
 </table>
