@@ -1,3 +1,32 @@
+:root {
+    /* Colors */
+    --noshi-primary: #0077b6;
+    --noshi-secondary: #588157;
+    --noshi-error: #9e2a2b;
+    --noshi-warning: #ffc971;
+    --noshi-success: #588157;
+    --noshi-dark: #222222;
+    --noshi-light: #fdfdfd;
+    --noshi-gray: #e5e5e5;
+    --noshi-text: #444444;
+    --noshi-text-muted: #666666;
+
+    /* Spacing */
+    --noshi-spacing-xs: 0.25rem;
+    --noshi-spacing-sm: 0.5rem;
+    --noshi-spacing-md: 1rem;
+    --noshi-spacing-lg: 1.5rem;
+    --noshi-spacing-xl: 2rem;
+
+    /* Shadows */
+    --noshi-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --noshi-shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --noshi-shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+
+    /* Transitions */
+    --noshi-transition: all 0.3s ease;
+}
+
 /* width */
 .w5{width: 5%;}
 .w10{width: 10%;}
@@ -69,11 +98,11 @@
 .xlarge{font-size: 1.4em;}
 
 /* background colors */
-.bgred{background-color: #9e2a2b;}
-.bgorange{background-color: orange;}
-.bggreen{background-color: #588157;}
-.bgyellow{background-color: #ffc971;}
-.bgblue{background-color: #0077b6;}
+.bgred{background-color: var(--noshi-error);}
+.bgorange{background-color: var(--noshi-warning);}
+.bggreen{background-color: var(--noshi-success);}
+.bgyellow{background-color: var(--noshi-warning);}
+.bgblue{background-color: var(--noshi-primary);}
 .bgpurple{background-color: purple;}
 .bgpink{background-color: pink;}
 .bgblack{background-color: black;}
@@ -97,13 +126,21 @@
 .bgcc{background-color: #cccccc;}
 .bgdd{background-color: #dddddd;}
 .bgee{background-color: #eeeeee;}
+.bggry{background-image: linear-gradient(45deg, #9e2a2b, #ffc971);}
+.bggpb{background-image: linear-gradient(45deg, lightpink, lightblue);}
+.bggmg{background-image: linear-gradient(45deg, magenta, gold);}
+.bggpg{background-image: linear-gradient(45deg, lightpink, seagreen);}
+.bgggb{background-image: linear-gradient(45deg, seagreen, lightblue);}
+.bggbw{background-image: linear-gradient(45deg, black, white);}
+.bggpp{background-image: linear-gradient(45deg, lightpink, purple);}
+.bgggp{background-image: linear-gradient(45deg, gold, purple);}
 
 /* font colors */
-.cred{color: #9e2a2b;}
-.corange{color: orange;}
-.cgreen{color: #588157;}
-.cyellow{color: #ffc971;}
-.cblue{color: #0077b6;}
+.cred{color: var(--noshi-error);}
+.corange{color: var(--noshi-warning);}
+.cgreen{color: var(--noshi-success);}
+.cyellow{color: var(--noshi-warning);}
+.cblue{color: var(--noshi-primary);}
 .cpurple{color: purple;}
 .cpink{color: pink;}
 .cblack{color: black;}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noshi Example 1 - Basics</title>
+    <!-- Include Noshi Styles -->
+    <link rel="stylesheet" href="../noshi.css">
+    <style>
+        body { padding: 2rem; background-color: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; }
+        section { margin-bottom: 3rem; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        h1 { color: #0077b6; margin-bottom: 1.5rem; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.25rem; }
+        .description { color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Noshi Toolkit - Basics</h1>
+        <p class="description">This example showcases the basic UI elements provided by the Noshi toolkit, including buttons, notes, and inputs.</p>
+
+        <!-- Buttons Section -->
+        <section id="buttons-section">
+            <h2>Buttons</h2>
+            <p class="description">Noshi provides several button variants for different contexts.</p>
+            <div id="buttons-demo"></div>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notes-section">
+            <h2>Notes & Alerts</h2>
+            <p class="description">Use notes to provide feedback or important information to users.</p>
+            <div id="notes-demo"></div>
+        </section>
+
+        <!-- Inputs Section -->
+        <section id="inputs-section">
+            <h2>Inputs</h2>
+            <p class="description">Standard inputs with modern styling and focus states.</p>
+            <div id="inputs-demo"></div>
+        </section>
+    </div>
+
+    <!-- Include Noshi JS -->
+    <script src="../noshi.js"></script>
+    <script>
+        Noshi.start(() => {
+            const builder = new NoshiBuilder();
+
+            // 1. Buttons Demo
+            const btnContainer = Noshi._("#buttons-demo");
+            btnContainer.appendChild(builder.button({ text: "Primary Button", class: "active", click: () => alert("Primary Clicked!") }));
+            btnContainer.appendChild(builder.button({ text: "Success", class: "correct" }));
+            btnContainer.appendChild(builder.button({ text: "Warning", class: "warning" }));
+            btnContainer.appendChild(builder.button({ text: "Error", class: "error" }));
+            btnContainer.appendChild(builder.button({ text: "Dark", class: "dark" }));
+            btnContainer.appendChild(builder.button({ text: "Disabled", disabled: true }));
+
+            // 2. Notes Demo
+            const notesContainer = Noshi._("#notes-demo");
+            notesContainer.appendChild(builder.note({ text: "This is a standard information note.", icon: "noshi-info" }));
+            notesContainer.appendChild(builder.note({ text: "Success! Your changes have been saved.", class: "correct", icon: "noshi-check" }));
+            notesContainer.appendChild(builder.note({ text: "Warning: Please check your input before submitting.", class: "warning", icon: "noshi-exclamation" }));
+            notesContainer.appendChild(builder.note({ text: "Error: Failed to connect to the server.", class: "error", icon: "noshi-cross" }));
+
+            // 3. Inputs Demo
+            const inputsContainer = Noshi._("#inputs-demo");
+            inputsContainer.appendChild(builder.input({ placeholder: "Type something...", id: "text-input" }));
+            inputsContainer.appendChild(builder.input({ type: "radio", text: "Option A", name: "radio-demo", id: "radio-a" }));
+            inputsContainer.appendChild(builder.input({ type: "radio", text: "Option B", name: "radio-demo", id: "radio-b" }));
+            inputsContainer.appendChild(builder.input({ type: "checkbox", text: "Accept terms and conditions", id: "check-demo" }));
+        });
+    </script>
+</body>
+</html>

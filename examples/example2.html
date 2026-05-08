@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noshi Example 2 - Components</title>
+    <link rel="stylesheet" href="../noshi.css">
+    <style>
+        body { padding: 2rem; background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        section { margin-bottom: 4rem; }
+        h1 { color: #0077b6; text-align: center; margin-bottom: 3rem; }
+        h2 { margin-bottom: 1.5rem; color: #333; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Noshi Components</h1>
+
+        <!-- Slider Section -->
+        <section>
+            <h2>Sliders</h2>
+            <div id="slider-demo" style="height: 400px; border-radius: 12px; overflow: hidden;"></div>
+        </section>
+
+        <!-- Cards Section -->
+        <section>
+            <h2>Cards</h2>
+            <div class="grid" id="cards-demo"></div>
+        </section>
+
+        <!-- Form Section -->
+        <section>
+            <h2>Interactive Forms</h2>
+            <div id="form-demo"></div>
+        </section>
+    </div>
+
+    <script src="../noshi.js"></script>
+    <script>
+        Noshi.start(() => {
+            const builder = new NoshiBuilder();
+
+            // 1. Slider
+            const slider = builder.slider({
+                images: [
+                    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80",
+                    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80",
+                    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1000&q=80"
+                ],
+                slideTime: 4,
+                imageHeight: "400px"
+            });
+            Noshi._("#slider-demo").appendChild(slider);
+
+            // 2. Cards
+            const cardsContainer = Noshi._("#cards-demo");
+            cardsContainer.appendChild(builder.card({
+                title: "Mountain Retreat",
+                text: "Experience the tranquility of the mountains in this luxury cabin.",
+                image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80",
+                link: "#",
+                button: { text: "Book Now", action: () => alert("Booking...") }
+            }));
+            cardsContainer.appendChild(builder.card({
+                title: "Ocean View",
+                text: "A beautiful villa with a stunning view of the Pacific Ocean.",
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+                mode: "dark",
+                button: { text: "Explore", position: "end" }
+            }));
+
+            // 3. Form
+            const form = builder.form({
+                title: "Contact Us",
+                formWidth: "100%",
+                fields: [
+                    { type: "text", placeholder: "Your Name", name: "name", required: true },
+                    { type: "email", placeholder: "Email Address", name: "email" },
+                    { type: "select", options: ["General Inquiry", "Support", "Feedback"], name: "subject" },
+                    { type: "checkbox", text: "Subscribe to newsletter", name: "subscribe" }
+                ],
+                buttons: [
+                    { text: "Send Message", active: true, function: (e) => { e.preventDefault(); alert("Form Submitted!"); } },
+                    { text: "Reset", function: () => console.log("Reset clicked") }
+                ]
+            });
+            Noshi._("#form-demo").appendChild(form);
+        });
+    </script>
+</body>
+</html>

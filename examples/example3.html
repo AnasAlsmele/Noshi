@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noshi Example 3 - Interactions</title>
+    <link rel="stylesheet" href="../noshi.css">
+    <style>
+        body { padding: 2rem; background-color: #f4f7f6; }
+        .container { max-width: 900px; margin: 0 auto; }
+        section { margin-bottom: 3rem; background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #e1e4e8; }
+        h1 { color: #0077b6; margin-bottom: 2rem; text-align: center; }
+        .controls { margin-bottom: 1.5rem; display: flex; gap: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactions & Data</h1>
+
+        <!-- Loading Demo -->
+        <section>
+            <h2>Loading States</h2>
+            <p>Click the buttons below to trigger different loading animations.</p>
+            <div class="controls" id="loading-controls"></div>
+        </section>
+
+        <!-- AJAX Demo -->
+        <section>
+            <h2>AJAX Requests</h2>
+            <p>Fetch data from a public API using the new Promise-based AJAX helper.</p>
+            <div class="controls">
+                <button id="fetch-btn" class="btn-holder-active">
+                    <span class="btn-holder-text">Fetch Random User</span>
+                </button>
+            </div>
+            <div id="ajax-result" style="margin-top: 1rem; min-height: 100px; padding: 1rem; background: #f9f9f9; border-radius: 8px;">
+                Results will appear here...
+            </div>
+        </section>
+
+        <!-- Graph Demo -->
+        <section>
+            <h2>Dynamic Graphs</h2>
+            <p>Visualize data using the built-in SVG graphing component.</p>
+            <div id="graph-demo"></div>
+        </section>
+    </div>
+
+    <script src="../noshi.js"></script>
+    <script>
+        Noshi.start(() => {
+            const builder = new NoshiBuilder();
+
+            // 1. Loading Demo
+            const loadingControls = Noshi._("#loading-controls");
+            
+            const triggerLoading = (type) => {
+                Noshi.loading({ type, backgroundColor: "rgba(0,0,0,0.5)" });
+                setTimeout(() => Noshi.loading(), 2000); // Hide after 2s
+            };
+
+            loadingControls.appendChild(builder.button({ text: "Circle Spinner", click: () => triggerLoading("circle") }));
+            loadingControls.appendChild(builder.button({ text: "Animated Dots", click: () => triggerLoading("dots") }));
+            loadingControls.appendChild(builder.button({ text: "Default Text", click: () => triggerLoading() }));
+
+            // 2. AJAX Demo
+            const fetchBtn = document.getElementById("fetch-btn");
+            const resultDiv = document.getElementById("ajax-result");
+
+            fetchBtn.onclick = async () => {
+                Noshi.loading({ type: "dots" });
+                resultDiv.innerHTML = "Fetching...";
+                
+                try {
+                    const response = await Noshi.ajax({ url: "https://randomuser.me/api/" });
+                    const data = JSON.parse(response);
+                    const user = data.results[0];
+                    
+                    resultDiv.innerHTML = "";
+                    resultDiv.appendChild(builder.card({
+                        title: `${user.name.first} ${user.name.last}`,
+                        text: `${user.email}<br>${user.location.city}, ${user.location.country}`,
+                        image: user.picture.large,
+                        imageWidth: "150px",
+                        imageHeight: "150px",
+                        size: "fit",
+                        style: "flex-direction: row; align-items: center;"
+                    }));
+                } catch (err) {
+                    Noshi.errorScreen("Failed to fetch user data: " + err.text);
+                } finally {
+                    Noshi.loading();
+                }
+            };
+
+            // 3. Graph Demo
+            const graph = builder.graph({
+                head: { title: "Monthly Performance", backgroundColor: "#0077b6", color: "#fff" },
+                data: [
+                    [10, 45, 30, 80, 55, 90, 70],
+                    [20, 30, 50, 40, 70, 60, 85]
+                ],
+                style: [
+                    { color: "#0077b6" },
+                    { color: "#9e2a2b" }
+                ],
+                graph: { type: "area", points: true, height: "350px" }
+            });
+            Noshi._("#graph-demo").appendChild(graph);
+        });
+    </script>
+</body>
+</html>

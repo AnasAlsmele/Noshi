@@ -1,58 +1,70 @@
 /* inputs */
 .input, 
-.input:disabled, 
-.input-warning, 
-.input-placeholder{
+.input-warning {
     flex: 1;
-    padding: .866em 1em;
-    border: 1px solid #e5e5e5;
-    border-radius: 3px;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--noshi-gray);
+    border-radius: 8px;
     outline: none;
-    color: #444444;
-    background-color: #ffffff;
-    margin: .15em .3em;
-    font-size: .9em;
-}
-.input:focus{
-    outline: 1px solid #0077b6;
-}
-.input::placeholder{
-    color: #a9a9a9;
-    opacity: 1;
-    transition: opacity .25s;
-}
-.input:focus::placeholder{
-    opacity: .3;
-}
-.input:disabled{
-    background-color: #f5f5f5;
-    color: #bbbbbb;
+    color: var(--noshi-text);
+    background-color: #fff;
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+    transition: var(--noshi-transition);
 }
 
-/* radio input */
-.input-holder{
+.input:focus {
+    border-color: var(--noshi-primary);
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
+}
+
+.input::placeholder {
+    color: #a9a9a9;
+    opacity: 1;
+    transition: opacity 0.25s;
+}
+
+.input:focus::placeholder {
+    opacity: 0.4;
+}
+
+.input:disabled {
+    background-color: var(--noshi-gray);
+    color: var(--noshi-text-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* checkbox & radio holder */
+.input-holder {
     display: flex;
     flex-direction: row;
-    flex: 1;
-    justify-content: center;
     align-items: center;
-    margin: .15em .3em;
-    border: 1px solid #e5e5e5;
-    border-radius: 3px;
-    padding: 0 1em;
+    margin: 0.25rem 0;
+    border: 1.5px solid var(--noshi-gray);
+    border-radius: 8px;
+    padding: 0 1rem;
+    transition: var(--noshi-transition);
+    background-color: #fff;
 }
-.input-holder:hover{
-    background-color: #f0f0f0;
+
+.input-holder:hover {
+    border-color: var(--noshi-primary);
+    background-color: rgba(0, 119, 182, 0.02);
 }
-.input-label{
+
+.input-label {
     cursor: pointer;
-    color: #444444;
-    font-size: .9em;
+    color: var(--noshi-text);
+    font-size: 0.95rem;
     flex: 1;
-    padding: .866em .5em;
+    padding: 0.75rem 0;
 }
-.input-radio{
+
+.input-radio,
+.input-checkbox {
     cursor: pointer;
-    padding: 0 2em;
-    outline: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--noshi-primary);
 }
