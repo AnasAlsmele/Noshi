@@ -479,8 +479,6 @@
             }).tag;
         };
     }
-        };
-    }
     /**
      * Slider Logic
      */
@@ -638,14 +636,22 @@
      * Language Loader
      */
     const _setLang = () => {
-        const lang = document.documentElement.lang || "en";
-        const script = new NoshiCE({
-            tag: "script",
-            src: `./lang/${lang}.js`,
-            type: "application/javascript"
-        }).tag;
-        document.head.appendChild(script);
-        document.body.setAttribute("data-noshi-lang", lang);
+        try {
+            const lang = document.documentElement.lang || "en";
+            // Check if we are in an example folder or root
+            const isExample = window.location.pathname.includes('/examples/');
+            const basePath = isExample ? '../' : './';
+            
+            const script = new NoshiCE({
+                tag: "script",
+                src: `${basePath}lang/${lang}.js`,
+                type: "application/javascript"
+            }).tag;
+            document.head.appendChild(script);
+            document.body.setAttribute("data-noshi-lang", lang);
+        } catch (e) {
+            console.warn("Noshi: Language loader failed, falling back to default.", e);
+        }
     };
 
     /**
@@ -690,10 +696,13 @@
      * Initialize Noshi
      */
     const startNoshi = (funcs) => {
+        const list = Array.isArray(funcs) ? funcs : [funcs];
+        const run = () => list.forEach(f => typeof f === "function" && f());
+
         if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", () => funcs.forEach(f => f()));
+            document.addEventListener("DOMContentLoaded", run);
         } else {
-            funcs.forEach(f => f());
+            run();
         }
     };
 
