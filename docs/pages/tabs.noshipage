@@ -1,42 +1,54 @@
 <h1 id="tabs">Tabs</h1>
-<p>The Tabs component helps you organize content into multiple views that can be toggled through a navigation bar.</p>
+<p>Tabbed navigation for organizing content into switchable panels.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>Provide an array of tab objects, each with a <code>title</code> and <code>content</code>.</p>
-
-<code data-target="js" data-code="const tabbedContent = builder.tabs({
+<h2 id="basic">Basic Tabs</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const tab1 = document.createElement('div');
+tab1.innerHTML = '<p style="line-height:1.7;color:var(--muted)">Welcome to the <strong>Dashboard</strong> tab. This is where your overview content goes.</p>';
+const tab2 = document.createElement('div');
+tab2.innerHTML = '<p style="line-height:1.7;color:var(--muted)">This is the <strong>Analytics</strong> tab with charts and metrics.</p>';
+const tab3 = document.createElement('div');
+tab3.innerHTML = '<p style="line-height:1.7;color:var(--muted)">Manage your account <strong>Settings</strong> here.</p>';
+return b.tabs({
     tabs: [
-        { 
-            title: 'General', 
-            content: new NoshiCE({ tag: 'p', text: 'General settings content.' }).tag 
-        },
-        { 
-            title: 'Security', 
-            content: new NoshiCE({ tag: 'p', text: 'Security settings content.' }).tag 
-        },
-        { 
-            title: 'Advanced', 
-            content: new NoshiCE({ tag: 'p', text: 'Advanced configuration options.' }).tag 
-        }
+        { title: '📊 Dashboard', content: tab1 },
+        { title: '📈 Analytics', content: tab2 },
+        { title: '⚙️ Settings',  content: tab3 }
     ]
 });
+</script>
+<pre class="docs-code">b.tabs({
+    tabs: [
+        { title: 'Dashboard', content: dashboardEl },
+        { title: 'Analytics', content: analyticsEl },
+        { title: 'Settings',  content: settingsEl  }
+    ]
+});</pre>
 
-document.body.appendChild(tabbedContent);"></code>
+<h2 id="html-content">HTML String Content</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.tabs({
+    tabs: [
+        { title: 'About',   content: '<p style="padding:.5rem 0;color:var(--muted)">Noshi v2.0 — a zero-dependency front-end toolkit.</p>' },
+        { title: 'License', content: '<p style="padding:.5rem 0;color:var(--muted)">MIT License. Free for personal and commercial use.</p>' }
+    ]
+});
+</script>
+<pre class="docs-code">b.tabs({
+    tabs: [
+        { title: 'About',   content: '&lt;p&gt;HTML content works too.&lt;/p&gt;' },
+        { title: 'License', content: '&lt;p&gt;MIT License.&lt;/p&gt;' }
+    ]
+});</pre>
 
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>tabs</code></td>
-            <td>Array</td>
-            <td>An array of objects: <code>{ title: string, content: Element|Array }</code>.</td>
-        </tr>
+        <tr><td><code>tabs</code></td><td>Array</td><td>Array of <code>{ title, content }</code> objects</td></tr>
+        <tr><td><code>tabs[].title</code></td><td>String</td><td>Tab button label (supports emoji)</td></tr>
+        <tr><td><code>tabs[].content</code></td><td>HTMLElement|String</td><td>Tab panel content</td></tr>
     </tbody>
 </table>

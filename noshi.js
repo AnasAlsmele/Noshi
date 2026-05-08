@@ -99,7 +99,7 @@ input[type=checkbox],input[type=radio]{accent-color:var(--p);width:1.1rem;height
 .noshi-field-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.75rem}
 .noshi-field-label{font-size:.85rem;font-weight:600}
 .noshi-field-hint{font-size:.78rem;color:var(--muted)}
-.noshi-field-error{font-size:.78rem;color:var(--err)}`;
+.noshi-field-error{font-size:.78rem;color:var(--err)}.noshi-textarea{resize:vertical;min-height:80px;font-family:inherit}`;
 
     /* â”€â”€ FORMS CSS â”€â”€ */
     const CSS_FORM = `.noshi-form{display:flex;flex-direction:column;gap:.5rem}
@@ -256,6 +256,83 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
     /* inject base styles immediately on load */
     NoshiStyles.inject('base', CSS_BASE + CSS_UTILS + CSS_ANIM);
 
+    /* -- ICON SYSTEM -- */
+    const NOSHI_ICONS = {
+        home:       '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+        user:       '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+        users:      '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+        settings:   '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+        bell:       '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+        search:     '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+        mail:       '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+        phone:      '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>',
+        calendar:   '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+        check:      '<polyline points="20 6 9 17 4 12"/>',
+        'check-circle': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+        x:          '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+        'x-circle':  '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+        alert:       '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+        info:        '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+        star:        '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+        heart:       '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+        edit:        '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>',
+        trash:       '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',
+        download:    '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+        upload:      '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+        link:        '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+        lock:        '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+        unlock:      '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>',
+        eye:         '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+        'eye-off':   '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>',
+        'chevron-up': '<polyline points="18 15 12 9 6 15"/>',
+        'chevron-down': '<polyline points="6 9 12 15 18 9"/>',
+        'chevron-left': '<polyline points="15 18 9 12 15 6"/>',
+        'chevron-right': '<polyline points="9 18 15 12 9 6"/>',
+        menu:        '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
+        'more-h':    '<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+        'more-v':    '<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>',
+        plus:        '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+        minus:       '<line x1="5" y1="12" x2="19" y2="12"/>',
+        save:        '<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>',
+        copy:        '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+        share:       '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+        filter:      '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+        sort:        '<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
+        grid:        '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+        list:        '<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
+        image:       '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+        file:        '<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/>',
+        folder:      '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>',
+        chart:       '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+        refresh:     '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+        'log-out':   '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+        'log-in':    '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>'
+    };
+
+    /* NoshiIcon — renders an inline SVG icon by name */
+    function NoshiIcon(name, opts) {
+        opts = opts || {};
+        const size  = opts.size  || 20;
+        const color = opts.color || 'currentColor';
+        const paths = NOSHI_ICONS[name];
+        if (!paths) return null;
+        const css = '.ni{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}';
+        NoshiStyles.inject('icons', css);
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width',  String(size));
+        svg.setAttribute('height', String(size));
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', color);
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.setAttribute('class', 'ni');
+        svg.innerHTML = paths;
+        return svg;
+    }
+
+
     /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
        NoshiCE â€” Standard DOM element factory
     â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -332,26 +409,170 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
             return sel;
         };
 
-        /* â”€â”€ INPUT â”€â”€ */
+        /* -- INPUT (all types) -- */
         this.input = (info) => {
             NoshiStyles.inject('inputs', CSS_INPUT);
             const type = info.type || 'text';
+            if (type === 'textarea') {
+                const ta = document.createElement('textarea');
+                ta.className = 'noshi-input noshi-textarea'; ta.id=info.id||''; ta.name=info.name||''; ta.placeholder=info.placeholder||''; ta.rows=info.rows||4;
+                if (info.value)    ta.value    = info.value;
+                if (info.required) ta.required = true;
+                if (info.disabled) ta.disabled = true;
+                if (info.resize === false) ta.style.resize = 'none';
+                if (info.change) ta.addEventListener('input', info.change);
+                return ta;
+            }
             if (type === 'checkbox' || type === 'radio') {
                 const id  = info.id || 'noshi-' + Math.random().toString(36).substr(2,6);
                 const inp = new NoshiCE({ tag:'input', type, id, name: info.name||'', value: info.value||'', checked: info.checked, required: info.required }).tag;
                 const lbl = new NoshiCE({ tag:'label', for: id, class:'noshi-input-label', text: info.text||'' }).tag;
+                if (info.change) inp.addEventListener('change', info.change);
                 return new NoshiCE({ tag:'div', class:'noshi-input-holder', child:[inp, lbl] }).tag;
             }
-            return new NoshiCE({ tag:'input', class:'noshi-input', type, id: info.id||'', name: info.name||'', placeholder: info.placeholder||'', value: info.value||'', required: info.required, disabled: info.disabled }).tag;
+            if (type === 'toggle') {
+                NoshiStyles.inject('toggle', '.noshi-toggle-wrap{display:flex;align-items:center;gap:.75rem;cursor:pointer}.noshi-toggle{position:relative;width:44px;height:24px;flex-shrink:0}.noshi-toggle input{opacity:0;width:0;height:0}.noshi-toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;transition:.3s}.noshi-toggle-slider::before{content:"";position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}.noshi-toggle input:checked+.noshi-toggle-slider{background:var(--p)}.noshi-toggle input:checked+.noshi-toggle-slider::before{transform:translateX(20px)}');
+                const id=info.id||'noshi-'+Math.random().toString(36).substr(2,6);
+                const inp=document.createElement('input'); inp.type='checkbox'; inp.id=id; inp.name=info.name||'';
+                if(info.checked) inp.checked=true; if(info.change) inp.addEventListener('change',info.change);
+                const slider=document.createElement('span'); slider.className='noshi-toggle-slider';
+                const lbl=document.createElement('label'); lbl.className='noshi-toggle'; lbl.htmlFor=id; lbl.appendChild(inp); lbl.appendChild(slider);
+                const txt=new NoshiCE({ tag:'span', class:'noshi-input-label', text:info.text||'' }).tag;
+                return new NoshiCE({ tag:'div', class:'noshi-toggle-wrap', child:[lbl,txt] }).tag;
+            }
+            if (type === 'range') {
+                NoshiStyles.inject('range-input', '.noshi-range-wrap{display:flex;flex-direction:column;gap:.4rem;width:100%}.noshi-range{width:100%;accent-color:var(--p);cursor:pointer}.noshi-range-labels{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}.noshi-range-val{text-align:center;font-size:.85rem;font-weight:600;color:var(--p)}');
+                const id=info.id||'noshi-'+Math.random().toString(36).substr(2,6);
+                const inp=document.createElement('input'); inp.type='range'; inp.className='noshi-range'; inp.id=id;
+                inp.min=String(info.min||0); inp.max=String(info.max||100); inp.step=String(info.step||1); inp.value=String(info.value||50);
+                const valEl=document.createElement('div'); valEl.className='noshi-range-val'; valEl.textContent=inp.value+(info.unit||'');
+                inp.addEventListener('input',()=>{ valEl.textContent=inp.value+(info.unit||''); if(info.change) info.change(inp.value); });
+                const ch=[];
+                if(info.label){ const l=document.createElement('label'); l.htmlFor=id; l.className='noshi-field-label'; l.textContent=info.label; ch.push(l); }
+                ch.push(inp);
+                if(info.showValue!==false) ch.push(valEl);
+                if(info.min!=null||info.max!=null){ const labs=document.createElement('div'); labs.className='noshi-range-labels'; labs.innerHTML='<span>'+info.min+'</span><span>'+info.max+'</span>'; ch.push(labs); }
+                return new NoshiCE({ tag:'div', class:'noshi-range-wrap', child:ch }).tag;
+            }
+            if (type === 'color') {
+                NoshiStyles.inject('color-input', '.noshi-color-wrap{display:flex;align-items:center;gap:.75rem}.noshi-color{width:42px;height:42px;border:2px solid var(--gray);border-radius:var(--r-sm);padding:2px;cursor:pointer;background:none}.noshi-color-val{font-size:.85rem;font-family:monospace;color:var(--muted)}');
+                const id=info.id||'noshi-'+Math.random().toString(36).substr(2,6);
+                const inp=document.createElement('input'); inp.type='color'; inp.id=id; inp.className='noshi-color'; inp.value=info.value||'#0077b6';
+                const valEl=document.createElement('span'); valEl.className='noshi-color-val'; valEl.textContent=inp.value;
+                inp.addEventListener('input',()=>{ valEl.textContent=inp.value; if(info.change) info.change(inp.value); });
+                return new NoshiCE({ tag:'div', class:'noshi-color-wrap', child:[inp,valEl] }).tag;
+            }
+            if (type === 'file') {
+                NoshiStyles.inject('file-input', '.noshi-file-label{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;border:2px dashed var(--gray);border-radius:var(--r-sm);cursor:pointer;transition:var(--tr);font-size:.9rem;color:var(--muted)}.noshi-file-label:hover{border-color:var(--p);color:var(--p)}.noshi-file-label input{display:none}.noshi-file-name{font-size:.82rem;color:var(--p);margin-top:.35rem}');
+                const id=info.id||'noshi-'+Math.random().toString(36).substr(2,6);
+                const inp=document.createElement('input'); inp.type='file'; inp.id=id; inp.name=info.name||'';
+                if(info.multiple) inp.multiple=true; if(info.accept) inp.accept=info.accept;
+                const nameEl=document.createElement('div'); nameEl.className='noshi-file-name';
+                inp.addEventListener('change',()=>{ nameEl.textContent=inp.files.length>1?(inp.files.length+' files selected'):inp.files[0]?.name||''; if(info.change) info.change(inp.files); });
+                const label=document.createElement('label'); label.htmlFor=id; label.className='noshi-file-label';
+                label.innerHTML='<span>📎</span><span>'+(info.placeholder||'Choose file...')+'</span>'; label.appendChild(inp);
+                return new NoshiCE({ tag:'div', child:[label,nameEl] }).tag;
+            }
+            if (type === 'datalist') {
+                const listId=info.id?info.id+'-list':'noshi-dl-'+Math.random().toString(36).substr(2,6);
+                const inp=new NoshiCE({ tag:'input', class:'noshi-input', list:listId, id:info.id||'', name:info.name||'', placeholder:info.placeholder||'' }).tag;
+                const dl=document.createElement('datalist'); dl.id=listId;
+                (info.options||[]).forEach(o=>{ const opt=document.createElement('option'); opt.value=typeof o==='object'?o.value:o; opt.textContent=typeof o==='object'?o.label:o; dl.appendChild(opt); });
+                const w=document.createElement('div'); w.appendChild(inp); w.appendChild(dl);
+                if(info.change) inp.addEventListener('input',info.change);
+                return w;
+            }
+            const inp=document.createElement('input');
+            inp.className='noshi-input'; inp.type=type; inp.id=info.id||''; inp.name=info.name||'';
+            inp.placeholder=info.placeholder||''; inp.value=info.value||'';
+            if(info.min !=null) inp.min=String(info.min);
+            if(info.max !=null) inp.max=String(info.max);
+            if(info.step!=null) inp.step=String(info.step);
+            if(info.required) inp.required=true;
+            if(info.disabled) inp.disabled=true;
+            if(info.readonly) inp.readOnly=true;
+            if(info.pattern)  inp.pattern=info.pattern;
+            if(info.change)   inp.addEventListener('input',info.change);
+            return inp;
         };
+
+        /* -- DATEPICKER -- */
+        this.datepicker = (info) => {
+            const CSS_DP = '.ndp-wrap{position:relative;width:100%}.ndp-inp{width:100%;padding:.65rem 2.5rem .65rem 1rem;border:1.5px solid var(--gray);border-radius:var(--r-sm);font-size:.95rem;color:var(--txt);background:#fff;outline:none;cursor:pointer;transition:var(--tr)}.ndp-inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(0,119,182,.1)}.ndp-cal{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--gray);border-radius:var(--r-md);box-shadow:var(--sh-md);z-index:500;min-width:280px;display:none}.ndp-cal.open{display:block}.ndp-cal-head{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-bottom:1px solid var(--gray)}.ndp-nav{background:none;border:none;cursor:pointer;padding:.25rem .5rem;border-radius:var(--r-sm);color:var(--muted);font-size:1rem;transition:var(--tr)}.ndp-nav:hover{background:var(--gray)}.ndp-title{font-weight:600;font-size:.95rem;cursor:pointer;padding:.2rem .5rem;border-radius:var(--r-sm);background:none;border:none;font-family:inherit;transition:var(--tr)}.ndp-title:hover{background:var(--gray)}.ndp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:.75rem}.ndp-dow{text-align:center;font-size:.7rem;font-weight:700;color:var(--muted);padding:.3rem 0}.ndp-day{text-align:center;padding:.45rem .2rem;border-radius:var(--r-sm);font-size:.85rem;cursor:pointer;transition:var(--tr)}.ndp-day:hover{background:var(--gray)}.ndp-day.today{color:var(--p);font-weight:700}.ndp-day.selected{background:var(--p);color:#fff}.ndp-day.range-between{background:rgba(0,119,182,.12)}.ndp-day.range-end{background:var(--p);color:#fff;border-radius:0 var(--r-sm) var(--r-sm) 0}.ndp-day.range-start{background:var(--p);color:#fff;border-radius:var(--r-sm) 0 0 var(--r-sm)}.ndp-day.muted{color:#ccc;pointer-events:none}.ndp-footer{display:flex;justify-content:space-between;padding:.5rem .75rem;border-top:1px solid var(--gray)}.ndp-today-btn,.ndp-clear-btn{background:none;border:none;font-size:.82rem;cursor:pointer;padding:.25rem .5rem;border-radius:4px;font-family:inherit;transition:var(--tr)}.ndp-today-btn{color:var(--p)}.ndp-today-btn:hover{background:var(--gray)}.ndp-clear-btn{color:var(--muted)}.ndp-clear-btn:hover{color:var(--err)}.ndp-months,.ndp-years{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;padding:.75rem}.ndp-month-btn,.ndp-year-btn{padding:.5rem;border-radius:var(--r-sm);font-size:.85rem;cursor:pointer;text-align:center;transition:var(--tr);border:1.5px solid transparent;background:none;font-family:inherit}.ndp-month-btn:hover,.ndp-year-btn:hover{background:var(--gray)}.ndp-month-btn.active,.ndp-year-btn.active{border-color:var(--p);color:var(--p);font-weight:600}';
+            NoshiStyles.inject('datepicker', CSS_DP);
+            const mode=info.mode||'single', format=info.format||'YYYY-MM-DD';
+            let view='days', today=new Date(), cur={y:today.getFullYear(),m:today.getMonth()};
+            let sel1=null, sel2=null;
+            const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+            const DAYS=['Su','Mo','Tu','We','Th','Fr','Sa'];
+            const fmt=(d)=>{ if(!d) return ''; return format.replace('YYYY',d.getFullYear()).replace('MM',String(d.getMonth()+1).padStart(2,'0')).replace('DD',String(d.getDate()).padStart(2,'0')); };
+            const wrap=document.createElement('div'); wrap.className='ndp-wrap';
+            const inp=document.createElement('input'); inp.className='ndp-inp'; inp.type='text'; inp.readOnly=true;
+            inp.placeholder=info.placeholder||(mode==='range'?'Select date range...':'Select date...');
+            inp.id=info.id||''; inp.name=info.name||'';
+            const cal=document.createElement('div'); cal.className='ndp-cal';
+            if(mode!=='inline'){ wrap.appendChild(inp); wrap.appendChild(cal); }
+            else{ cal.style.cssText='position:static;display:block;box-shadow:none'; wrap.appendChild(cal); }
+            const head=document.createElement('div'); head.className='ndp-cal-head';
+            const prev=document.createElement('button'); prev.className='ndp-nav'; prev.textContent='←'; prev.type='button';
+            const next=document.createElement('button'); next.className='ndp-nav'; next.textContent='→'; next.type='button';
+            const title=document.createElement('button'); title.className='ndp-title'; title.type='button';
+            head.appendChild(prev); head.appendChild(title); head.appendChild(next); cal.appendChild(head);
+            const body=document.createElement('div'); cal.appendChild(body);
+            const footer=document.createElement('div'); footer.className='ndp-footer';
+            const todayBtn=document.createElement('button'); todayBtn.className='ndp-today-btn'; todayBtn.textContent='Today'; todayBtn.type='button';
+            const clearBtn=document.createElement('button'); clearBtn.className='ndp-clear-btn'; clearBtn.textContent='Clear'; clearBtn.type='button';
+            footer.appendChild(todayBtn); footer.appendChild(clearBtn); cal.appendChild(footer);
+            const updateInput=()=>{ inp.value=mode==='range'?sel1&&sel2?fmt(sel1)+' - '+fmt(sel2):sel1?fmt(sel1):'':sel1?fmt(sel1):''; if(info.onChange) info.onChange(mode==='range'?{start:sel1,end:sel2}:sel1); };
+            const renderDays=()=>{
+                view='days'; title.textContent=MONTHS[cur.m]+' '+cur.y; body.innerHTML='';
+                const grid=document.createElement('div'); grid.className='ndp-grid';
+                DAYS.forEach(d=>{ const el=document.createElement('div'); el.className='ndp-dow'; el.textContent=d; grid.appendChild(el); });
+                const firstDay=new Date(cur.y,cur.m,1).getDay();
+                const daysInMonth=new Date(cur.y,cur.m+1,0).getDate();
+                const prevMonthDays=new Date(cur.y,cur.m,0).getDate();
+                for(let i=firstDay-1;i>=0;i--){ const el=document.createElement('div'); el.className='ndp-day muted'; el.textContent=String(prevMonthDays-i); grid.appendChild(el); }
+                for(let d=1;d<=daysInMonth;d++){
+                    const date=new Date(cur.y,cur.m,d);
+                    const el=document.createElement('div'); el.className='ndp-day'; el.textContent=String(d);
+                    const isToday=d===today.getDate()&&cur.m===today.getMonth()&&cur.y===today.getFullYear();
+                    if(isToday) el.classList.add('today');
+                    if(sel1&&date.toDateString()===sel1.toDateString()) el.classList.add(mode==='range'?'range-start':'selected');
+                    if(mode==='range'&&sel2&&date.toDateString()===sel2.toDateString()) el.classList.add('range-end');
+                    if(mode==='range'&&sel1&&sel2&&date>sel1&&date<sel2) el.classList.add('range-between');
+                    el.addEventListener('click',()=>{
+                        if(mode==='range'){ if(!sel1||sel2){ sel1=date; sel2=null; } else if(date<sel1){ sel2=sel1; sel1=date; } else { sel2=date; } }
+                        else { sel1=date; if(mode!=='inline') cal.classList.remove('open'); }
+                        updateInput(); renderDays();
+                    });
+                    grid.appendChild(el);
+                }
+                body.appendChild(grid);
+            };
+            const renderMonths=()=>{ view='months'; title.textContent=String(cur.y); body.innerHTML=''; const g=document.createElement('div'); g.className='ndp-months'; MONTHS.forEach((m,i)=>{ const el=document.createElement('div'); el.className='ndp-month-btn'+(i===cur.m?' active':''); el.textContent=m.substr(0,3); el.addEventListener('click',()=>{ cur.m=i; renderDays(); }); g.appendChild(el); }); body.appendChild(g); };
+            const renderYears=()=>{ view='years'; const start=cur.y-6; title.textContent=start+'-'+(start+11); body.innerHTML=''; const g=document.createElement('div'); g.className='ndp-years'; for(let y=start;y<start+12;y++){ const el=document.createElement('div'); el.className='ndp-year-btn'+(y===cur.y?' active':''); el.textContent=String(y); el.addEventListener('click',()=>{ cur.y=y; renderMonths(); }); g.appendChild(el); } body.appendChild(g); };
+            title.addEventListener('click',()=>{ if(view==='days') renderMonths(); else if(view==='months') renderYears(); else renderDays(); });
+            prev.addEventListener('click',()=>{ if(view==='days'){ cur.m--; if(cur.m<0){cur.m=11;cur.y--;} renderDays(); } else if(view==='months'){ cur.y--; renderMonths(); } else { cur.y-=12; renderYears(); } });
+            next.addEventListener('click',()=>{ if(view==='days'){ cur.m++; if(cur.m>11){cur.m=0;cur.y++;} renderDays(); } else if(view==='months'){ cur.y++; renderMonths(); } else { cur.y+=12; renderYears(); } });
+            todayBtn.addEventListener('click',()=>{ sel1=new Date(); cur.y=sel1.getFullYear(); cur.m=sel1.getMonth(); updateInput(); renderDays(); if(mode!=='inline') cal.classList.remove('open'); });
+            clearBtn.addEventListener('click',()=>{ sel1=null; sel2=null; inp.value=''; renderDays(); if(info.onChange) info.onChange(null); });
+            if(mode!=='inline'){ inp.addEventListener('click',()=>cal.classList.toggle('open')); document.addEventListener('click',e=>{ if(!wrap.contains(e.target)) cal.classList.remove('open'); }); }
+            if(info.value){ try{ sel1=new Date(info.value); if(!isNaN(sel1)){ cur.y=sel1.getFullYear(); cur.m=sel1.getMonth(); } else sel1=null; } catch(e){ sel1=null; } updateInput(); }
+            renderDays();
+            wrap.getValue=()=>mode==='range'?{start:sel1,end:sel2}:sel1;
+            wrap.setValue=(v)=>{ try{ sel1=new Date(v); if(!isNaN(sel1)){cur.y=sel1.getFullYear();cur.m=sel1.getMonth();} else sel1=null; } catch(e){sel1=null;} updateInput(); renderDays(); };
+            wrap.clear=()=>clearBtn.click();
+            return wrap;
+        };
+
 
         /* â”€â”€ BUTTON â”€â”€ */
         this.button = (info) => {
             NoshiStyles.inject('buttons', CSS_BTN);
             const cls = info.class ? `btn btn-${info.class}` : 'btn btn-default';
-            const children = [];
+            if (info.icon && info.iconPos !== 'right') { if (info.icon instanceof HTMLElement) { children.push(info.icon); } else { children.push(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
             if (info.icon && info.iconPos !== 'right') children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
-            children.push(new NoshiCE({ tag:'span', text: info.text||'' }).tag);
+            if (info.icon && info.iconPos === 'right')  { if (info.icon instanceof HTMLElement) { children.push(info.icon); } else { children.push(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
             if (info.icon && info.iconPos === 'right') children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
             return new NoshiCE({ tag:'button', class: cls, disabled: info.disabled, click: info.click||null, child: children }).tag;
         };
@@ -359,10 +580,18 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
         /* â”€â”€ NOTE â”€â”€ */
         this.note = (info) => {
             NoshiStyles.inject('notes', CSS_NOTE);
-            const type  = info.class || 'default';
-            const icon  = new NoshiCE({ tag:'div', class:'noshi-note-icon', html: info.icon ? `<i class="${info.icon}"></i>` : '&#9432;' }).tag;
-            const body  = new NoshiCE({ tag:'div', class:'noshi-note-body', html: info.text||'' }).tag;
-            return new NoshiCE({ tag:'div', class:`noshi-note noshi-note-${type}`, child:[icon, body] }).tag;
+            const type     = info.class || 'default';
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'noshi-note-icon';
+            if (info.icon instanceof HTMLElement) {
+                iconWrap.appendChild(info.icon);
+            } else if (typeof info.icon === 'string' && info.icon) {
+                iconWrap.innerHTML = '<i class="' + info.icon + '"></i>';
+            } else {
+                iconWrap.innerHTML = '&#9432;';
+            }
+            const body = new NoshiCE({ tag:'div', class:'noshi-note-body', html: info.text||'' }).tag;
+            return new NoshiCE({ tag:'div', class:'noshi-note noshi-note-'+type, child:[iconWrap, body] }).tag;
         };
 
         /* â”€â”€ CARD â”€â”€ */
@@ -615,7 +844,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
             const iconType = info.iconType || 'primary';
             const iconEl   = new NoshiCE({ tag:'div', class:`noshi-stats-icon noshi-stats-icon-${iconType}` }).tag;
             iconEl.textContent = info.emoji || '';
-            if (info.icon) iconEl.appendChild(new NoshiCE({ tag:'i', class: info.icon }).tag);
+            if (info.icon) { if (info.icon instanceof HTMLElement) { iconEl.appendChild(info.icon); } else { iconEl.appendChild(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
 
             const bodyChildren = [
                 new NoshiCE({ tag:'div', class:'noshi-stats-value', text: String(info.value||'0') }).tag,
@@ -634,7 +863,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
                 if (item.content instanceof HTMLElement) body.appendChild(item.content);
                 else body.innerHTML = `<div class="noshi-accordion-content">${item.content||''}</div>`;
 
-                const arrow = new NoshiCE({ tag:'span', class:'noshi-accordion-arrow', text:'â–¼' }).tag;
+                const arrow = new NoshiCE({ tag:'span', class:'noshi-accordion-arrow', text:String.fromCharCode(9660) }).tag;
                 const head  = new NoshiCE({ tag:'div', class:'noshi-accordion-head', child:[
                     new NoshiCE({ tag:'span', class:'noshi-accordion-title', text: item.title||'' }).tag, arrow
                 ]}).tag;
@@ -761,7 +990,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
             });
 
             const content = new NoshiCE({ tag:'div', class:'noshi-stepper-content', child: panes }).tag;
-            const prevBtn = new NoshiCE({ tag:'button', class:'btn btn-ghost', text:'â† Back' }).tag;
+            const prevBtn = new NoshiCE({ tag:'button', class:'btn btn-ghost', text:String.fromCharCode(8592)+' Back' }).tag;
             const nextBtn = new NoshiCE({ tag:'button', class:'btn btn-active', text:'Next â†’' }).tag;
             const counter = new NoshiCE({ tag:'span', class:'small' }).tag;
             const footer  = new NoshiCE({ tag:'div', class:'noshi-stepper-footer', child:[prevBtn, counter, nextBtn] }).tag;
@@ -947,6 +1176,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
     };
 
     global.NoshiCE      = NoshiCE;
+    global.NoshiIcon    = NoshiIcon;
     global.NoshiCENS    = NoshiCENS;
     global.NoshiBuilder = NoshiBuilder;
     global.NoshiStyles  = NoshiStyles;

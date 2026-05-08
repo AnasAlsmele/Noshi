@@ -1,61 +1,73 @@
 <h1 id="graphs">Graphs</h1>
-<p>The Graph component provides a clean, SVG-based way to visualize data sets in your application.</p>
+<p>SVG-based line and area charts built without any external charting library.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>Noshi supports Line and Area graphs with multiple data sets and customizable styling.</p>
+<h2 id="line">Line Chart</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.graph({
+    head: { title: 'Monthly Revenue', backgroundColor: '#f8f9fa' },
+    data: [[120, 280, 190, 350, 420, 310, 490, 380, 520, 460, 600, 550]],
+    graph: { height: 220, points: true }
+});
+</script>
+<pre class="docs-code">b.graph({
+    head: { title: 'Monthly Revenue' },
+    data: [[120, 280, 190, 350, 420, 310, 490]],
+    graph: { height: 240 }
+});</pre>
 
-<code data-target="js" data-code="const performanceGraph = builder.graph({
-    head: { title: 'Server Load', backgroundColor: '#0077b6', color: '#fff' },
+<h2 id="multi-line">Multi-Line Chart</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.graph({
+    head: { title: 'Sales vs Expenses', backgroundColor: '#f8f9fa' },
     data: [
-        [15, 30, 25, 45, 60, 50, 80], // Set 1
-        [10, 20, 15, 30, 40, 35, 60]  // Set 2
+        [200, 340, 290, 410, 380, 520, 460, 590],
+        [150, 180, 220, 200, 280, 260, 310, 290]
+    ],
+    style: [{ color: '#0077b6' }, { color: '#9e2a2b' }],
+    graph: { height: 220, points: true }
+});
+</script>
+<pre class="docs-code">b.graph({
+    head: { title: 'Sales vs Expenses' },
+    data: [
+        [200, 340, 290, 410, 380, 520],  // line 1
+        [150, 180, 220, 200, 280, 260]   // line 2
     ],
     style: [
         { color: '#0077b6' },
         { color: '#9e2a2b' }
-    ],
-    graph: { type: 'area', points: true, height: '350px' }
-});"></code>
+    ]
+});</pre>
 
-<h2 id="customization">Graph Customization</h2>
-<p>You can toggle points, change graph heights, and define background colors.</p>
+<h2 id="area">Area Chart</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.graph({
+    head: { title: 'User Growth (Area)', backgroundColor: '#f8f9fa' },
+    data: [[50, 120, 200, 320, 410, 390, 520, 640, 580, 720]],
+    style: [{ color: '#588157' }],
+    graph: { height: 220, type: 'area', points: false }
+});
+</script>
+<pre class="docs-code">b.graph({
+    head: { title: 'User Growth' },
+    data: [[50, 120, 200, 320, 410, 390, 520]],
+    style: [{ color: '#588157' }],
+    graph: { type: 'area', points: false, height: 240 }
+});</pre>
 
-<code data-target="js" data-code="graph: { 
-    type: 'line', 
-    points: false, 
-    height: '250px', 
-    backgroundColor: '#f9f9f9' 
-}"></code>
-
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>head</code></td>
-            <td>Object</td>
-            <td>Header config: <code>{ title, backgroundColor, color }</code>.</td>
-        </tr>
-        <tr>
-            <td><code>data</code></td>
-            <td>Array</td>
-            <td>An array of arrays, each representing a data set.</td>
-        </tr>
-        <tr>
-            <td><code>style</code></td>
-            <td>Array</td>
-            <td>Styling for each data set: <code>{ color }</code>.</td>
-        </tr>
-        <tr>
-            <td><code>graph</code></td>
-            <td>Object</td>
-            <td>Core config: <code>{ type, points, height, backgroundColor }</code>.</td>
-        </tr>
+        <tr><td><code>data</code></td><td>Array[]</td><td>Array of datasets — each dataset is an array of numbers</td></tr>
+        <tr><td><code>head.title</code></td><td>String</td><td>Chart title shown above</td></tr>
+        <tr><td><code>head.backgroundColor</code></td><td>String</td><td>Header background color</td></tr>
+        <tr><td><code>style[n].color</code></td><td>String</td><td>Line color for dataset n</td></tr>
+        <tr><td><code>graph.height</code></td><td>Number</td><td>Chart height in pixels</td></tr>
+        <tr><td><code>graph.type</code></td><td>String</td><td>'line' (default) or 'area'</td></tr>
+        <tr><td><code>graph.points</code></td><td>Boolean</td><td>false to hide data point circles</td></tr>
     </tbody>
 </table>

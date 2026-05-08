@@ -1,67 +1,80 @@
 <h1 id="cards">Cards</h1>
-<p>Cards are flexible containers for content, typically including an image, title, description, and an optional action button.</p>
+<p>Flexible content containers with optional image, title, text, footer button, hover effect, and dark mode.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>The <code>builder.card()</code> method creates a modern, elevation-style card.</p>
+<h2 id="basic">Basic Card</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.card({
+    title: 'Noshi Framework',
+    text: 'A lightweight, zero-dependency front-end toolkit. One file to build them all.',
+    button: { text: 'Learn More', action: () => alert('Hello from card!') }
+});
+</script>
+<pre class="docs-code">b.card({
+    title: 'Noshi Framework',
+    text: 'A lightweight front-end toolkit.',
+    button: { text: 'Learn More', action: () => alert('Hello!') }
+});</pre>
 
-<code data-target="js" data-code="const card = builder.card({
-    title: 'Modern Architecture',
-    text: 'Explore the latest trends in urban design and sustainable building.',
-    image: 'https://example.com/building.jpg',
-    button: {
-        text: 'Read More',
-        action: () => window.location.href = '/article'
-    }
-});"></code>
+<h2 id="with-image">With Image</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:1rem;flex-wrap:wrap';
+wrap.appendChild(b.card({
+    image: 'https://picsum.photos/seed/noshi1/400/200',
+    imageHeight: '160px',
+    title: 'Mountain View',
+    text: 'A stunning view from the top.',
+    button: { text: 'View', action: () => {} }
+}));
+wrap.appendChild(b.card({
+    image: 'https://picsum.photos/seed/noshi2/400/200',
+    imageHeight: '160px',
+    title: 'Ocean Breeze',
+    text: 'Feel the ocean wind.',
+    button: { text: 'View', action: () => {} }
+}));
+return wrap;
+</script>
+<pre class="docs-code">b.card({
+    image: 'https://picsum.photos/400/200',
+    imageHeight: '180px',
+    title: 'Card Title',
+    text: 'Card description text.',
+    button: { text: 'View', action: () => {} }
+});</pre>
 
-<h2 id="dark-mode">Dark Mode Cards</h2>
-<p>You can create dark-themed cards by setting the <code>mode</code> property to <code>'dark'</code>.</p>
+<h2 id="dark-mode">Dark Mode Card</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.card({
+    title: 'Dark Card',
+    text: 'This card has a dark background theme.',
+    mode: 'dark',
+    button: { text: 'Action', action: () => {} }
+});
+</script>
+<pre class="docs-code">b.card({ title: 'Dark Card', text: '...', mode: 'dark' });</pre>
 
-<code data-target="js" data-code="builder.card({
-    title: 'Midnight Collection',
-    text: 'A collection of premium night-time photography.',
-    mode: 'dark'
-});"></code>
+<h2 id="link-card">Clickable / Link Card</h2>
+<pre class="docs-code">b.card({
+    title: 'Click me',
+    text: 'This entire card is a link.',
+    link: '/some-page'
+});</pre>
 
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="config">Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>title</code></td>
-            <td>String</td>
-            <td>The card title.</td>
-        </tr>
-        <tr>
-            <td><code>text</code></td>
-            <td>String</td>
-            <td>Main content text. Supports HTML.</td>
-        </tr>
-        <tr>
-            <td><code>image</code></td>
-            <td>String</td>
-            <td>URL of the card image.</td>
-        </tr>
-        <tr>
-            <td><code>mode</code></td>
-            <td>String</td>
-            <td>'light' (default) or 'dark'.</td>
-        </tr>
-        <tr>
-            <td><code>link</code></td>
-            <td>String</td>
-            <td>Makes the entire card a link.</td>
-        </tr>
-        <tr>
-            <td><code>button</code></td>
-            <td>Object</td>
-            <td>Config for the card button: <code>{ text, action, position }</code>.</td>
-        </tr>
+        <tr><td><code>title</code></td><td>String</td><td>Card heading</td></tr>
+        <tr><td><code>text</code></td><td>String</td><td>Body text (supports HTML)</td></tr>
+        <tr><td><code>image</code></td><td>String</td><td>Image URL</td></tr>
+        <tr><td><code>imageHeight</code></td><td>String</td><td>Image height (e.g. '200px')</td></tr>
+        <tr><td><code>button</code></td><td>Object</td><td><code>{ text, action }</code> — adds a footer button</td></tr>
+        <tr><td><code>mode</code></td><td>String</td><td>'dark' for dark background</td></tr>
+        <tr><td><code>link</code></td><td>String</td><td>Makes the entire card an anchor tag</td></tr>
+        <tr><td><code>hover</code></td><td>Boolean</td><td>false to disable hover lift effect</td></tr>
     </tbody>
 </table>

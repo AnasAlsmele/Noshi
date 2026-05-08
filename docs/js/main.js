@@ -29,7 +29,8 @@
             { id: 'tooltip',   label: 'Tooltip'        },
             { id: 'stepper',   label: 'Stepper'        },
             { id: 'slider',    label: 'Slider'         },
-            { id: 'graphs',    label: 'Graphs'         }
+            { id: 'graphs',    label: 'Graphs'         },
+            { id: 'icons',     label: 'Icons'          }
         ]},
         { title: 'Forms & Data', items: [
             { id: 'forms',     label: 'Forms'          },
@@ -172,63 +173,152 @@
     }
 
     /* ── Process code blocks: highlight + copy button ── */
-    function processCodeBlocks() {
-        pageArea.querySelectorAll('pre.docs-code').forEach(pre => {
-            /* wrap */
-            const wrap = document.createElement('div');
-            wrap.className = 'code-wrap';
-            pre.parentNode.insertBefore(wrap, pre);
-            wrap.appendChild(pre);
-            /* highlight */
-            pre.innerHTML = highlight(pre.textContent);
-            /* copy button */
-            const btn = document.createElement('button');
-            btn.className   = 'copy-btn';
-            btn.textContent = 'Copy';
-            btn.addEventListener('click', () => {
-                const text = pre.textContent;
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text).then(() => showCopied(btn));
-                } else {
-                    const ta = document.createElement('textarea');
-                    ta.value = text; document.body.appendChild(ta);
-                    ta.select(); document.execCommand('copy');
-                    ta.remove(); showCopied(btn);
-                }
-            });
-            wrap.appendChild(btn);
-        });
-    }
-    function showCopied(btn) {
-        btn.textContent = '✓ Copied!'; btn.classList.add('copied');
-        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    /* ── Execute demo code, populate a preview box ── */
+    function execDemo(code, box) {
+        /* clear everything except the label */
+        const lbl = box.querySelector('.preview-label');
+        box.innerHTML = '';
+        if (lbl) box.appendChild(lbl);
+        try {
+            const b = new NoshiBuilder();
+            const result = new Function('builder', 'Noshi', 'NoshiBuilder', code)(b, Noshi, NoshiBuilder);
+            if (result instanceof HTMLElement) {
+                box.appendChild(result);
+            } else if (Array.isArray(result)) {
+                result.forEach(el => { if (el instanceof HTMLElement) box.appendChild(el); });
+            }
+        } catch (e) {
+            const err = document.createElement('span');
+            err.style.cssText = 'color:#ff7b72;font-size:.82rem;font-family:monospace';
+            err.textContent   = '⚠ ' + e.message;
+            box.appendChild(err);
+        }
     }
 
-    /* ── Run live demos ── */
+    /* ── Run live demos — assigns IDs & links to the next <pre> ── */
     function runDemos() {
+        let n = 0;
         pageArea.querySelectorAll('script.noshi-demo').forEach(script => {
+            const demoId = 'noshi-demo-' + (n++);
+            /* preview box */
             const box = document.createElement('div');
             box.className = 'preview-box';
+            box.id = demoId;
             const lbl = document.createElement('div');
             lbl.className   = 'preview-label';
             lbl.textContent = '⚡ Live Preview';
             box.appendChild(lbl);
-            try {
-                const b      = new NoshiBuilder();
-                const result = new Function('builder', 'b', 'Noshi', 'NoshiBuilder', script.textContent)(b, b, Noshi, NoshiBuilder);
-                if (result instanceof HTMLElement) {
-                    box.appendChild(result);
-                } else if (Array.isArray(result)) {
-                    result.forEach(el => { if (el instanceof HTMLElement) box.appendChild(el); });
-                }
-            } catch (e) {
-                const err = document.createElement('span');
-                err.style.cssText = 'color:#ff7b72;font-size:.82rem;font-family:monospace';
-                err.textContent   = '⚠ Demo error: ' + e.message;
-                box.appendChild(err);
-            }
+            execDemo(script.textContent.trim(), box);
             script.parentNode.insertBefore(box, script);
+            /* link the immediately following <pre> to this demo */
+            const next = script.nextElementSibling;
+            if (next && next.tagName === 'PRE' && next.classList.contains('docs-code')) {
+                next.dataset.demoId   = demoId;
+                next.dataset.demoCode = script.textContent.trim();
+            }
         });
+    }
+
+    /* ── Process code blocks: editable playground OR highlighted readonly ── */
+    function processCodeBlocks() {
+        pageArea.querySelectorAll('pre.docs-code').forEach(pre => {
+            const wrap = document.createElement('div');
+            wrap.className = 'code-wrap';
+            pre.parentNode.insertBefore(wrap, pre);
+
+            const rawCode = pre.textContent;
+            const demoId  = pre.dataset.demoId;
+            const demoCode = pre.dataset.demoCode;
+
+            if (demoId) {
+                /* ── EDITABLE PLAYGROUND ── */
+                const ta = document.createElement('textarea');
+                ta.className   = 'code-editor';
+                ta.value       = demoCode || rawCode;
+                ta.spellcheck  = false;
+                ta.autocomplete = 'off';
+                /* auto-resize height */
+                ta.rows = Math.min(Math.max((demoCode || rawCode).split('\n').length + 1, 4), 30);
+                ta.addEventListener('input', () => {
+                    ta.rows = Math.min(Math.max(ta.value.split('\n').length + 1, 4), 30);
+                });
+                /* Tab key inserts spaces instead of leaving field */
+                ta.addEventListener('keydown', e => {
+                    if (e.key === 'Tab') {
+                        e.preventDefault();
+                        const s = ta.selectionStart, end = ta.selectionEnd;
+                        ta.value = ta.value.substring(0, s) + '    ' + ta.value.substring(end);
+                        ta.selectionStart = ta.selectionEnd = s + 4;
+                    }
+                    /* Ctrl/Cmd+Enter to run */
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                        e.preventDefault();
+                        runBtn.click();
+                    }
+                });
+                wrap.appendChild(ta);
+
+                /* toolbar */
+                const toolbar = document.createElement('div');
+                toolbar.className = 'code-toolbar';
+
+                const hint = document.createElement('span');
+                hint.className   = 'code-hint';
+                hint.textContent = 'Ctrl+Enter to run';
+                toolbar.appendChild(hint);
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className   = 'copy-btn copy-btn-bar';
+                copyBtn.textContent = 'Copy';
+                copyBtn.addEventListener('click', () => {
+                    if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(() => showCopied(copyBtn));
+                    else { const t = document.createElement('textarea'); t.value=ta.value; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); showCopied(copyBtn); }
+                });
+
+                const runBtn = document.createElement('button');
+                runBtn.className   = 'run-btn';
+                runBtn.innerHTML   = '&#9654; Run';
+                runBtn.addEventListener('click', () => {
+                    const box = document.getElementById(demoId);
+                    if (box) execDemo(ta.value, box);
+                });
+
+                const resetBtn = document.createElement('button');
+                resetBtn.className   = 'reset-btn';
+                resetBtn.textContent = '↺ Reset';
+                resetBtn.addEventListener('click', () => {
+                    ta.value = demoCode || rawCode;
+                    ta.rows  = Math.min(Math.max(ta.value.split('\n').length + 1, 4), 30);
+                    const box = document.getElementById(demoId);
+                    if (box) execDemo(ta.value, box);
+                });
+
+                toolbar.appendChild(copyBtn);
+                toolbar.appendChild(resetBtn);
+                toolbar.appendChild(runBtn);
+                wrap.appendChild(toolbar);
+
+            } else {
+                /* ── READONLY highlighted block ── */
+                wrap.appendChild(pre);
+                pre.innerHTML = highlight(rawCode);
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className   = 'copy-btn';
+                copyBtn.textContent = 'Copy';
+                copyBtn.addEventListener('click', () => {
+                    if (navigator.clipboard) navigator.clipboard.writeText(rawCode).then(() => showCopied(copyBtn));
+                    else { const t = document.createElement('textarea'); t.value=rawCode; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); showCopied(copyBtn); }
+                });
+                wrap.appendChild(copyBtn);
+            }
+        });
+    }
+
+    function showCopied(btn) {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
     }
 
     /* ── Add anchor links to headings ── */

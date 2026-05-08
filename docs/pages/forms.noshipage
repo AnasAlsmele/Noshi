@@ -1,64 +1,91 @@
 <h1 id="forms">Forms</h1>
-<p>The Form component allows you to quickly build complex, data-driven forms using a simple configuration object.</p>
+<p>The <code>builder.form()</code> method renders a fully validated, styled form from a configuration object — no manual HTML needed.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>Define fields and buttons to generate a complete, styled form.</p>
-
-<code data-target="js" data-code="const loginForm = builder.form({
-    title: 'Login to Account',
+<h2 id="basic">Basic Form</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.form({
+    title: 'Create Account',
     fields: [
-        { type: 'text', placeholder: 'Username', name: 'user', required: true },
-        { type: 'password', placeholder: 'Password', name: 'pass', required: true }
+        { label: 'Full Name',  name: 'name',  placeholder: 'Enter your name',  required: true },
+        { label: 'Email',      name: 'email', placeholder: 'you@example.com',  type: 'email', required: true },
+        { label: 'Password',   name: 'pass',  placeholder: 'At least 8 chars', type: 'password', required: true },
+        { label: 'Role', name: 'role', type: 'select', placeholder: '— Choose role —',
+          options: ['Developer', 'Designer', 'Manager', 'Analyst'] }
     ],
     buttons: [
-        { text: 'Sign In', active: true, function: (e) => {
-            e.preventDefault();
-            // Handle login
-        }},
-        { text: 'Forgot Password?', function: () => { /* ... */ }}
+        { text: 'Register', active: true, function: () => b.toast({ message: 'Account created!', type: 'success' }) }
     ]
-});"></code>
+});
+</script>
+<pre class="docs-code">b.form({
+    title: 'Create Account',
+    fields: [
+        { label: 'Name',  name: 'name',  placeholder: 'Full name',  required: true },
+        { label: 'Email', name: 'email', type: 'email',              required: true },
+        { label: 'Role',  name: 'role',  type: 'select',
+          options: ['Developer', 'Designer', 'Manager'] }
+    ],
+    buttons: [
+        { text: 'Submit', active: true, function: () => handleSubmit() }
+    ]
+});</pre>
 
-<h2 id="supported-fields">Supported Fields</h2>
-<p>Noshi forms support standard inputs, passwords, emails, checkboxes, radio buttons, and select dropdowns.</p>
+<h2 id="validation">Built-in Validation</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const form = b.form({
+    fields: [
+        { label: 'Username', name: 'user', placeholder: 'Enter username', required: true },
+        { label: 'Email',    name: 'mail', placeholder: 'Email address',  type: 'email', required: true }
+    ],
+    buttons: [
+        {
+            text: 'Validate & Submit', active: true,
+            function: () => {
+                const errors = form.validate();
+                if (errors.length === 0) {
+                    b.toast({ message: 'Form is valid! Submitting...', type: 'success' });
+                } else {
+                    b.toast({ message: errors.join(', '), type: 'error' });
+                }
+            }
+        }
+    ]
+});
+return form;
+</script>
+<pre class="docs-code">const form = b.form({ fields: [...], buttons: [...] });
 
-<code data-target="js" data-code="{ type: 'select', options: ['USA', 'UK', 'UAE'], name: 'country' },
-{ type: 'checkbox', text: 'Stay logged in', name: 'remember' }"></code>
+// Validate programmatically — returns array of error messages
+const errors = form.validate();
+if (errors.length === 0) submitData();
+else showErrors(errors);</pre>
 
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="hints">Field Hints</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.form({
+    fields: [
+        { label: 'Username', name: 'user', placeholder: 'johndoe', hint: 'Only letters, numbers, and underscores' },
+        { label: 'Password', name: 'pass', type: 'password', placeholder: '••••••••', hint: 'Minimum 8 characters, include a number' }
+    ],
+    buttons: [{ text: 'Continue', active: true }]
+});
+</script>
+<pre class="docs-code">{ label: 'Email', name: 'email', hint: 'We will never share your email' }</pre>
+
+<h2 id="field-config">Field Configuration</h2>
+<table>
+    <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>title</code></td>
-            <td>String</td>
-            <td>Optional form header title.</td>
-        </tr>
-        <tr>
-            <td><code>fields</code></td>
-            <td>Array</td>
-            <td>Array of field objects.</td>
-        </tr>
-        <tr>
-            <td><code>buttons</code></td>
-            <td>Array</td>
-            <td>Array of button objects: <code>{ text, active, function }</code>.</td>
-        </tr>
-        <tr>
-            <td><code>formWidth</code></td>
-            <td>String</td>
-            <td>Custom width for the form.</td>
-        </tr>
-        <tr>
-            <td><code>method</code></td>
-            <td>String</td>
-            <td>HTTP method (default: 'POST').</td>
-        </tr>
+        <tr><td><code>label</code></td><td>String</td><td>Field label shown above the input</td></tr>
+        <tr><td><code>name</code></td><td>String</td><td>Input name attribute</td></tr>
+        <tr><td><code>type</code></td><td>String</td><td>text (default), email, password, number, select</td></tr>
+        <tr><td><code>placeholder</code></td><td>String</td><td>Placeholder text</td></tr>
+        <tr><td><code>value</code></td><td>String</td><td>Default value</td></tr>
+        <tr><td><code>required</code></td><td>Boolean</td><td>Mark as required (validated by <code>form.validate()</code>)</td></tr>
+        <tr><td><code>hint</code></td><td>String</td><td>Helper text shown below the field</td></tr>
+        <tr><td><code>options</code></td><td>Array</td><td>For type: 'select' — array of strings or <code>{ value, label }</code></td></tr>
     </tbody>
 </table>

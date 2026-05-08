@@ -1,19 +1,37 @@
 <h1 id="tooltip">Tooltip</h1>
-<p>Tooltips display helpful hint text when hovering over any element.</p>
+<p>Hover hints that can be placed on any element in four directions.</p>
 
-<h2 id="usage">Usage</h2>
-<pre class="docs-code">const b = new NoshiBuilder();
-const btn = b.button({ text: 'Delete', class: 'error' });
-
-// Wrap any element with a tooltip
-const withTip = b.tooltip(btn, { text: 'Permanently delete this record', position: 'top' });
+<h2 id="positions">All Positions</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0';
+['top','bottom','left','right'].forEach(pos => {
+    const btn = b.button({ text: pos.charAt(0).toUpperCase() + pos.slice(1), class: 'outline' });
+    wrap.appendChild(b.tooltip(btn, { text: `Tooltip on ${pos}`, position: pos }));
+});
+return wrap;
+</script>
+<pre class="docs-code">const btn = b.button({ text: 'Hover me', class: 'outline' });
+// wrap any element — returns the wrapper
+const withTip = b.tooltip(btn, { text: 'Hello!', position: 'top' });
 document.body.appendChild(withTip);</pre>
 
-<h2 id="positions">Positions</h2>
-<pre class="docs-code">b.tooltip(el, { text: 'Tooltip above',  position: 'top'    });
-b.tooltip(el, { text: 'Tooltip below',  position: 'bottom' });
-b.tooltip(el, { text: 'Tooltip left',   position: 'left'   });
-b.tooltip(el, { text: 'Tooltip right',  position: 'right'  });</pre>
+<h2 id="on-icons">On Icons & Badges</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:1rem;align-items:center;flex-wrap:wrap;padding:.5rem 0';
+const del = b.button({ text: '🗑', class: 'error btn-icon' });
+const edit = b.button({ text: '✏️', class: 'outline btn-icon' });
+const info = b.badge({ text: 'Beta', type: 'info' });
+wrap.appendChild(b.tooltip(del,  { text: 'Delete record',    position: 'top'   }));
+wrap.appendChild(b.tooltip(edit, { text: 'Edit this item',   position: 'top'   }));
+wrap.appendChild(b.tooltip(info, { text: 'Feature is in beta', position: 'right' }));
+return wrap;
+</script>
+<pre class="docs-code">const icon = b.button({ text: '🗑', class: 'error btn-icon' });
+b.tooltip(icon, { text: 'Delete record', position: 'top' });</pre>
 
 <h2 id="config">Configuration</h2>
 <table>
@@ -24,5 +42,6 @@ b.tooltip(el, { text: 'Tooltip right',  position: 'right'  });</pre>
     </tbody>
 </table>
 
-<h2 id="note">Note</h2>
-<p><code>builder.tooltip()</code> wraps the element in a <code>&lt;span&gt;</code> container and returns the wrapper. Append the wrapper — not the original element — to the DOM.</p>
+<blockquote style="border-left:3px solid var(--c-primary);padding:.5rem 1rem;margin:1rem 0;background:var(--c-primary-soft);border-radius:0 6px 6px 0;font-size:.9rem;color:var(--c-muted)">
+    ⚠️ <strong>Important:</strong> <code>builder.tooltip()</code> returns the wrapper element — append the wrapper, not the original element.
+</blockquote>

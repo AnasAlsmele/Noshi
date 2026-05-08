@@ -1,76 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noshi Example 1 - Basics</title>
-    <!-- Include Noshi Styles -->
-    <link rel="stylesheet" href="../noshi.css">
-    <style>
-        body { padding: 2rem; background-color: #f8f9fa; }
-        .container { max-width: 800px; margin: 0 auto; }
-        section { margin-bottom: 3rem; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        h1 { color: #0077b6; margin-bottom: 1.5rem; }
-        h2 { border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.25rem; }
-        .description { color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Morgan — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<script src="../noshi.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #e2e8f0; overflow-x: hidden; }
+  .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(10,10,15,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.07); }
+  .nav-brand { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg,#6c63ff,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: .88rem; color: #94a3b8; text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: #a78bfa; }
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 4rem; position: relative; }
+  .hero::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(108,99,255,.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+  .hero-avatar { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(108,99,255,.5); margin-bottom: 1.5rem; }
+  .hero-greeting { font-size: .9rem; color: #6c63ff; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .75rem; }
+  .hero-name { font-size: clamp(2.4rem,5vw,3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: .75rem; background: linear-gradient(135deg,#fff 40%,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-title { font-size: 1.1rem; color: #64748b; margin-bottom: 2rem; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-size: .78rem; color: #6c63ff; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .5rem; }
+  .section-title { font-size: clamp(1.6rem,3vw,2.2rem); font-weight: 700; color: #f1f5f9; margin-bottom: 2.5rem; }
+  .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; }
+  .about-img-wrap { position: relative; }
+  .about-img { width: 100%; border-radius: 16px; object-fit: cover; aspect-ratio: 1; border: 1px solid rgba(108,99,255,.25); }
+  .about-img-badge { position: absolute; bottom: -12px; right: -12px; background: #6c63ff; color: #fff; border-radius: 12px; padding: .5rem 1rem; font-size: .8rem; font-weight: 600; }
+  .about-text { color: #94a3b8; line-height: 1.8; font-size: .97rem; margin-bottom: 1.25rem; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+  .tag { display: inline-block; padding: .25rem .75rem; background: rgba(108,99,255,.12); border: 1px solid rgba(108,99,255,.25); border-radius: 20px; font-size: .78rem; color: #a78bfa; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.25rem; }
+  .skill-item { margin-bottom: .25rem; }
+  .skill-label { display: flex; justify-content: space-between; font-size: .85rem; color: #cbd5e1; margin-bottom: .5rem; }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.5rem; }
+  .proj-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 1.5rem; transition: all .3s; cursor: pointer; }
+  .proj-card:hover { border-color: rgba(108,99,255,.4); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(108,99,255,.15); }
+  .proj-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .proj-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: .5rem; }
+  .proj-desc { font-size: .85rem; color: #64748b; line-height: 1.6; margin-bottom: 1rem; }
+  .proj-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .proj-tag { font-size: .7rem; padding: .15rem .55rem; background: rgba(108,99,255,.12); color: #a78bfa; border-radius: 4px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1.25rem; }
+  .stat-box { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 1.75rem 1.5rem; text-align: center; }
+  .stat-num { font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg,#6c63ff,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-lbl { font-size: .82rem; color: #64748b; margin-top: .35rem; }
+  .contact-wrap { max-width: 600px; margin: 0 auto; }
+  .site-footer { text-align: center; padding: 2.5rem 1rem; border-top: 1px solid rgba(255,255,255,.07); color: #334155; font-size: .83rem; }
+  /* FAB */
+  .code-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 900; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg,#6c63ff,#a78bfa); color: #fff; font-family: 'Fira Code',monospace; font-size: .95rem; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 6px 24px rgba(108,99,255,.45); transition: all .25s; display: flex; align-items: center; justify-content: center; }
+  .code-fab:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(108,99,255,.6); }
+  /* Code Viewer */
+  .code-viewer { position: fixed; inset: 0; z-index: 9999; background: #0d1117; display: flex; flex-direction: column; }
+  .cv-header { display: flex; align-items: center; justify-content: space-between; padding: .85rem 1.5rem; background: #161b22; border-bottom: 1px solid #21262d; flex-shrink: 0; }
+  .cv-title { font-family: 'Fira Code',monospace; font-size: .85rem; color: #8b949e; }
+  .cv-title span { color: #c9d1d9; }
+  .cv-actions { display: flex; gap: .5rem; }
+  .cv-btn { padding: .3rem .85rem; border-radius: 6px; font-size: .78rem; font-weight: 600; cursor: pointer; font-family:'Inter',sans-serif; transition: all .2s; border: none; }
+  .cv-copy { background: rgba(255,255,255,.07); color: #8b949e; border: 1px solid rgba(255,255,255,.1); }
+  .cv-copy:hover { background: rgba(255,255,255,.12); color: #c9d1d9; }
+  .cv-copy.ok { color: #3fb950; border-color: #3fb950; }
+  .cv-close { background: #6c63ff; color: #fff; }
+  .cv-close:hover { background: #7c6fff; }
+  .cv-body { flex: 1; overflow: auto; padding: 1.5rem 2rem; }
+  .cv-body pre { font-family:'Fira Code',monospace; font-size:.82rem; line-height:1.8; color:#e6edf3; white-space:pre; }
+  .tk{color:#ff7b72}.ts{color:#a5d6ff}.tm{color:#d2a8ff}.tc{color:#8b949e;font-style:italic}.tn{color:#79c0ff}.tk2{color:#ffa657}
+  @media(max-width:640px){.nav-links{display:none}.about-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Noshi Toolkit - Basics</h1>
-        <p class="description">This example showcases the basic UI elements provided by the Noshi toolkit, including buttons, notes, and inputs.</p>
+<nav class="site-nav">
+  <div class="nav-brand">Alex Morgan</div>
+  <div class="nav-links">
+    <a href="#about">About</a><a href="#skills">Skills</a>
+    <a href="#projects">Projects</a><a href="#contact">Contact</a>
+  </div>
+</nav>
 
-        <!-- Buttons Section -->
-        <section id="buttons-section">
-            <h2>Buttons</h2>
-            <p class="description">Noshi provides several button variants for different contexts.</p>
-            <div id="buttons-demo"></div>
-        </section>
+<div id="app"></div>
 
-        <!-- Notes Section -->
-        <section id="notes-section">
-            <h2>Notes & Alerts</h2>
-            <p class="description">Use notes to provide feedback or important information to users.</p>
-            <div id="notes-demo"></div>
-        </section>
+<button class="code-fab" id="code-fab" title="View Source Code">&lt;/&gt;</button>
 
-        <!-- Inputs Section -->
-        <section id="inputs-section">
-            <h2>Inputs</h2>
-            <p class="description">Standard inputs with modern styling and focus states.</p>
-            <div id="inputs-demo"></div>
-        </section>
-    </div>
+<script id="page-source">
+Noshi.start(() => {
+    const b   = new NoshiBuilder();
+    const app = Noshi.$('#app');
 
-    <!-- Include Noshi JS -->
-    <script src="../noshi.js"></script>
-    <script>
-        Noshi.start(() => {
-            const builder = new NoshiBuilder();
+    /* ── HERO ── */
+    const hero = document.createElement('div');
+    hero.className = 'hero';
+    hero.innerHTML = `
+        <div>
+            <img class="hero-avatar" src="https://i.pravatar.cc/200?img=11" alt="Alex Morgan">
+            <div class="hero-greeting">Hello, I'm</div>
+            <div class="hero-name">Alex Morgan</div>
+            <div class="hero-title">Frontend Developer & UI Designer · San Francisco</div>
+            <div class="hero-btns" id="hero-btns"></div>
+        </div>`;
+    app.appendChild(hero);
+    const hb = Noshi.$('#hero-btns');
+    hb.appendChild(b.button({ text: 'View Projects', class: 'active',
+        click: () => document.getElementById('projects').scrollIntoView({ behavior:'smooth' }) }));
+    hb.appendChild(b.button({ text: 'Contact Me', class: 'outline',
+        click: () => document.getElementById('contact').scrollIntoView({ behavior:'smooth' }) }));
 
-            // 1. Buttons Demo
-            const btnContainer = Noshi._("#buttons-demo");
-            btnContainer.appendChild(builder.button({ text: "Primary Button", class: "active", click: () => alert("Primary Clicked!") }));
-            btnContainer.appendChild(builder.button({ text: "Success", class: "correct" }));
-            btnContainer.appendChild(builder.button({ text: "Warning", class: "warning" }));
-            btnContainer.appendChild(builder.button({ text: "Error", class: "error" }));
-            btnContainer.appendChild(builder.button({ text: "Dark", class: "dark" }));
-            btnContainer.appendChild(builder.button({ text: "Disabled", disabled: true }));
+    /* ── ABOUT ── */
+    const about = document.createElement('section');
+    about.id = 'about';
+    about.innerHTML = `
+        <div class="section-tag">Who I Am</div>
+        <div class="section-title">About Me</div>
+        <div class="about-grid">
+            <div class="about-img-wrap">
+                <img class="about-img" src="https://i.pravatar.cc/400?img=11" alt="Alex">
+                <div class="about-img-badge">5+ Yrs Exp.</div>
+            </div>
+            <div id="about-content"></div>
+        </div>`;
+    app.appendChild(about);
+    const ac = Noshi.$('#about-content');
+    ac.innerHTML = `
+        <p class="about-text">Hi! I'm Alex — a passionate frontend developer who loves turning complex problems into beautiful, intuitive interfaces. I've shipped products used by millions across 12 countries.</p>
+        <p class="about-text">Outside of code you'll find me hiking, brewing specialty coffee, or contributing to open-source. I believe great software is as much about empathy as engineering.</p>`;
+    ac.appendChild(b.note({ text: 'B.Sc. Computer Science — Stanford University, 2018', class: 'info' }));
+    const tagList = document.createElement('div');
+    tagList.className = 'tag-list';
+    ['JavaScript','TypeScript','React','Vue','Node.js','Figma','GraphQL','AWS'].forEach(t => {
+        const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = t;
+        tagList.appendChild(tag);
+    });
+    ac.appendChild(tagList);
 
-            // 2. Notes Demo
-            const notesContainer = Noshi._("#notes-demo");
-            notesContainer.appendChild(builder.note({ text: "This is a standard information note.", icon: "noshi-info" }));
-            notesContainer.appendChild(builder.note({ text: "Success! Your changes have been saved.", class: "correct", icon: "noshi-check" }));
-            notesContainer.appendChild(builder.note({ text: "Warning: Please check your input before submitting.", class: "warning", icon: "noshi-exclamation" }));
-            notesContainer.appendChild(builder.note({ text: "Error: Failed to connect to the server.", class: "error", icon: "noshi-cross" }));
+    /* ── SKILLS ── */
+    const skillsSection = document.createElement('section');
+    skillsSection.id = 'skills';
+    skillsSection.innerHTML = `<div class="section-tag">Expertise</div><div class="section-title">Skills</div><div class="skills-grid" id="skills-grid"></div>`;
+    app.appendChild(skillsSection);
+    [
+        { name: 'JavaScript / TypeScript', value: 95 },
+        { name: 'React & Vue',             value: 90 },
+        { name: 'CSS / UI Design',         value: 88 },
+        { name: 'Node.js / REST APIs',     value: 80 },
+        { name: 'GraphQL',                 value: 72 },
+        { name: 'DevOps / AWS',            value: 65 },
+    ].forEach(s => {
+        const wrap = document.createElement('div'); wrap.className = 'skill-item';
+        const lbl  = document.createElement('div'); lbl.className = 'skill-label';
+        lbl.innerHTML = `<span>${s.name}</span><span>${s.value}%</span>`;
+        wrap.appendChild(lbl);
+        wrap.appendChild(b.progress({ value: s.value, max: 100, label: false }));
+        Noshi.$('#skills-grid').appendChild(wrap);
+    });
 
-            // 3. Inputs Demo
-            const inputsContainer = Noshi._("#inputs-demo");
-            inputsContainer.appendChild(builder.input({ placeholder: "Type something...", id: "text-input" }));
-            inputsContainer.appendChild(builder.input({ type: "radio", text: "Option A", name: "radio-demo", id: "radio-a" }));
-            inputsContainer.appendChild(builder.input({ type: "radio", text: "Option B", name: "radio-demo", id: "radio-b" }));
-            inputsContainer.appendChild(builder.input({ type: "checkbox", text: "Accept terms and conditions", id: "check-demo" }));
-        });
-    </script>
+    /* ── PROJECTS ── */
+    const projSection = document.createElement('section');
+    projSection.id = 'projects';
+    projSection.innerHTML = `<div class="section-tag">Portfolio</div><div class="section-title">Featured Projects</div><div class="projects-grid" id="proj-grid"></div>`;
+    app.appendChild(projSection);
+    [
+        { icon: '🛍️', title: 'ShopFlow',    desc: 'Headless e-commerce platform processing $2M+ monthly. Built with Next.js and Stripe.',       tags: ['Next.js','Stripe','PostgreSQL'] },
+        { icon: '📊', title: 'DataViz Pro', desc: 'Real-time analytics dashboard visualising 50M+ events per day using SVG charts.',              tags: ['React','D3.js','WebSocket'] },
+        { icon: '🤝', title: 'TeamCollab',  desc: 'Multiplayer collaborative whiteboard used by 30K+ remote teams with CRDT sync.',               tags: ['Vue 3','Yjs','WebRTC'] },
+        { icon: '🔐', title: 'SecureAuth',  desc: 'Zero-knowledge auth library — passkeys, TOTP, and magic links.',                              tags: ['TypeScript','WebAuthn'] },
+        { icon: '🌍', title: 'Wanderlust',  desc: 'AI-powered travel planner with personalised itinerary generation and offline maps.',           tags: ['React Native','OpenAI'] },
+        { icon: '🎨', title: 'Noshi UI',    desc: 'The zero-dependency, single-file UI toolkit powering this very page.',                         tags: ['Vanilla JS','CSS-in-JS'] },
+    ].forEach(p => {
+        const card = document.createElement('div'); card.className = 'proj-card';
+        card.innerHTML = `<div class="proj-icon">${p.icon}</div><div class="proj-title">${p.title}</div><div class="proj-desc">${p.desc}</div><div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>`;
+        card.addEventListener('click', () => b.toast({ message: 'Opening ' + p.title + '...', type: 'info' }));
+        Noshi.$('#proj-grid').appendChild(card);
+    });
+
+    /* ── STATS ── */
+    const statsSection = document.createElement('section');
+    statsSection.innerHTML = `<div class="section-tag">By the Numbers</div><div class="section-title">Impact</div><div class="stats-row" id="stats-row"></div>`;
+    app.appendChild(statsSection);
+    [
+        { num:'120+', lbl:'Projects Delivered' },
+        { num:'30K+', lbl:'Active Users'       },
+        { num:'98%',  lbl:'Client Satisfaction'},
+        { num:'12',   lbl:'Countries'          },
+        { num:'5+',   lbl:'Years Experience'   },
+    ].forEach(s => {
+        const box = document.createElement('div'); box.className = 'stat-box';
+        box.innerHTML = `<div class="stat-num">${s.num}</div><div class="stat-lbl">${s.lbl}</div>`;
+        Noshi.$('#stats-row').appendChild(box);
+    });
+
+    /* ── CONTACT ── */
+    const contactSection = document.createElement('section');
+    contactSection.id = 'contact';
+    contactSection.innerHTML = `<div class="section-tag">Get In Touch</div><div class="section-title">Contact Me</div><div class="contact-wrap" id="contact-wrap"></div>`;
+    app.appendChild(contactSection);
+    const cw = Noshi.$('#contact-wrap');
+    cw.appendChild(b.note({ text: 'Currently open to freelance & full-time roles. Response within 24h.', class: 'info' }));
+    const form = b.form({
+        fields: [
+            { label: 'Your Name', name: 'name',    placeholder: 'Jane Smith',            required: true },
+            { label: 'Email',     name: 'email',   placeholder: 'jane@example.com', type: 'email', required: true },
+            { label: 'Subject',   name: 'subject', placeholder: 'Project inquiry...' },
+            { label: 'Message',   name: 'msg',     type: 'textarea', placeholder: 'Tell me about your project...', required: true }
+        ],
+        buttons: [{ text: 'Send Message', active: true, function: () => {
+            if (!form.validate().length) b.toast({ message: 'Message sent! Reply within 24h.', type: 'success' });
+        }}]
+    });
+    cw.appendChild(form);
+
+    /* ── FOOTER ── */
+    const footer = document.createElement('footer');
+    footer.className = 'site-footer';
+    footer.innerHTML = 'Built with <a href="../docs/index.html" style="color:#6c63ff">Noshi v2.0</a> &nbsp;·&nbsp; &copy; 2025 Alex Morgan &nbsp;·&nbsp; <a href="#" style="color:#6c63ff">GitHub</a> &nbsp;·&nbsp; <a href="#" style="color:#6c63ff">LinkedIn</a>';
+    app.appendChild(footer);
+
+    /* ══ FLOATING CODE VIEWER ══ */
+    function hl(raw) {
+        let c = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        c = c.replace(/(\/\/[^\n]*)/g,'<span class="tc">$1</span>');
+        c = c.replace(/(\/\*[\s\S]*?\*\/)/g,'<span class="tc">$1</span>');
+        c = c.replace(/((?:`[^`]*`|'[^'\\]*(?:\\[\s\S][^'\\]*)*'|"[^"\\]*(?:\\[\s\S][^"\\]*)*"))/g,'<span class="ts">$1</span>');
+        c = c.replace(/\b(const|let|var|function|return|if|else|new|class|async|await|for|of|in|this|true|false|null|undefined|forEach)\b/g,'<span class="tk">$1</span>');
+        c = c.replace(/\b(\d+\.?\d*)\b/g,'<span class="tn">$1</span>');
+        c = c.replace(/\.([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g,'.<span class="tm">$1</span>');
+        c = c.replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\s*):/g,'<span class="tk2">$1</span>:');
+        return c;
+    }
+
+    const src = Noshi.$('#page-source').textContent;
+
+    Noshi.$('#code-fab').addEventListener('click', () => {
+        if (Noshi.$('#code-viewer')) return;
+        const viewer = document.createElement('div');
+        viewer.className = 'code-viewer'; viewer.id = 'code-viewer';
+
+        const hdr = document.createElement('div'); hdr.className = 'cv-header';
+        hdr.innerHTML = `<div class="cv-title">example1.html &nbsp;&#8250;&nbsp; <span>Noshi.start() — full page source</span></div>`;
+
+        const acts = document.createElement('div'); acts.className = 'cv-actions';
+
+        const copyBtn = document.createElement('button'); copyBtn.className='cv-btn cv-copy'; copyBtn.textContent='Copy';
+        copyBtn.onclick = () => {
+            navigator.clipboard && navigator.clipboard.writeText(src);
+            copyBtn.textContent='✓ Copied!'; copyBtn.classList.add('ok');
+            setTimeout(()=>{copyBtn.textContent='Copy';copyBtn.classList.remove('ok');},2000);
+        };
+        const closeBtn = document.createElement('button'); closeBtn.className='cv-btn cv-close'; closeBtn.textContent='✕ Close';
+        closeBtn.onclick = () => viewer.remove();
+
+        acts.appendChild(copyBtn); acts.appendChild(closeBtn); hdr.appendChild(acts);
+
+        const body = document.createElement('div'); body.className = 'cv-body';
+        const pre  = document.createElement('pre'); pre.innerHTML = hl(src.trim());
+        body.appendChild(pre); viewer.appendChild(hdr); viewer.appendChild(body);
+        document.body.appendChild(viewer);
+
+        const esc = (e) => { if(e.key==='Escape'){viewer.remove();document.removeEventListener('keydown',esc);} };
+        document.addEventListener('keydown', esc);
+    });
+});
+</script>
 </body>
 </html>

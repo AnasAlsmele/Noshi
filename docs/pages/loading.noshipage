@@ -1,46 +1,63 @@
-<h1 id="loading">Loading States</h1>
-<p>Noshi includes a global loading state system that can be easily toggled to provide feedback during long-running operations.</p>
+<h1 id="loading">Loading Overlay</h1>
+<p>A full-screen animated loading overlay with customizable message. Blocks user interaction while async operations complete.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
-<p>Call <code>Noshi.loading()</code> to show or hide the loading overlay.</p>
+<h2 id="basic">Show &amp; Hide</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;gap:.75rem;flex-wrap:wrap';
 
-<code data-target="js" data-code="// Show default loader
-Noshi.loading();
+wrap.appendChild(b.button({
+    text: '⏳ Show Loading (2s)',
+    class: 'active',
+    click: () => {
+        Noshi.loading.show('Processing your request...');
+        setTimeout(() => Noshi.loading.hide(), 2000);
+    }
+}));
 
-// Hide loader
-Noshi.loading();"></code>
+wrap.appendChild(b.button({
+    text: '📦 Simulate Fetch',
+    class: 'outline',
+    click: async () => {
+        Noshi.loading.show('Fetching data...');
+        await new Promise(r => setTimeout(r, 1500));
+        Noshi.loading.hide();
+        b.toast({ message: 'Data loaded!', type: 'success' });
+    }
+}));
 
-<h2 id="variants">Loader Variants</h2>
-<p>You can choose between different animation styles: <code>circle</code>, <code>dots</code>, or custom <code>text</code>.</p>
+return wrap;
+</script>
+<pre class="docs-code">// Show with message
+Noshi.loading.show('Uploading file...');
 
-<code data-target="js" data-code="Noshi.loading({ type: 'circle' });
-Noshi.loading({ type: 'dots' });
-Noshi.loading({ text: 'Please wait, processing data...' });"></code>
+// Hide after async work
+await uploadFile(data);
+Noshi.loading.hide();</pre>
 
-<h2 id="configuration">Configuration Options</h2>
-<table class="noshi-table">
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
+<h2 id="async-pattern">Recommended Async Pattern</h2>
+<pre class="docs-code">async function saveData(payload) {
+    Noshi.loading.show('Saving changes...');
+    try {
+        const res = await Noshi.ajax({
+            url: '/api/save',
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+        b.toast({ message: 'Saved successfully!', type: 'success' });
+        return JSON.parse(res);
+    } catch(err) {
+        b.toast({ message: 'Save failed: ' + err, type: 'error' });
+    } finally {
+        Noshi.loading.hide(); // always hide, even on error
+    }
+}</pre>
+
+<h2 id="api">API</h2>
+<table>
+    <thead><tr><th>Method</th><th>Description</th></tr></thead>
     <tbody>
-        <tr>
-            <td><code>type</code></td>
-            <td>String</td>
-            <td>'circle' or 'dots'.</td>
-        </tr>
-        <tr>
-            <td><code>text</code></td>
-            <td>String</td>
-            <td>Custom text message (overrides type).</td>
-        </tr>
-        <tr>
-            <td><code>backgroundColor</code></td>
-            <td>String</td>
-            <td>Custom overlay color (e.g., 'rgba(0,0,0,0.5)').</td>
-        </tr>
+        <tr><td><code>Noshi.loading.show(message?)</code></td><td>Show the overlay with optional message text</td></tr>
+        <tr><td><code>Noshi.loading.hide()</code></td><td>Hide the overlay</td></tr>
     </tbody>
 </table>

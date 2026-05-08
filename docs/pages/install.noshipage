@@ -1,37 +1,53 @@
-<h1 id="installation">Installation</h1>
-<p>Noshi is designed to be easy to integrate into any project. Just follow these simple steps.</p>
+<h1 id="install">Installation</h1>
+<p>Noshi is a single JavaScript file. No npm, no build tools, no CSS link needed.</p>
 
-<h2 id="manual-installation">Manual Installation</h2>
-<p>1. Download the latest version of Noshi or clone the repository.</p>
-<p>2. Copy <code>noshi.css</code> and <code>noshi.js</code> into your project's assets folder.</p>
-<p>3. Include them in your HTML <code>&lt;head&gt;</code> section:</p>
+<h2 id="download">Option 1 — Download</h2>
+<p>Download <code>noshi.js</code> and include it in your HTML:</p>
+<pre class="docs-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My App&lt;/title&gt;
+    &lt;!-- That's it. No CSS link. No other scripts. --&gt;
+    &lt;script src="noshi.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        Noshi.start(() => {
+            const b = new NoshiBuilder();
+            document.body.appendChild(
+                b.note({ text: '🎉 Noshi is working!', class: 'success' })
+            );
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
 
-<code data-target="html" data-code="<link rel='stylesheet' href='css/noshi.css'>
-<script src='js/noshi.js'></script>"></code>
+<h2 id="cdn">Option 2 — CDN (jsDelivr)</h2>
+<pre class="docs-code">&lt;script src="https://cdn.jsdelivr.net/gh/AnasMusic/Noshi@main/noshi.js"&gt;&lt;/script&gt;</pre>
 
-<h2 id="using-the-toolkit">Using the Toolkit</h2>
-<p>Once included, you can start building your application within the <code>Noshi.start()</code> block:</p>
+<h2 id="quick-demo">Quick Demo</h2>
+<p>After including <code>noshi.js</code>, you have access to:</p>
+<table>
+    <thead><tr><th>Global</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>Noshi</code></td><td>Main namespace: <code>Noshi.ajax()</code>, <code>Noshi.store</code>, <code>Noshi.page()</code>, <code>Noshi.toggleDarkMode()</code>, etc.</td></tr>
+        <tr><td><code>new NoshiBuilder()</code></td><td>Component factory: buttons, cards, tables, modals, etc.</td></tr>
+        <tr><td><code>NoshiStyles</code></td><td>CSS-in-JS engine: inject/remove style blocks</td></tr>
+        <tr><td><code>NoshiCE()</code></td><td>Low-level DOM element factory</td></tr>
+    </tbody>
+</table>
 
-<code data-target="js" data-code="Noshi.start(() => {
-    const builder = new NoshiBuilder();
-    
-    // Your app logic here
-    const app = builder.button({ text: 'Launch App', class: 'active' });
-    document.body.appendChild(app);
-});"></code>
+<h2 id="start">Noshi.start()</h2>
+<p>Wrap your code in <code>Noshi.start()</code> to ensure it runs after the DOM is ready:</p>
+<pre class="docs-code">Noshi.start(() => {
+    // your code here — DOM is guaranteed to be ready
+    const b = new NoshiBuilder();
+    document.body.appendChild(b.button({ text: 'Hello!', class: 'active' }));
+});
 
-<h2 id="project-structure">Recommended Project Structure</h2>
-<p>For larger projects, we recommend a structure that keeps your code separate from the toolkit:</p>
+// Also accepts an array of functions:
+Noshi.start([initRouter, initTheme, loadData]);</pre>
 
-<code data-target="text" data-code="/my-project
-  /assets
-    /noshi
-      noshi.js
-      noshi.css
-      /style
-      /lang
-  /js
-    app.js
-  /css
-    styles.css
-  index.html"></code>
+<h2 id="version">Check Version</h2>
+<pre class="docs-code">console.log(Noshi.version); // "2.0.0"</pre>

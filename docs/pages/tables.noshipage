@@ -1,46 +1,110 @@
 <h1 id="tables">Tables</h1>
-<p>The smart data table supports client-side sorting, searching, and pagination out of the box — no configuration required beyond your data.</p>
+<p>Smart data table with built-in search, sortable columns, pagination, custom cell renderers, and live data updates.</p>
 
-<h2 id="basic">Basic Usage</h2>
-<pre class="docs-code">const b = new NoshiBuilder();
-
-const table = b.table({
+<h2 id="basic">Basic Table</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.table({
     columns: [
         { key: 'name',   label: 'Name',   sortable: true },
-        { key: 'role',   label: 'Role'   },
-        { key: 'status', label: 'Status', render: (val) =>
-            b.badge({ text: val, type: val === 'active' ? 'success' : 'gray', dot: true })
-        }
+        { key: 'role',   label: 'Role',   sortable: true },
+        { key: 'status', label: 'Status',
+          render: (val) => b.badge({ text: val, type: val === 'Active' ? 'success' : 'gray', dot: true }) },
+        { key: 'joined', label: 'Joined' }
     ],
     data: [
-        { name: 'Anas',  role: 'Admin',  status: 'active'   },
-        { name: 'Ali',   role: 'Editor', status: 'inactive' },
-        { name: 'Sara',  role: 'Viewer', status: 'active'   }
+        { name: 'Anas Al-Smele', role: 'Admin',     status: 'Active',   joined: '2024-01-15' },
+        { name: 'Sara Hassan',   role: 'Designer',  status: 'Active',   joined: '2024-03-22' },
+        { name: 'Ali Ahmed',     role: 'Developer', status: 'Inactive', joined: '2023-11-08' },
+        { name: 'Mona Khalid',   role: 'Manager',   status: 'Active',   joined: '2024-06-01' },
+        { name: 'Omar Nasser',   role: 'Analyst',   status: 'Inactive', joined: '2023-09-14' }
     ],
     search: true,
-    pagination: 10,
-    onRowClick: (row) => console.log('Clicked:', row)
+    pagination: 10
+});
+</script>
+<pre class="docs-code">b.table({
+    columns: [
+        { key: 'name',   label: 'Name',   sortable: true },
+        { key: 'status', label: 'Status',
+          render: (val) => b.badge({ text: val, type: val === 'Active' ? 'success' : 'gray', dot: true }) }
+    ],
+    data: [
+        { name: 'Anas', status: 'Active'   },
+        { name: 'Ali',  status: 'Inactive' }
+    ],
+    search: true,
+    pagination: 10
+});</pre>
+
+<h2 id="row-click">Row Click Handler</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+return b.table({
+    columns: [
+        { key: 'product', label: 'Product', sortable: true },
+        { key: 'price',   label: 'Price',   render: (v) => { const s=document.createElement('span'); s.textContent='$'+v; s.style.fontWeight='600'; return s; } },
+        { key: 'stock',   label: 'Stock',
+          render: (v) => b.badge({ text: v+' units', type: Number(v) < 10 ? 'warning' : 'success' }) }
+    ],
+    data: [
+        { product: 'Noshi Pro',   price: 49,  stock: 240 },
+        { product: 'Noshi Lite',  price: 0,   stock: 999 },
+        { product: 'Noshi Teams', price: 199, stock: 7   }
+    ],
+    onRowClick: (row) => b.toast({ message: 'Selected: ' + row.product, type: 'info' })
+});
+</script>
+<pre class="docs-code">b.table({
+    columns: [...],
+    data: [...],
+    onRowClick: (row) => console.log('Clicked row:', row)
 });</pre>
 
 <h2 id="live-update">Live Data Update</h2>
-<p>The table element exposes a <code>setData()</code> method for live updates.</p>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const users = [
+    { id: 1, name: 'Anas',  score: 88 },
+    { id: 2, name: 'Sara',  score: 92 },
+    { id: 3, name: 'Ali',   score: 76 }
+];
+const table = b.table({
+    columns: [
+        { key: 'id',    label: '#'     },
+        { key: 'name',  label: 'User', sortable: true },
+        { key: 'score', label: 'Score',
+          render: (v) => b.progress({ value: v, max: 100, label: false, size: 'sm', color: v > 85 ? 'success' : 'warning' }) }
+    ],
+    data: users
+});
+const refreshBtn = b.button({ text: '🔄 Randomize Scores', class: 'outline', click: () => {
+    users.forEach(u => u.score = Math.floor(Math.random() * 40) + 60);
+    table.setData([...users]);
+}});
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-direction:column;gap:.75rem';
+wrap.appendChild(refreshBtn);
+wrap.appendChild(table);
+return wrap;
+</script>
 <pre class="docs-code">const table = b.table({ columns: [...], data: [] });
 
-// Later, after an AJAX call:
-const freshData = await Noshi.ajax({ url: '/api/users' });
-table.setData(JSON.parse(freshData));</pre>
+// Update table data at any time:
+const fresh = await fetchUsers();
+table.setData(fresh);</pre>
 
 <h2 id="config">Configuration</h2>
 <table>
     <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
         <tr><td><code>columns</code></td><td>Array</td><td><code>{ key, label, sortable, render }</code></td></tr>
-        <tr><td><code>data</code></td><td>Array</td><td>Array of data objects</td></tr>
-        <tr><td><code>search</code></td><td>Boolean</td><td>Show search input</td></tr>
+        <tr><td><code>columns[].render</code></td><td>Function</td><td>Custom cell renderer — receives cell value, returns HTMLElement or string</td></tr>
+        <tr><td><code>data</code></td><td>Array</td><td>Array of row objects</td></tr>
+        <tr><td><code>search</code></td><td>Boolean</td><td>Show search input above the table</td></tr>
         <tr><td><code>pagination</code></td><td>Number</td><td>Rows per page (0 = no pagination)</td></tr>
-        <tr><td><code>onRowClick</code></td><td>Function</td><td>Called with the row object when clicked</td></tr>
-        <tr><td><code>emptyText</code></td><td>String</td><td>Message when no results found</td></tr>
-        <tr><td><code>searchPlaceholder</code></td><td>String</td><td>Placeholder text for search input</td></tr>
+        <tr><td><code>onRowClick</code></td><td>Function</td><td>Called with the full row object on row click</td></tr>
+        <tr><td><code>emptyText</code></td><td>String</td><td>Message shown when no rows match search</td></tr>
     </tbody>
 </table>
 
@@ -48,7 +112,7 @@ table.setData(JSON.parse(freshData));</pre>
 <table>
     <thead><tr><th>Method</th><th>Description</th></tr></thead>
     <tbody>
-        <tr><td><code>.setData(array)</code></td><td>Replace all data and re-render</td></tr>
-        <tr><td><code>.refresh()</code></td><td>Re-apply current filter and sort</td></tr>
+        <tr><td><code>.setData(array)</code></td><td>Replace all data and re-render the table</td></tr>
+        <tr><td><code>.refresh()</code></td><td>Re-apply current sort and filter without changing data</td></tr>
     </tbody>
 </table>

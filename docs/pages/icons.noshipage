@@ -1,203 +1,165 @@
 <h1 id="icons">Icons</h1>
-<p class="np"><b>Noshi</b> includes a list of icons that can be used inside paragraphs, links, list, and almost everywhere. In this page, we will show you available icons and how to display them inside the tags.</p>
-<space></space>
-<h1 id="how-to-use">How To Use The Icons</h1>
-<p class="np">Usually, you can use <code>i</code> tag as a holder for your icon, and to add an icon, you can simply pass <code>noshi-</code> followed by the icon name as a class inside the tag e.g.</p>
-<code class="ncode" data-target="html" data-code="
-<p>I <i class='noshi-correct'></i> Noshi</p>
-"></code>
-<p class="np">Which will be display as show below.</p>
-<div class="dcode">
-    <p>I <i class='noshi-heart'></i> Noshi</p>
-</div>
-<h1 id="icons-list">Icons List</h1>
-<div class="dcode">
-    <table class="table-grid-head center">
-        <tr>
-            <th class="w15">Name</th>
-            <th class="w10">Icon</th>
-            <th class="w15">Name</th>
-            <th class="w10">Icon</th>
-            <th class="w15">Name</th>
-            <th class="w10">Icon</th>
-            <th class="w15">Name</th>
-            <th class="w10">Icon</th>
-        </tr>
-        <tr>
-            <td><code>bill</code></td>
-            <td><i class="noshi-bill"></i></td>
-            <td><code>signin</code></td>
-            <td><i class="noshi-signin"></i></td>
-            <td><code>flag</code></td>
-            <td><i class="noshi-flag"></i></td>
-            <td><code>no-image</code></td>
-            <td><i class="noshi-no-image"></i></td>
-        </tr>
-        <tr>
-            <td><code>list-down</code></td>
-            <td><i class="noshi-list-down"></i></td>
-            <td><code>list-up</code></td>
-            <td><i class="noshi-list-up"></i></td>
-            <td><code>return</code></td>
-            <td><i class="noshi-return"></i></td>
-            <td><code>add-book</code></td>
-            <td><i class="noshi-add-book"></i></td>
-        </tr>
-        <tr>
-            <td><code>arrow-up</code></td>
-            <td><i class="noshi-arrow-up"></i></td>
-            <td><code>arrow-down</code></td>
-            <td><i class="noshi-arrow-down"></i></td>
-            <td><code>arrow-left</code></td>
-            <td><i class="noshi-arrow-left"></i></td>
-            <td><code>arrow-right</code></td>
-            <td><i class="noshi-arrow-right"></i></td>
-        </tr>
-        <tr>
-            <td><code>linkedin</code></td>
-            <td><i class="noshi-linkedin"></i></td>
-            <td><code>facebook</code></td>
-            <td><i class="noshi-facebook"></i></td>
-            <td><code>github</code></td>
-            <td><i class="noshi-github"></i></td>
-            <td><code>youtube</code></td>
-            <td><i class="noshi-youtube"></i></td>
-        </tr>
-        <tr>
-            <td><code>link</code></td>
-            <td><i class="noshi-link"></i></td>
-            <td><code>zoom-in</code></td>
-            <td><i class="noshi-zoom-in"></i></td>
-            <td><code>heart</code></td>
-            <td><i class="noshi-heart"></i></td>
-            <td><code>truck-time</code></td>
-            <td><i class="noshi-truck-time"></i></td>
-        </tr>
-        <tr>
-            <td><code>feed</code></td>
-            <td><i class="noshi-feed"></i></td>
-            <td><code>eye</code></td>
-            <td><i class="noshi-eye"></i></td>
-            <td><code>new-window</code></td>
-            <td><i class="noshi-new-window"></i></td>
-            <td><code>money</code></td>
-            <td><i class="noshi-money"></i></td>
-        </tr>
-        <tr>
-            <td><code>save</code></td>
-            <td><i class="noshi-save"></i></td>
-            <td><code>shirt</code></td>
-            <td><i class="noshi-shirt"></i></td>
-            <td><code>search</code></td>
-            <td><i class="noshi-search"></i></td>
-            <td><code>coupon</code></td>
-            <td><i class="noshi-coupon"></i></td>
-        </tr>
-        <tr>
-            <td><code>home</code></td>
-            <td><i class="noshi-home"></i></td>
-            <td><code>switch</code></td>
-            <td><i class="noshi-switch"></i></td>
-            <td><code>info</code></td>
-            <td><i class="noshi-info"></i></td>
-            <td><code>statistics</code></td>
-            <td><i class="noshi-statistics"></i></td>
-        </tr>
-        <tr>
-            <td><code>mail</code></td>
-            <td><i class="noshi-mail"></i></td>
-            <td><code>building</code></td>
-            <td><i class="noshi-building"></i></td>
-            <td><code>bag</code></td>
-            <td><i class="noshi-bag"></i></td>
-            <td><code>location</code></td>
-            <td><i class="noshi-location"></i></td>
-        </tr>
-        <tr>
-            <td><code>store</code></td>
-            <td><i class="noshi-store"></i></td>
-            <td><code>time-is-money</code></td>
-            <td><i class="noshi-time-is-money"></i></td>
-            <td><code>users</code></td>
-            <td><i class="noshi-users"></i></td>
-            <td><code>user</code></td>
-            <td><i class="noshi-user"></i></td>
-        </tr>
-        <tr>
-            <td><code>box</code></td>
-            <td><i class="noshi-box"></i></td>
-            <td><code>calendar</code></td>
-            <td><i class="noshi-calendar"></i></td>
-            <td><code>open-folder</code></td>
-            <td><i class="noshi-open-folder"></i></td>
-            <td><code>trash</code></td>
-            <td><i class="noshi-trash"></i></td>
-        </tr>
-        <tr>
-            <td><code>truck</code></td>
-            <td><i class="noshi-truck"></i></td>
-            <td><code>order</code></td>
-            <td><i class="noshi-order"></i></td>
-            <td><code>correct</code></td>
-            <td><i class="noshi-correct"></i></td>
-            <td><code>delivery-man</code></td>
-            <td><i class="noshi-delivery-man"></i></td>
-        </tr>
-        <tr>
-            <td><code>phone</code></td>
-            <td><i class="noshi-phone"></i></td>
-            <td><code>warning</code></td>
-            <td><i class="noshi-warning"></i></td>
-            <td><code>times</code></td>
-            <td><i class="noshi-times"></i></td>
-            <td><code>plus</code></td>
-            <td><i class="noshi-plus"></i></td>
-        </tr>
-        <tr>
-            <td><code>earth</code></td>
-            <td><i class="noshi-earth"></i></td>
-            <td><code>edit</code></td>
-            <td><i class="noshi-edit"></i></td>
-            <td><code>safety</code></td>
-            <td><i class="noshi-safety"></i></td>
-            <td><code>settings</code></td>
-            <td><i class="noshi-settings"></i></td>
-        </tr>
-        <tr>
-            <td><code>fingerprint</code></td>
-            <td><i class="noshi-fingerprint"></i></td>
-            <td><code>file</code></td>
-            <td><i class="noshi-file"></i></td>
-            <td><code>cog</code></td>
-            <td><i class="noshi-cog"></i></td>
-            <td><code>control-panel</code></td>
-            <td><i class="noshi-control-panel"></i></td>
-        </tr>
-        <tr>
-            <td><code>image</code></td>
-            <td><i class="noshi-image"></i></td>
-            <td><code>list</code></td>
-            <td><i class="noshi-list"></i></td>
-            <td><code>dolly</code></td>
-            <td><i class="noshi-dolly"></i></td>
-            <td><code>star</code></td>
-            <td><i class="noshi-star"></i></td>
-        </tr>
-        <tr>
-            <td><code>logout</code></td>
-            <td><i class="noshi-logout"></i></td>
-            <td><code>loading</code></td>
-            <td><i class="noshi-loading"></i></td>
-            <td><code>redo</code></td>
-            <td><i class="noshi-redo"></i></td>
-        </tr>
-        <tr>
-            <td><code>undo</code></td>
-            <td><i class="noshi-undo"></i></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-</div><p class="np-note-green">Functions, <a href="index.html?page=functions" target="_self">learn more</a></p>
+<p>Noshi includes 40+ built-in SVG icons via <code>NoshiIcon(name, options)</code>. They are inline SVG — no font files, no external requests, fully styleable with CSS.</p>
+
+<h2 id="basic">Basic Usage</h2>
+<script class="noshi-demo">
+const icons = ['home','user','mail','search','bell','star','heart','settings','edit','trash'];
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center';
+icons.forEach(name => {
+    const box = document.createElement('div');
+    box.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.7rem;color:var(--muted);cursor:pointer';
+    const ico = NoshiIcon(name, { size: 22 });
+    box.title = name;
+    box.appendChild(ico);
+    const lbl = document.createElement('span'); lbl.textContent = name;
+    box.appendChild(lbl);
+    wrap.appendChild(box);
+});
+return wrap;
+</script>
+<pre class="docs-code">// Render an icon element
+const icon = NoshiIcon('home');
+document.body.appendChild(icon);
+
+// With size and color
+const icon2 = NoshiIcon('trash', { size: 24, color: '#9e2a2b' });
+element.appendChild(icon2);</pre>
+
+<h2 id="all-icons">All Icons</h2>
+<script class="noshi-demo">
+const allIcons = [
+    'home','user','users','settings','bell','search','mail','phone','calendar',
+    'check','check-circle','x','x-circle','alert','info','star','heart',
+    'edit','trash','download','upload','link','lock','unlock','eye','eye-off',
+    'chevron-up','chevron-down','chevron-left','chevron-right',
+    'menu','more-h','more-v','plus','minus','save','copy','share',
+    'filter','sort','grid','list','image','file','folder','chart',
+    'refresh','log-out','log-in'
+];
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.75rem';
+allIcons.forEach(name => {
+    const ico = NoshiIcon(name, { size: 20 });
+    if (!ico) return;
+    const box = document.createElement('div');
+    box.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:.6rem .25rem;border:1px solid var(--gray);border-radius:8px;cursor:pointer;transition:all .2s;font-size:.68rem;color:var(--muted)';
+    box.title = 'NoshiIcon("'+name+'")';
+    box.addEventListener('mouseenter', () => { box.style.borderColor='var(--p)'; box.style.color='var(--p)'; });
+    box.addEventListener('mouseleave', () => { box.style.borderColor='var(--gray)'; box.style.color='var(--muted)'; });
+    box.addEventListener('click', () => { navigator.clipboard && navigator.clipboard.writeText('NoshiIcon("'+name+'")'); box.style.background='var(--p)'; setTimeout(()=>box.style.background='',600); });
+    box.appendChild(ico);
+    const lbl = document.createElement('span'); lbl.textContent = name;
+    box.appendChild(lbl);
+    wrap.appendChild(box);
+});
+return wrap;
+</script>
+<pre class="docs-code">NoshiIcon('home')
+NoshiIcon('user')         NoshiIcon('users')        NoshiIcon('settings')
+NoshiIcon('bell')         NoshiIcon('search')        NoshiIcon('mail')
+NoshiIcon('check')        NoshiIcon('check-circle')  NoshiIcon('x')
+NoshiIcon('x-circle')     NoshiIcon('alert')         NoshiIcon('info')
+NoshiIcon('star')         NoshiIcon('heart')         NoshiIcon('edit')
+NoshiIcon('trash')        NoshiIcon('download')      NoshiIcon('upload')
+NoshiIcon('link')         NoshiIcon('lock')          NoshiIcon('unlock')
+NoshiIcon('eye')          NoshiIcon('eye-off')       NoshiIcon('save')
+NoshiIcon('copy')         NoshiIcon('share')         NoshiIcon('filter')
+NoshiIcon('sort')         NoshiIcon('grid')          NoshiIcon('list')
+NoshiIcon('image')        NoshiIcon('file')          NoshiIcon('folder')
+NoshiIcon('chart')        NoshiIcon('refresh')       NoshiIcon('menu')
+NoshiIcon('plus')         NoshiIcon('minus')         NoshiIcon('phone')
+NoshiIcon('calendar')     NoshiIcon('log-in')        NoshiIcon('log-out')
+NoshiIcon('chevron-up')   NoshiIcon('chevron-down')
+NoshiIcon('chevron-left') NoshiIcon('chevron-right')
+NoshiIcon('more-h')       NoshiIcon('more-v')</pre>
+
+<h2 id="sizes">Sizes</h2>
+<script class="noshi-demo">
+const sizes = [14, 18, 22, 28, 36, 48];
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap';
+sizes.forEach(s => {
+    const col = document.createElement('div');
+    col.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.7rem;color:var(--muted)';
+    col.appendChild(NoshiIcon('star', { size: s }));
+    const lbl = document.createElement('span'); lbl.textContent = s+'px';
+    col.appendChild(lbl);
+    wrap.appendChild(col);
+});
+return wrap;
+</script>
+<pre class="docs-code">NoshiIcon('star', { size: 14 });  // 14px
+NoshiIcon('star', { size: 20 });  // 20px (default)
+NoshiIcon('star', { size: 36 });  // 36px
+NoshiIcon('star', { size: 48 });  // 48px</pre>
+
+<h2 id="colors">Colors</h2>
+<script class="noshi-demo">
+const colors = [
+    { color: 'currentColor', label: 'inherit' },
+    { color: '#0077b6',      label: 'primary'  },
+    { color: '#588157',      label: 'success'  },
+    { color: '#a06000',      label: 'warning'  },
+    { color: '#9e2a2b',      label: 'error'    }
+];
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:1rem;align-items:center;flex-wrap:wrap';
+colors.forEach(({color, label}) => {
+    const col = document.createElement('div');
+    col.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.7rem;color:var(--muted)';
+    col.appendChild(NoshiIcon('heart', { size: 28, color }));
+    const lbl = document.createElement('span'); lbl.textContent = label;
+    col.appendChild(lbl);
+    wrap.appendChild(col);
+});
+return wrap;
+</script>
+<pre class="docs-code">NoshiIcon('heart', { color: 'currentColor' }); // inherits from CSS
+NoshiIcon('heart', { color: '#0077b6' });       // primary blue
+NoshiIcon('heart', { color: '#9e2a2b' });       // red</pre>
+
+<h2 id="with-button">Icons in Buttons</h2>
+<script class="noshi-demo">
+const b = new NoshiBuilder();
+const wrap = document.createElement('div');
+wrap.style.cssText = 'display:flex;gap:.75rem;flex-wrap:wrap;align-items:center';
+
+// Manual icon+button composition
+const makeIconBtn = (iconName, label, cls) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-' + cls;
+    btn.style.cssText = 'display:inline-flex;align-items:center;gap:.4rem';
+    const ico = NoshiIcon(iconName, { size: 16 });
+    btn.appendChild(ico);
+    btn.appendChild(document.createTextNode(' ' + label));
+    return btn;
+};
+
+NoshiStyles.inject('buttons', '');  // ensure button styles are loaded
+wrap.appendChild(makeIconBtn('save',     'Save',   'active'));
+wrap.appendChild(makeIconBtn('trash',    'Delete', 'error'));
+wrap.appendChild(makeIconBtn('download', 'Export', 'outline'));
+wrap.appendChild(NoshiIcon('bell',     { size: 22, color: 'var(--muted)' }));
+wrap.appendChild(NoshiIcon('settings', { size: 22, color: 'var(--muted)' }));
+return wrap;
+</script>
+<pre class="docs-code">const btn = document.createElement('button');
+btn.className = 'btn btn-active';
+btn.style.cssText = 'display:inline-flex;align-items:center;gap:.4rem';
+btn.appendChild(NoshiIcon('save', { size: 16 }));
+btn.appendChild(document.createTextNode(' Save'));</pre>
+
+<h2 id="api">API</h2>
+<table>
+    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><code>name</code></td><td>String</td><td>Icon name (see list above)</td></tr>
+        <tr><td><code>options.size</code></td><td>Number</td><td>Width &amp; height in pixels (default: 20)</td></tr>
+        <tr><td><code>options.color</code></td><td>String</td><td>Stroke color (default: 'currentColor' — inherits CSS)</td></tr>
+    </tbody>
+</table>
+
+<blockquote style="border-left:3px solid var(--c-primary);padding:.5rem 1rem;background:var(--c-primary-soft);border-radius:0 6px 6px 0;font-size:.9rem;color:var(--c-muted);margin:1rem 0">
+    💡 <strong>Tip:</strong> All icons use <code>stroke</code> (not fill), so you can set their color using the CSS <code>color</code> property or by passing <code>color</code> in the options.
+</blockquote>
