@@ -1,113 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noshi Example 3 - Interactions</title>
-    <link rel="stylesheet" href="../noshi.css">
-    <style>
-        body { padding: 2rem; background-color: #f4f7f6; }
-        .container { max-width: 900px; margin: 0 auto; }
-        section { margin-bottom: 3rem; background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #e1e4e8; }
-        h1 { color: #0077b6; margin-bottom: 2rem; text-align: center; }
-        .controls { margin-bottom: 1.5rem; display: flex; gap: 1rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noshi Timepiece Elite — Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<script src="../noshi.js"></script>
+<style>
+  :root {
+    --p: #6366f1; /* Modern Indigo */
+    --p-dark: #4f46e5;
+    --bg: #ffffff;
+    --card: #f8fafc;
+    --txt: #0f172a;
+    --muted: #64748b;
+    --border: rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--txt); line-height: 1.6; }
+  
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  
+  /* Sections */
+  section { padding: 6rem 0; }
+  .hero { height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at top right, #f5f3ff 0%, #ffffff 100%); }
+  .hero-content h1 { font-size: 5.5rem; font-weight: 800; letter-spacing: -3px; margin-bottom: 1rem; background: linear-gradient(135deg, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-subtitle { font-size: 1.3rem; color: var(--muted); margin-bottom: 2.5rem; }
+
+  /* Navbar */
+  .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 0; transition: all 0.3s; }
+  .navbar.scrolled { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 1.5rem; font-weight: 800; color: var(--p); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-link { color: #64748b; text-decoration: none; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; }
+  .nav-link:hover { color: var(--p); }
+  .nav-cart { position: relative; cursor: pointer; color: var(--txt); }
+  .cart-badge { position: absolute; top: -8px; right: -8px; background: var(--p); color: #fff; font-size: 0.7rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+  /* Feature Grid */
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+  .noshi-card { background: var(--card) !important; border: 1px solid var(--border) !important; border-radius: 24px !important; transition: transform 0.3s ease, box-shadow 0.3s ease !important; }
+  .noshi-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05) !important; }
+
+  /* Product Detail Overrides */
+  .noshi-tabs { border: none !important; background: transparent !important; }
+  .noshi-tabs-nav { background: transparent !important; border-bottom: 1px solid var(--border) !important; justify-content: center; }
+  .noshi-tab-btn { color: var(--muted) !important; border-bottom: 3px solid transparent !important; font-size: 1rem !important; padding: 1rem 2rem !important; }
+  .noshi-tab-btn.active { color: var(--p) !important; border-bottom-color: var(--p) !important; background: transparent !important; }
+  .noshi-tab-pane { color: var(--muted) !important; line-height: 1.8 !important; font-size: 1.1rem !important; padding: 3rem 0 !important; }
+
+  /* Accordion Overrides */
+  .noshi-accordion { border: 1px solid var(--border) !important; background: #fff !important; border-radius: 16px !important; overflow: hidden !important; }
+  .noshi-accordion-head { background: #fff !important; color: var(--txt) !important; padding: 1.5rem !important; }
+  .noshi-accordion-head.open { color: var(--p) !important; background: #f5f3ff !important; }
+  .noshi-accordion-body { background: #fff !important; }
+  .noshi-accordion-content { color: var(--muted) !important; padding-bottom: 1.5rem !important; }
+
+  /* FAB */
+  .code-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 900; width: 52px; height: 52px; border-radius: 50%; background: var(--p); color: #fff; font-family: 'Fira Code',monospace; font-size: .95rem; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 6px 24px rgba(99,102,241,0.3); display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+  .code-fab:hover { transform: scale(1.1); }
+  
+  /* Button Design Overrides */
+  .btn-active { 
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important; 
+    color: #fff !important; 
+    border: none !important; 
+    font-weight: 700 !important; 
+    box-shadow: 0 8px 20px rgba(99,102,241,0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .btn-active:hover { transform: translateY(-3px) scale(1.02) !important; box-shadow: 0 12px 25px rgba(99,102,241,0.4) !important; }
+  .btn-active:active { transform: translateY(0) scale(0.98) !important; }
+
+  /* Toast/Popup Message Overrides */
+  .noshi-toasts { bottom: 3rem !important; right: 3rem !important; }
+  .noshi-toast { 
+    background: rgba(15, 23, 42, 0.9) !important; 
+    backdrop-filter: blur(12px) !important; 
+    border-radius: 20px !important; 
+    border: 1px solid rgba(255,255,255,0.1) !important; 
+    padding: 1.25rem 1.5rem !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+    color: #fff !important;
+  }
+  .noshi-toast-msg { font-weight: 500 !important; font-size: 0.95rem !important; }
+  .noshi-toast-success { border-left: 6px solid #10b981 !important; background: linear-gradient(to right, rgba(16,185,129,0.1), transparent) !important; }
+
+  /* Modal Overrides */
+  .noshi-modal { background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%) !important; color: var(--txt) !important; border-radius: 32px !important; border: none !important; box-shadow: 0 30px 60px -12px rgba(99,102,241,0.2) !important; }
+  .noshi-modal-header { border-bottom: 1px solid rgba(0,0,0,0.05) !important; padding: 2rem !important; }
+  .noshi-modal-header h3 { font-size: 1.5rem !important; font-weight: 800 !important; }
+  .noshi-modal-footer { background: transparent !important; border-top: 1px solid rgba(0,0,0,0.05) !important; padding: 1.5rem 2rem !important; }
+  .noshi-input { background: #fff !important; border: 1.5px solid #e2e8f0 !important; border-radius: 12px !important; padding: .85rem 1rem !important; }
+  .noshi-input:focus { border-color: var(--p) !important; }
+  
+  /* Stepper Overrides */
+  .noshi-stepper-nav { background: transparent !important; border-bottom: none !important; padding: 2rem 2rem 0 !important; }
+  .noshi-step-circle { width: 40px !important; height: 40px !important; font-size: 1rem !important; }
+  .noshi-step-line { background: #e2e8f0 !important; }
+  .noshi-step-line.done { background: var(--p) !important; }
+  .noshi-step-pane { padding: 2rem !important; }
+  
+  /* Code Viewer */
+  .code-viewer { position: fixed; inset: 0; z-index: 9999; background: #0d1117; display: flex; flex-direction: column; }
+  .cv-header { display: flex; align-items: center; justify-content: space-between; padding: .85rem 1.5rem; background: #161b22; border-bottom: 1px solid #21262d; }
+  .cv-title { font-family: 'Fira Code',monospace; font-size: .85rem; color: #8b949e; }
+  .cv-btn { padding: .3rem .85rem; border-radius: 6px; font-size: .78rem; font-weight: 600; cursor: pointer; border: none; }
+  .cv-close { background: var(--p); color: #000; }
+  .cv-body { flex: 1; overflow: auto; padding: 1.5rem 2rem; }
+  .cv-body pre { font-family:'Fira Code',monospace; font-size:.82rem; line-height:1.8; color:#e6edf3; }
+  .tk{color:#ff7b72}.ts{color:#a5d6ff}.tm{color:#d2a8ff}.tc{color:#8b949e}.tn{color:#79c0ff}
+
+  /* Slider Overrides */
+  .noshi-slider { border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+
+  /* Modal/Form Dark overrides */
+  .noshi-modal { background: #111 !important; color: #fff !important; border: 1px solid #222 !important; }
+  .noshi-modal-header { border-bottom: 1px solid #222 !important; }
+  .noshi-modal-footer { background: #0a0a0a !important; border-top: 1px solid #222 !important; }
+  .noshi-input { background: #1a1a1a !important; border-color: #333 !important; color: #fff !important; }
+  .noshi-field-label { color: #aaa !important; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Interactions & Data</h1>
 
-        <!-- Loading Demo -->
-        <section>
-            <h2>Loading States</h2>
-            <p>Click the buttons below to trigger different loading animations.</p>
-            <div class="controls" id="loading-controls"></div>
-        </section>
+<div id="app"></div>
 
-        <!-- AJAX Demo -->
-        <section>
-            <h2>AJAX Requests</h2>
-            <p>Fetch data from a public API using the new Promise-based AJAX helper.</p>
-            <div class="controls">
-                <button id="fetch-btn" class="btn-holder-active">
-                    <span class="btn-holder-text">Fetch Random User</span>
-                </button>
-            </div>
-            <div id="ajax-result" style="margin-top: 1rem; min-height: 100px; padding: 1rem; background: #f9f9f9; border-radius: 8px;">
-                Results will appear here...
-            </div>
-        </section>
+<button class="code-fab" id="code-fab">&lt;/&gt;</button>
 
-        <!-- Graph Demo -->
-        <section>
-            <h2>Dynamic Graphs</h2>
-            <p>Visualize data using the built-in SVG graphing component.</p>
-            <div id="graph-demo"></div>
-        </section>
-    </div>
+<script id="page-source">
+Noshi.start(() => {
+    const b = new NoshiBuilder();
+    const { $, $$, create, on, onAll, append, store } = Noshi;
 
-    <script src="../noshi.js"></script>
-    <script>
-        Noshi.start(() => {
-            const builder = new NoshiBuilder();
+    // 1. App State
+    store.set('cartCount', 0);
+    store.set('scrolled', false);
 
-            // 1. Loading Demo
-            const loadingControls = Noshi._("#loading-controls");
-            
-            const triggerLoading = (type) => {
-                Noshi.loading({ type, backgroundColor: "rgba(0,0,0,0.5)" });
-                setTimeout(() => Noshi.loading(), 2000); // Hide after 2s
-            };
+    window.addEventListener('scroll', () => {
+        const isScrolled = window.scrollY > 50;
+        if (isScrolled !== store.get('scrolled')) {
+            store.set('scrolled', isScrolled);
+            $('.navbar').classList.toggle('scrolled', isScrolled);
+        }
+    });
 
-            loadingControls.appendChild(builder.button({ text: "Circle Spinner", click: () => triggerLoading("circle") }));
-            loadingControls.appendChild(builder.button({ text: "Animated Dots", click: () => triggerLoading("dots") }));
-            loadingControls.appendChild(builder.button({ text: "Default Text", click: () => triggerLoading() }));
+    /* ── COMPONENTS ── */
 
-            // 2. AJAX Demo
-            const fetchBtn = document.getElementById("fetch-btn");
-            const resultDiv = document.getElementById("ajax-result");
+    const Nav = () => create('nav', { class: 'navbar', child: [
+        create('div', { class: 'container nav-inner', child: [
+            create('div', { class: 'logo', text: 'NOSHI' }),
+            create('div', { class: 'nav-links', child: [
+                create('a', { class: 'nav-link', text: 'Collection', click: () => $('#gallery-section').scrollIntoView({behavior:'smooth'}) }),
+                create('a', { class: 'nav-link', text: 'Features', click: () => $('#features-section').scrollIntoView({behavior:'smooth'}) }),
+                create('a', { class: 'nav-link', text: 'Specs', click: () => $('#specs-section').scrollIntoView({behavior:'smooth'}) })
+            ]}),
+            create('div', { class: 'nav-cart', click: () => showCheckout(), child: [
+                NoshiIcon('mail', { size: 24, color: 'var(--p)' }),
+                create('span', { class: 'cart-badge', text: store.get('cartCount') })
+            ]})
+        ]})
+    ]});
 
-            fetchBtn.onclick = async () => {
-                Noshi.loading({ type: "dots" });
-                resultDiv.innerHTML = "Fetching...";
-                
-                try {
-                    const response = await Noshi.ajax({ url: "https://randomuser.me/api/" });
-                    const data = JSON.parse(response);
-                    const user = data.results[0];
-                    
-                    resultDiv.innerHTML = "";
-                    resultDiv.appendChild(builder.card({
-                        title: `${user.name.first} ${user.name.last}`,
-                        text: `${user.email}<br>${user.location.city}, ${user.location.country}`,
-                        image: user.picture.large,
-                        imageWidth: "150px",
-                        imageHeight: "150px",
-                        size: "fit",
-                        style: "flex-direction: row; align-items: center;"
-                    }));
-                } catch (err) {
-                    Noshi.errorScreen("Failed to fetch user data: " + err.text);
-                } finally {
-                    Noshi.loading();
-                }
-            };
+    store.on('cartCount', count => {
+        const badge = $('.cart-badge');
+        if (badge) badge.textContent = count;
+    });
 
-            // 3. Graph Demo
-            const graph = builder.graph({
-                head: { title: "Monthly Performance", backgroundColor: "#0077b6", color: "#fff" },
-                data: [
-                    [10, 45, 30, 80, 55, 90, 70],
-                    [20, 30, 50, 40, 70, 60, 85]
+    const HeroSlider = () => create('section', { id: 'gallery-section', style: 'padding-top: 100px; padding-bottom: 0', child: [
+        create('div', { class: 'container', style: 'position: relative', child: [
+            b.slider({
+                height: '550px',
+                images: [
+                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1200',
+                    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&q=80&w=1200',
+                    'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=1200'
                 ],
-                style: [
-                    { color: "#0077b6" },
-                    { color: "#9e2a2b" }
-                ],
-                graph: { type: "area", points: true, height: "350px" }
-            });
-            Noshi._("#graph-demo").appendChild(graph);
+                time: 5
+            }),
+            // Title Overlay (Centered)
+            create('div', { style: 'position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none', child: [
+                create('h1', { style: 'font-size: 4.5rem; line-height: 1.1; color: #fff; text-shadow: 0 10px 30px rgba(0,0,0,0.5); font-weight: 800; letter-spacing: -2px; margin-bottom: 20px', text: 'The Chronos Elite' })
+            ]}),
+            // Button Container (Lower Center, Interactive)
+            create('div', { style: 'position: absolute; bottom: 80px; left: 0; right: 0; z-index: 11; display: flex; justify-content: center', child: [
+                b.button({ text: 'Reserve Now — $2,499', class: 'active', style: 'border-radius: 50px; background: #fff; color: var(--p); font-weight: 800; padding: 1rem 2.5rem; font-size: 1.1rem', click: () => showCheckout() })
+            ]})
+        ]})
+    ]});
+
+    const Features = () => create('section', { id: 'features-section', child: [
+        create('div', { class: 'container', child: [
+            create('h2', { style: 'text-align: center; margin-bottom: 3rem; font-size: 2.5rem', text: 'Engineered for Excellence' }),
+            create('div', { class: 'feat-grid', child: [
+                b.card({ title: 'Sapphire Crystal', text: 'Virtually scratch-proof surface for clarity that lasts generations.', icon: NoshiIcon('eye', { color: '#f59e0b' }) }),
+                b.card({ title: '72h Power Reserve', text: 'Automatic movement that keeps ticking even when you rest.', icon: NoshiIcon('refresh', { color: '#10b981' }) }),
+                b.card({ title: '100m Waterproof', text: 'Designed for the elements, from the boardroom to the ocean.', icon: NoshiIcon('check', { color: '#3b82f6' }) })
+            ]})
+        ]})
+    ]});
+
+    const Details = () => create('section', { id: 'specs-section', child: [
+        create('div', { class: 'container', child: [
+            b.tabs({
+                tabs: [
+                    { title: 'Overview', content: 'Crafted from surgical-grade stainless steel and featuring a hand-assembled Swiss movement, the Chronos Elite represents the pinnacle of watchmaking. Every component is tested for 400 hours before final assembly.' },
+                    { title: 'Specifications', content: 'Case Diameter: 42mm | Movement: Caliber 9012 Auto | Strap: Genuine Italian Leather | Warranty: 5 Years Limited International.' },
+                    { title: 'Shipping', content: 'Complimentary worldwide express shipping on all orders. Each timepiece is insured and requires a signature upon delivery.' }
+                ]
+            })
+        ]})
+    ]});
+
+    const FAQ = () => create('section', { child: [
+        create('div', { class: 'container', child: [
+            create('h2', { style: 'text-align: center; margin-bottom: 3rem', text: 'Frequently Asked Questions' }),
+            b.accordion({
+                items: [
+                    { title: 'How do I maintain my automatic watch?', content: 'We recommend servicing your timepiece every 3-5 years at an authorized center to ensure optimal lubrication and water resistance.' },
+                    { title: 'Can I change the strap myself?', content: 'Yes, the Chronos Elite features a quick-release system. No tools are required to swap between leather and steel bands.' },
+                    { title: 'What is the return policy?', content: 'We offer a 30-day "no questions asked" return policy. Items must be in original, unworn condition with all protective films intact.' }
+                ]
+            })
+        ]})
+    ]});
+
+    const Footer = () => create('footer', { style: 'padding: 4rem 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted)', child: [
+        create('div', { class: 'container', child: [
+            create('p', { text: '© 2026 Noshi Timepieces. All rights reserved.' }),
+            create('div', { style: 'margin-top: 1rem; display: flex; gap: 1rem; justify-content: center', child: [
+                create('a', { class: 'nav-link', style: 'font-size: 0.7rem', text: 'Privacy' }),
+                create('a', { class: 'nav-link', style: 'font-size: 0.7rem', text: 'Terms' })
+            ]})
+        ]})
+    ]});
+
+    /* ── CHECKOUT FLOW ── */
+    function showCheckout() {
+        const stepper = b.stepper({
+            steps: [
+                { title: 'Details', content: b.form({
+                    fields: [
+                        { label: 'Full Name', name: 'name', required: true, placeholder: 'Your name...' },
+                        { label: 'Shipping Address', name: 'addr', required: true, placeholder: 'Address...' }
+                    ]
+                }) },
+                { title: 'Payment', content: b.form({
+                    fields: [
+                        { label: 'Card Number', name: 'card', required: true, placeholder: '0000 0000 0000 0000' },
+                        { label: 'Expiry', name: 'exp', required: true, placeholder: 'MM/YY' }
+                    ]
+                }) },
+                { title: 'Confirm', content: create('div', { style: 'text-align: center', child: [
+                    create('h3', { text: 'Ready to Order?' }),
+                    create('p', { style: 'color: #888', text: 'By clicking confirm, you agree to our terms of service.' })
+                ]}) }
+            ],
+            onComplete: () => {
+                checkoutModal.close();
+                b.toast({ message: 'Order Placed! Confirmation sent to your email.', type: 'success' });
+                store.update('cartCount', c => c + 1);
+            }
         });
-    </script>
+
+        const checkoutModal = b.modal({
+            title: 'Complete Your Reservation',
+            content: stepper,
+            width: '600px'
+        });
+        checkoutModal.open();
+    }
+
+    /* ── PAGE ASSEMBLY ── */
+    append('#app', [
+        Nav(),
+        HeroSlider(),
+        Features(),
+        Details(),
+        FAQ(),
+        Footer()
+    ]);
+
+    /* ── CODE VIEWER ── */
+    function hl(raw) {
+        let c = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        c = c.replace(/(\/\/[^\n]*)/g,'<span class="tc">$1</span>');
+        c = c.replace(/((?:`[^`]*`|'[^'\\]*(?:\\[\s\S][^'\\]*)*'|"[^"\\]*(?:\\[\s\S][^"\\]*)*"))/g,'<span class="ts">$1</span>');
+        c = c.replace(/\b(const|let|var|function|return|if|else|new|class|async|await|for|of|in|this|true|false|null|undefined|forEach|map|store|set|get|update|on)\b/g,'<span class="tk">$1</span>');
+        c = c.replace(/\b(\d+\.?\d*)\b/g,'<span class="tn">$1</span>');
+        c = c.replace(/\.([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g,'.<span class="tm">$1</span>');
+        return c;
+    }
+    on('#code-fab', 'click', () => {
+        if ($('#code-viewer')) return;
+        const src = $('#page-source').textContent;
+        const viewer = create('div', { class: 'code-viewer', id: 'code-viewer', child: [
+            create('div', { class: 'cv-header', child: [
+                create('div', { class: 'cv-title', text: 'example3.html' }),
+                create('div', { style: 'display:flex;gap:.5rem', child: [
+                    create('button', { class: 'cv-btn', style: 'background:#30363d;color:#c9d1d9', text: '📋 Copy', click: (e) => {
+                        navigator.clipboard.writeText(src.trim());
+                        e.target.textContent = '✅ Copied!';
+                        setTimeout(() => e.target.textContent = '📋 Copy', 2000);
+                    }}),
+                    create('button', { class: 'cv-btn cv-close', text: '✕ Close', click: () => viewer.remove() })
+                ]})
+            ]}),
+            create('div', { class: 'cv-body', child: [create('pre', { html: hl(src.trim()) })]})
+        ]});
+        append(document.body, viewer);
+    });
+});
+</script>
 </body>
 </html>

@@ -9,6 +9,10 @@
 <script src="../noshi.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --p: #6c63ff; /* Noshi Primary -> Purple */
+    --p-soft: rgba(108,99,255,0.1);
+  }
   body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #e2e8f0; overflow-x: hidden; }
   .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(10,10,15,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.07); }
   .nav-brand { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg,#6c63ff,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -42,7 +46,7 @@
   .proj-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: .5rem; }
   .proj-desc { font-size: .85rem; color: #64748b; line-height: 1.6; margin-bottom: 1rem; }
   .proj-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
-  .proj-tag { font-size: .7rem; padding: .15rem .55rem; background: rgba(108,99,255,.12); color: #a78bfa; border-radius: 4px; }
+  .proj-tag { font-size: .7rem; padding: .15rem .55rem; background: var(--p-soft); color: var(--p); border-radius: 4px; }
   .stats-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1.25rem; }
   .stat-box { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 1.75rem 1.5rem; text-align: center; }
   .stat-num { font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg,#6c63ff,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -85,135 +89,131 @@
 
 <script id="page-source">
 Noshi.start(() => {
-    const b   = new NoshiBuilder();
-    const app = Noshi.$('#app');
+    const b = new NoshiBuilder();
+    const { $, $$, create, on, append } = Noshi;
 
-    /* ── HERO ── */
-    const hero = document.createElement('div');
-    hero.className = 'hero';
-    hero.innerHTML = `
-        <div>
-            <img class="hero-avatar" src="https://i.pravatar.cc/200?img=11" alt="Alex Morgan">
-            <div class="hero-greeting">Hello, I'm</div>
-            <div class="hero-name">Alex Morgan</div>
-            <div class="hero-title">Frontend Developer & UI Designer · San Francisco</div>
-            <div class="hero-btns" id="hero-btns"></div>
-        </div>`;
-    app.appendChild(hero);
-    const hb = Noshi.$('#hero-btns');
-    hb.appendChild(b.button({ text: 'View Projects', class: 'active',
-        click: () => document.getElementById('projects').scrollIntoView({ behavior:'smooth' }) }));
-    hb.appendChild(b.button({ text: 'Contact Me', class: 'outline',
-        click: () => document.getElementById('contact').scrollIntoView({ behavior:'smooth' }) }));
+    /* ── HERO SECTION ── */
+    append('#app', create('div', { class: 'hero', child: [
+        create('div', { child: [
+            create('img', { class: 'hero-avatar', src: 'https://i.pravatar.cc/200?img=11', alt: 'Alex' }),
+            create('div', { class: 'hero-greeting', text: 'Hello, I\'m' }),
+            create('div', { class: 'hero-name', text: 'Alex Morgan' }),
+            create('div', { class: 'hero-title', text: 'Frontend Developer & UI Designer · San Francisco' }),
+            create('div', { class: 'hero-btns', child: [
+                b.button({ text: 'View Projects', class: 'active', click: () => $('#projects').scrollIntoView({ behavior:'smooth' }) }),
+                b.button({ text: 'Contact Me', class: 'outline', click: () => $('#contact').scrollIntoView({ behavior:'smooth' }) })
+            ]})
+        ]})
+    ]}));
 
-    /* ── ABOUT ── */
-    const about = document.createElement('section');
-    about.id = 'about';
-    about.innerHTML = `
-        <div class="section-tag">Who I Am</div>
-        <div class="section-title">About Me</div>
-        <div class="about-grid">
-            <div class="about-img-wrap">
-                <img class="about-img" src="https://i.pravatar.cc/400?img=11" alt="Alex">
-                <div class="about-img-badge">5+ Yrs Exp.</div>
-            </div>
-            <div id="about-content"></div>
-        </div>`;
-    app.appendChild(about);
-    const ac = Noshi.$('#about-content');
-    ac.innerHTML = `
-        <p class="about-text">Hi! I'm Alex — a passionate frontend developer who loves turning complex problems into beautiful, intuitive interfaces. I've shipped products used by millions across 12 countries.</p>
-        <p class="about-text">Outside of code you'll find me hiking, brewing specialty coffee, or contributing to open-source. I believe great software is as much about empathy as engineering.</p>`;
-    ac.appendChild(b.note({ text: 'B.Sc. Computer Science — Stanford University, 2018', class: 'info' }));
-    const tagList = document.createElement('div');
-    tagList.className = 'tag-list';
-    ['JavaScript','TypeScript','React','Vue','Node.js','Figma','GraphQL','AWS'].forEach(t => {
-        const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = t;
-        tagList.appendChild(tag);
-    });
-    ac.appendChild(tagList);
+    /* ── ABOUT SECTION ── */
+    append('#app', create('section', { id: 'about', child: [
+        create('div', { class: 'section-tag', text: 'Who I Am' }),
+        create('div', { class: 'section-title', text: 'About Me' }),
+        create('div', { class: 'about-grid', child: [
+            create('div', { class: 'about-img-wrap', child: [
+                create('img', { class: 'about-img', src: 'https://i.pravatar.cc/400?img=11', alt: 'Alex' }),
+                create('div', { class: 'about-img-badge', text: '5+ Yrs Exp.' })
+            ]}),
+            create('div', { child: [
+                create('p', { class: 'about-text', text: 'Hi! I\'m Alex — a passionate frontend developer who loves turning complex problems into beautiful, intuitive interfaces. I\'ve shipped products used by millions across 12 countries.' }),
+                create('p', { class: 'about-text', text: 'Outside of code you\'ll find me hiking, brewing specialty coffee, or contributing to open-source. I believe great software is as much about empathy as engineering.' }),
+                b.note({ text: 'B.Sc. Computer Science — Stanford University, 2018', class: 'info' }),
+                create('div', { class: 'tag-list', child: 
+                    ['JavaScript','TypeScript','React','Vue','Node.js','Figma','GraphQL','AWS'].map(t => create('span', { class: 'tag', text: t }))
+                })
+            ]})
+        ]})
+    ]}));
 
-    /* ── SKILLS ── */
-    const skillsSection = document.createElement('section');
-    skillsSection.id = 'skills';
-    skillsSection.innerHTML = `<div class="section-tag">Expertise</div><div class="section-title">Skills</div><div class="skills-grid" id="skills-grid"></div>`;
-    app.appendChild(skillsSection);
-    [
-        { name: 'JavaScript / TypeScript', value: 95 },
-        { name: 'React & Vue',             value: 90 },
-        { name: 'CSS / UI Design',         value: 88 },
-        { name: 'Node.js / REST APIs',     value: 80 },
-        { name: 'GraphQL',                 value: 72 },
-        { name: 'DevOps / AWS',            value: 65 },
-    ].forEach(s => {
-        const wrap = document.createElement('div'); wrap.className = 'skill-item';
-        const lbl  = document.createElement('div'); lbl.className = 'skill-label';
-        lbl.innerHTML = `<span>${s.name}</span><span>${s.value}%</span>`;
-        wrap.appendChild(lbl);
-        wrap.appendChild(b.progress({ value: s.value, max: 100, label: false }));
-        Noshi.$('#skills-grid').appendChild(wrap);
-    });
+    /* ── SKILLS SECTION ── */
+    append('#app', create('section', { id: 'skills', child: [
+        create('div', { class: 'section-tag', text: 'Expertise' }),
+        create('div', { class: 'section-title', text: 'Skills' }),
+        create('div', { class: 'skills-grid', child: [
+            { name: 'JavaScript / TypeScript', value: 95 },
+            { name: 'React & Vue',             value: 90 },
+            { name: 'CSS / UI Design',         value: 88 },
+            { name: 'Node.js / REST APIs',     value: 80 },
+            { name: 'GraphQL',                 value: 72 },
+            { name: 'DevOps / AWS',            value: 65 }
+        ].map(s => create('div', { class: 'skill-item', child: [
+            create('div', { class: 'skill-label', child: [
+                create('span', { text: s.name }),
+                create('span', { text: s.value + '%' })
+            ]}),
+            b.progress({ value: s.value, max: 100, label: false })
+        ]}))})
+    ]}));
 
-    /* ── PROJECTS ── */
-    const projSection = document.createElement('section');
-    projSection.id = 'projects';
-    projSection.innerHTML = `<div class="section-tag">Portfolio</div><div class="section-title">Featured Projects</div><div class="projects-grid" id="proj-grid"></div>`;
-    app.appendChild(projSection);
-    [
-        { icon: '🛍️', title: 'ShopFlow',    desc: 'Headless e-commerce platform processing $2M+ monthly. Built with Next.js and Stripe.',       tags: ['Next.js','Stripe','PostgreSQL'] },
-        { icon: '📊', title: 'DataViz Pro', desc: 'Real-time analytics dashboard visualising 50M+ events per day using SVG charts.',              tags: ['React','D3.js','WebSocket'] },
-        { icon: '🤝', title: 'TeamCollab',  desc: 'Multiplayer collaborative whiteboard used by 30K+ remote teams with CRDT sync.',               tags: ['Vue 3','Yjs','WebRTC'] },
-        { icon: '🔐', title: 'SecureAuth',  desc: 'Zero-knowledge auth library — passkeys, TOTP, and magic links.',                              tags: ['TypeScript','WebAuthn'] },
-        { icon: '🌍', title: 'Wanderlust',  desc: 'AI-powered travel planner with personalised itinerary generation and offline maps.',           tags: ['React Native','OpenAI'] },
-        { icon: '🎨', title: 'Noshi UI',    desc: 'The zero-dependency, single-file UI toolkit powering this very page.',                         tags: ['Vanilla JS','CSS-in-JS'] },
-    ].forEach(p => {
-        const card = document.createElement('div'); card.className = 'proj-card';
-        card.innerHTML = `<div class="proj-icon">${p.icon}</div><div class="proj-title">${p.title}</div><div class="proj-desc">${p.desc}</div><div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>`;
-        card.addEventListener('click', () => b.toast({ message: 'Opening ' + p.title + '...', type: 'info' }));
-        Noshi.$('#proj-grid').appendChild(card);
-    });
+    /* ── PROJECTS SECTION ── */
+    append('#app', create('section', { id: 'projects', child: [
+        create('div', { class: 'section-tag', text: 'Portfolio' }),
+        create('div', { class: 'section-title', text: 'Featured Projects' }),
+        create('div', { class: 'projects-grid', child: [
+            { icon: '🛍️', title: 'ShopFlow',    desc: 'Headless e-commerce platform processing $2M+ monthly. Built with Next.js and Stripe.', tags: ['Next.js','Stripe'] },
+            { icon: '📊', title: 'DataViz Pro', desc: 'Real-time analytics dashboard visualising 50M+ events per day using SVG charts.', tags: ['React','D3.js'] },
+            { icon: '🤝', title: 'TeamCollab',  desc: 'Multiplayer collaborative whiteboard used by 30K+ remote teams with CRDT sync.', tags: ['Vue 3','Yjs'] },
+            { icon: '🔐', title: 'SecureAuth',  desc: 'Zero-knowledge auth library — passkeys, TOTP, and magic links.', tags: ['TypeScript','WebAuthn'] },
+            { icon: '🌍', title: 'Wanderlust',  desc: 'AI-powered travel planner with personalised itinerary generation and offline maps.', tags: ['React Native','OpenAI'] },
+            { icon: '🎨', title: 'Noshi UI',    desc: 'The zero-dependency, single-file UI toolkit powering this very page.', tags: ['Vanilla JS','CSS-in-JS'] }
+        ].map(p => {
+            const card = create('div', { class: 'proj-card', child: [
+                create('div', { class: 'proj-icon', text: p.icon }),
+                create('div', { class: 'proj-title', text: p.title }),
+                create('div', { class: 'proj-desc', text: p.desc }),
+                create('div', { class: 'proj-tags', child: p.tags.map(t => create('span', { class: 'proj-tag', text: t })) })
+            ]});
+            on(card, 'click', () => b.toast({ message: 'Opening ' + p.title + '...', type: 'info' }));
+            return card;
+        })})
+    ]}));
 
-    /* ── STATS ── */
-    const statsSection = document.createElement('section');
-    statsSection.innerHTML = `<div class="section-tag">By the Numbers</div><div class="section-title">Impact</div><div class="stats-row" id="stats-row"></div>`;
-    app.appendChild(statsSection);
-    [
-        { num:'120+', lbl:'Projects Delivered' },
-        { num:'30K+', lbl:'Active Users'       },
-        { num:'98%',  lbl:'Client Satisfaction'},
-        { num:'12',   lbl:'Countries'          },
-        { num:'5+',   lbl:'Years Experience'   },
-    ].forEach(s => {
-        const box = document.createElement('div'); box.className = 'stat-box';
-        box.innerHTML = `<div class="stat-num">${s.num}</div><div class="stat-lbl">${s.lbl}</div>`;
-        Noshi.$('#stats-row').appendChild(box);
-    });
+    /* ── IMPACT SECTION ── */
+    append('#app', create('section', { child: [
+        create('div', { class: 'section-tag', text: 'By the Numbers' }),
+        create('div', { class: 'section-title', text: 'Impact' }),
+        create('div', { class: 'stats-row', child: [
+            { num:'120+', lbl:'Projects Delivered' },
+            { num:'30K+', lbl:'Active Users'       },
+            { num:'98%',  lbl:'Client Satisfaction'},
+            { num:'12',   lbl:'Countries'          },
+            { num:'5+',   lbl:'Years Experience'   }
+        ].map(s => create('div', { class: 'stat-box', child: [
+            create('div', { class: 'stat-num', text: s.num }),
+            create('div', { class: 'stat-lbl', text: s.lbl })
+        ]}))})
+    ]}));
 
-    /* ── CONTACT ── */
-    const contactSection = document.createElement('section');
-    contactSection.id = 'contact';
-    contactSection.innerHTML = `<div class="section-tag">Get In Touch</div><div class="section-title">Contact Me</div><div class="contact-wrap" id="contact-wrap"></div>`;
-    app.appendChild(contactSection);
-    const cw = Noshi.$('#contact-wrap');
-    cw.appendChild(b.note({ text: 'Currently open to freelance & full-time roles. Response within 24h.', class: 'info' }));
-    const form = b.form({
-        fields: [
-            { label: 'Your Name', name: 'name',    placeholder: 'Jane Smith',            required: true },
-            { label: 'Email',     name: 'email',   placeholder: 'jane@example.com', type: 'email', required: true },
-            { label: 'Subject',   name: 'subject', placeholder: 'Project inquiry...' },
-            { label: 'Message',   name: 'msg',     type: 'textarea', placeholder: 'Tell me about your project...', required: true }
-        ],
-        buttons: [{ text: 'Send Message', active: true, function: () => {
-            if (!form.validate().length) b.toast({ message: 'Message sent! Reply within 24h.', type: 'success' });
-        }}]
-    });
-    cw.appendChild(form);
+    /* ── CONTACT SECTION ── */
+    append('#app', create('section', { id: 'contact', child: [
+        create('div', { class: 'section-tag', text: 'Get In Touch' }),
+        create('div', { class: 'section-title', text: 'Contact Me' }),
+        create('div', { class: 'contact-wrap', child: [
+            b.note({ text: 'Currently open to freelance & full-time roles. Response within 24h.', class: 'info' }),
+            b.form({
+                fields: [
+                    { label: 'Your Name', name: 'name', placeholder: 'Jane Smith', required: true },
+                    { label: 'Email', name: 'email', placeholder: 'jane@example.com', type: 'email', required: true },
+                    { label: 'Subject', name: 'subject', placeholder: 'Project inquiry...' },
+                    { label: 'Message', name: 'msg', type: 'textarea', placeholder: 'Tell me about your project...', required: true }
+                ],
+                buttons: [{ text: 'Send Message', active: true, function: (f) => {
+                    if (!f.validate().length) b.toast({ message: 'Message sent! Reply within 24h.', type: 'success' });
+                }}]
+            })
+        ]})
+    ]}));
 
     /* ── FOOTER ── */
-    const footer = document.createElement('footer');
-    footer.className = 'site-footer';
-    footer.innerHTML = 'Built with <a href="../docs/index.html" style="color:#6c63ff">Noshi v2.0</a> &nbsp;·&nbsp; &copy; 2025 Alex Morgan &nbsp;·&nbsp; <a href="#" style="color:#6c63ff">GitHub</a> &nbsp;·&nbsp; <a href="#" style="color:#6c63ff">LinkedIn</a>';
-    app.appendChild(footer);
+    append('#app', create('footer', { class: 'site-footer', child: [
+        'Built with ',
+        create('a', { href: '../docs/index.html', style: 'color:#6c63ff', text: 'Noshi v2.0' }),
+        ' · \u00A9 2025 Alex Morgan · ',
+        create('a', { href: '#', style: 'color:#6c63ff', text: 'GitHub' }),
+        ' · ',
+        create('a', { href: '#', style: 'color:#6c63ff', text: 'LinkedIn' })
+    ]}));
 
     /* ══ FLOATING CODE VIEWER ══ */
     function hl(raw) {
@@ -221,43 +221,35 @@ Noshi.start(() => {
         c = c.replace(/(\/\/[^\n]*)/g,'<span class="tc">$1</span>');
         c = c.replace(/(\/\*[\s\S]*?\*\/)/g,'<span class="tc">$1</span>');
         c = c.replace(/((?:`[^`]*`|'[^'\\]*(?:\\[\s\S][^'\\]*)*'|"[^"\\]*(?:\\[\s\S][^"\\]*)*"))/g,'<span class="ts">$1</span>');
-        c = c.replace(/\b(const|let|var|function|return|if|else|new|class|async|await|for|of|in|this|true|false|null|undefined|forEach)\b/g,'<span class="tk">$1</span>');
+        c = c.replace(/\b(const|let|var|function|return|if|else|new|class|async|await|for|of|in|this|true|false|null|undefined|forEach|map)\b/g,'<span class="tk">$1</span>');
         c = c.replace(/\b(\d+\.?\d*)\b/g,'<span class="tn">$1</span>');
         c = c.replace(/\.([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g,'.<span class="tm">$1</span>');
         c = c.replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)(?:\s*):/g,'<span class="tk2">$1</span>:');
         return c;
     }
 
-    const src = Noshi.$('#page-source').textContent;
-
-    Noshi.$('#code-fab').addEventListener('click', () => {
-        if (Noshi.$('#code-viewer')) return;
-        const viewer = document.createElement('div');
-        viewer.className = 'code-viewer'; viewer.id = 'code-viewer';
-
-        const hdr = document.createElement('div'); hdr.className = 'cv-header';
-        hdr.innerHTML = `<div class="cv-title">example1.html &nbsp;&#8250;&nbsp; <span>Noshi.start() — full page source</span></div>`;
-
-        const acts = document.createElement('div'); acts.className = 'cv-actions';
-
-        const copyBtn = document.createElement('button'); copyBtn.className='cv-btn cv-copy'; copyBtn.textContent='Copy';
-        copyBtn.onclick = () => {
-            navigator.clipboard && navigator.clipboard.writeText(src);
-            copyBtn.textContent='✓ Copied!'; copyBtn.classList.add('ok');
-            setTimeout(()=>{copyBtn.textContent='Copy';copyBtn.classList.remove('ok');},2000);
-        };
-        const closeBtn = document.createElement('button'); closeBtn.className='cv-btn cv-close'; closeBtn.textContent='✕ Close';
-        closeBtn.onclick = () => viewer.remove();
-
-        acts.appendChild(copyBtn); acts.appendChild(closeBtn); hdr.appendChild(acts);
-
-        const body = document.createElement('div'); body.className = 'cv-body';
-        const pre  = document.createElement('pre'); pre.innerHTML = hl(src.trim());
-        body.appendChild(pre); viewer.appendChild(hdr); viewer.appendChild(body);
-        document.body.appendChild(viewer);
-
+    on('#code-fab', 'click', () => {
+        if ($('#code-viewer')) return;
+        const src = $('#page-source').textContent;
+        const viewer = create('div', { class: 'code-viewer', id: 'code-viewer', child: [
+            create('div', { class: 'cv-header', child: [
+                create('div', { class: 'cv-title', html: 'example1.html &nbsp;&#8250;&nbsp; <span>Noshi.start() — full Noshi-idiomatic source</span>' }),
+                create('div', { class: 'cv-actions', child: [
+                    create('button', { class: 'cv-btn cv-copy', text: 'Copy', click: function() {
+                        navigator.clipboard && navigator.clipboard.writeText(src);
+                        this.textContent='✓ Copied!'; this.classList.add('ok');
+                        setTimeout(()=>{this.textContent='Copy';this.classList.remove('ok');},2000);
+                    }}),
+                    create('button', { class: 'cv-btn cv-close', text: '✕ Close', click: () => viewer.remove() })
+                ]})
+            ]}),
+            create('div', { class: 'cv-body', child: [
+                create('pre', { html: hl(src.trim()) })
+            ]})
+        ]});
+        append(document.body, viewer);
         const esc = (e) => { if(e.key==='Escape'){viewer.remove();document.removeEventListener('keydown',esc);} };
-        document.addEventListener('keydown', esc);
+        on(document, 'keydown', esc);
     });
 });
 </script>

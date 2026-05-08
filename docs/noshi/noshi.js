@@ -336,6 +336,22 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
     /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
        NoshiCE â€” Standard DOM element factory
     â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* -- SELECTORS -- */
+    const $     = (s, p = document) => p.querySelector(s);
+    const $$    = (s, p = document) => Array.from(p.querySelectorAll(s));
+    const create = (tag, props = {}) => { return new NoshiCE({ tag, ...props }).tag; };
+    const on    = (s, e, f) => { const el = typeof s === 'string' ? $(s) : s; if (el) el.addEventListener(e, f); };
+    const onAll = (s, e, f) => { $$(s).forEach(el => el.addEventListener(e, f)); };
+
+    const append = (p, ...c) => {
+        const parent = typeof p === 'string' ? $(p) : p;
+        if (!parent) return;
+        c.flat().forEach(child => {
+            if (child instanceof Node) parent.appendChild(child);
+            else if (typeof child === 'string' || typeof child === 'number') parent.appendChild(document.createTextNode(child));
+        });
+    };
+
     function NoshiCE(props) {
         const tag = document.createElement(props.tag || 'div');
         Object.keys(props).forEach(k => {
@@ -343,7 +359,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
             switch (k) {
                 case 'tag': break;
                 case 'child':
-                    if (Array.isArray(v)) v.forEach(c => { if (c instanceof Element) tag.appendChild(c); });
+                    if (Array.isArray(v)) v.forEach(c => { if (c instanceof Node) tag.appendChild(c); else if (typeof c === 'string' || typeof c === 'number') tag.appendChild(document.createTextNode(c)); });
                     break;
                 case 'html':    tag.innerHTML = v; break;
                 case 'text':    tag.textContent = v; break;
@@ -569,11 +585,15 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
         /* â”€â”€ BUTTON â”€â”€ */
         this.button = (info) => {
             NoshiStyles.inject('buttons', CSS_BTN);
-            const cls = info.class ? `btn btn-${info.class}` : 'btn btn-default';
-            if (info.icon && info.iconPos !== 'right') { if (info.icon instanceof HTMLElement) { children.push(info.icon); } else { children.push(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
-            if (info.icon && info.iconPos !== 'right') children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
-            if (info.icon && info.iconPos === 'right')  { if (info.icon instanceof HTMLElement) { children.push(info.icon); } else { children.push(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
-            if (info.icon && info.iconPos === 'right') children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
+            const cls = info.class ? 'btn btn-' + info.class : 'btn btn-default';
+            const children = [];
+            const addIcon = () => {
+                if (info.icon instanceof Node) children.push(info.icon);
+                else if (typeof info.icon === 'string' && info.icon) children.push(new NoshiCE({ tag:'i', class: info.icon }).tag);
+            };
+            if (info.icon && info.iconPos !== 'right') addIcon();
+            if (info.text) children.push(info.text);
+            if (info.icon && info.iconPos === 'right') addIcon();
             return new NoshiCE({ tag:'button', class: cls, disabled: info.disabled, click: info.click||null, child: children }).tag;
         };
 
@@ -583,7 +603,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
             const type     = info.class || 'default';
             const iconWrap = document.createElement('div');
             iconWrap.className = 'noshi-note-icon';
-            if (info.icon instanceof HTMLElement) {
+            if (info.icon instanceof Node) {
                 iconWrap.appendChild(info.icon);
             } else if (typeof info.icon === 'string' && info.icon) {
                 iconWrap.innerHTML = '<i class="' + info.icon + '"></i>';
@@ -679,34 +699,39 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
         /* â”€â”€ GRAPH â”€â”€ */
         this.graph = (info) => {
             NoshiStyles.inject('graph', CSS_GRAPH);
-            if (!info.data || !info.data.length) return _e();
-            const gH   = parseInt(info.graph && info.graph.height ? info.graph.height : 300);
+            if (!info.data || !info.data.length) return create('div', { text: 'No data' });
+            
+            const datasets = Array.isArray(info.data[0]) ? info.data : [info.data];
+            const gH   = parseInt(info.height || (info.graph && info.graph.height) || 300);
             const gW   = 1000;
             const h    = gH - 40;
-            const clrs = ['#0077b6','#9e2a2b','#588157','#ffc971','#9b5de5','#00b4d8'];
+            const clrs = ['#6366f1','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4'];
             const svgEls = [];
 
-            info.data.forEach((ds, si) => {
-                const clr  = (info.style && info.style[si] && info.style[si].color) || clrs[si % clrs.length];
+            const allPoints = datasets.flat();
+            const max = Math.max(...allPoints, 1);
+
+            datasets.forEach((ds, si) => {
+                const clr  = info.color || (info.style && info.style[si] && info.style[si].color) || clrs[si % clrs.length];
                 const step = gW / Math.max(ds.length - 1, 1);
-                const max  = Math.max(...ds.flat(), 1);
                 const pts  = ds.map((v, i) => [i * step, h - (v / max * h)]);
 
-                if (info.graph && info.graph.type === 'area') {
+                const type = info.type || (info.graph && info.graph.type) || 'line';
+                if (type === 'area') {
                     const polyPts = [[0,h], ...pts, [gW,h]].map(p => p.join(',')).join(' ');
                     svgEls.push(new NoshiCENS({ tag:'polygon', points: polyPts, fill: clr, style:'opacity:.2' }).tag);
                 }
                 svgEls.push(new NoshiCENS({ tag:'path', d:'M '+pts.map(p=>p.join(' ')).join(' L '), stroke: clr, strokeWidth: 3, fill:'none' }).tag);
-                if (!info.graph || info.graph.points !== false) {
+                if (info.points !== false) {
                     pts.forEach(p => svgEls.push(new NoshiCENS({ tag:'circle', cx:p[0], cy:p[1], r:5, fill:clr, stroke:'#fff', strokeWidth:2 }).tag));
                 }
             });
 
-            const svg = new NoshiCENS({ tag:'svg', viewBox:`0 0 ${gW} ${h+20}`, width:'100%', height: String(gH), child: svgEls }).tag;
+            const svg = new NoshiCENS({ tag:'svg', viewBox:'0 0 1000 ' + (h+20), width:'100%', height: gH.toString(), child: svgEls }).tag;
             const children = [];
-            if (info.head) children.push(new NoshiCE({ tag:'div', class:'noshi-graph-head', text: info.head.title||'', style:`background:${info.head.backgroundColor||'#f8f9fa'};color:${info.head.color||'var(--txt)'}` }).tag);
+            if (info.head) children.push(create('div', { class:'noshi-graph-head', text: info.head.title||'', style:'background:'+(info.head.backgroundColor||'#f8f9fa')+';color:'+(info.head.color||'var(--txt)') }));
             children.push(svg);
-            return new NoshiCE({ tag:'div', class:'noshi-graph', child: children }).tag;
+            return create('div', { class:'noshi-graph', child: children });
         };
 
         /* â”€â”€ SLIDER â”€â”€ */
@@ -844,7 +869,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
             const iconType = info.iconType || 'primary';
             const iconEl   = new NoshiCE({ tag:'div', class:`noshi-stats-icon noshi-stats-icon-${iconType}` }).tag;
             iconEl.textContent = info.emoji || '';
-            if (info.icon) { if (info.icon instanceof HTMLElement) { iconEl.appendChild(info.icon); } else { iconEl.appendChild(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
+            if (info.icon) { if (info.icon instanceof Node) { iconEl.appendChild(info.icon); } else { iconEl.appendChild(new NoshiCE({ tag:'i', class: info.icon }).tag); } }
 
             const bodyChildren = [
                 new NoshiCE({ tag:'div', class:'noshi-stats-value', text: String(info.value||'0') }).tag,
@@ -1150,11 +1175,10 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
         document.body.innerHTML = '';
         document.body.appendChild(root);
         return { page: root, content: contentEl };
-    };
+        return { page: root, content: contentEl };
+}
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-       INIT & EXPORTS
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ─── INIT & EXPORTS ─── */
     const startNoshi = (funcs) => {
         const list = Array.isArray(funcs) ? funcs : [funcs];
         const run  = () => list.forEach(f => typeof f === 'function' && f());
@@ -1181,6 +1205,7 @@ css-property{color:#89b4fa}css-value{color:#a6e3a1}js-var{color:#cba6f7}js-txt{c
     global.NoshiBuilder = NoshiBuilder;
     global.NoshiStyles  = NoshiStyles;
     global.Noshi = {
+        $, $$, create, on, onAll, append,
         version: VERSION,
         _,
         ajax,
