@@ -11,7 +11,8 @@
     const NAV = [
         { title: 'Getting Started', items: [
             { id: 'welcome',   label: 'Welcome'        },
-            { id: 'install',   label: 'Installation'   }
+            { id: 'install',   label: 'Installation'   },
+            { id: 'showcase',  label: 'Showcase'       }
         ]},
         { title: 'Layout', items: [
             { id: 'page',      label: 'Page Scaffold'  },

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Noshi v3 — Custom Tags Test</title>
+    <script src="noshi.js"></script>
+    <style>
+        .container { max-width: 800px; margin: 4rem auto; }
+        section { margin-bottom: 3rem; }
+        h2 { margin-bottom: 1rem; color: #888; font-size: .9rem; text-transform: uppercase; letter-spacing: .05em; }
+    </style>
+</head>
+<body>
+
+    <n-navbar brand="Noshi v3"></n-navbar>
+
+    <div class="container">
+        <section>
+            <h2>Buttons & Interaction</h2>
+            <div class="flex gap2">
+                <n-btn class="active" text="Show Loading" click="Noshi.loading({type:'dots'})"></n-btn>
+                <n-btn class="outline" text="Trigger Toast" click="new NoshiBuilder().toast({message:'Tags are working!', type:'success'})"></n-btn>
+            </div>
+        </section>
+
+        <section>
+            <h2>Cards & Layout</h2>
+            <div class="flex gap2">
+                <n-card class="flex-1" title="Noshi Tag" text="This card was created using <n-card> tag. It is much cleaner than writing JS."></n-card>
+                <noshi-card class="flex-1" mode="dark" title="Full Name Tag" text="You can also use the full <noshi-card> prefix if you prefer."></noshi-card>
+            </div>
+        </section>
+
+        <section>
+            <h2>Data & Status</h2>
+            <div class="flex gap2">
+                <n-stats class="flex-1" label="Efficiency" value="98%" trend="4.2%" trendUp="true" emoji="⚡"></n-stats>
+                <n-progress class="flex-1" label="Core Refactor" value="100" striped="true" color="ok"></n-progress>
+            </div>
+        </section>
+
+        <section>
+            <h2>Interactive Components</h2>
+            <n-accordion openFirst="true">
+                <div title="What is Noshi v3?">Noshi v3 is a modular, custom-element based framework that lets you build premium UIs with plain HTML tags.</div>
+                <div title="Is it fast?">Yes! It uses a just-in-time modular loader and vanilla JS for maximum performance.</div>
+            </n-accordion>
+        </section>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<h1 id="showcase">Showcase</h1>
+<p>Explore the full potential of the Noshi framework. These production-quality examples demonstrate how to build diverse interfaces—from minimalist portfolios to enterprise dashboards—all while maintaining a single-file, zero-dependency philosophy.</p>
+
+<div class="sc-grid">
+  <!-- Portfolio -->
+  <div class="sc-card">
+    <div class="sc-img-wrap">
+      <img src="./imgs/sc_portfolio.png" alt="Portfolio Showcase">
+    </div>
+    <div class="sc-info">
+      <h3>Minimalist Portfolio</h3>
+      <p>An editorial-style personal website focusing on high-end typography, clean spacing, and smooth content transitions.</p>
+      <div class="sc-tags">
+        <span>Scaffold</span>
+        <span>Typography</span>
+        <span>Dark Mode</span>
+      </div>
+      <a href="../examples/example1.html" target="_blank" class="sc-btn">View Live Preview</a>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="sc-card">
+    <div class="sc-img-wrap">
+      <img src="./imgs/sc_dashboard.png" alt="Analytics Dashboard Showcase">
+    </div>
+    <div class="sc-info">
+      <h3>Analytics Pro Dashboard</h3>
+      <p>A complex administrative interface featuring reactive graphs, sortable data tables, and advanced stat tracking.</p>
+      <div class="sc-tags">
+        <span>Graphs</span>
+        <span>Tables</span>
+        <span>Reactive Store</span>
+      </div>
+      <a href="../examples/example2.html" target="_blank" class="sc-btn">View Live Preview</a>
+    </div>
+  </div>
+
+  <!-- Shop -->
+  <div class="sc-card">
+    <div class="sc-img-wrap">
+      <img src="./imgs/sc_shop.png" alt="E-commerce Shop Showcase">
+    </div>
+    <div class="sc-info">
+      <h3>Timepiece Elite Shop</h3>
+      <p>A vibrant light-themed luxury landing page featuring hero sliders, multi-step checkout, and reactive cart management.</p>
+      <div class="sc-tags">
+        <span>Slider</span>
+        <span>Stepper</span>
+        <span>Modals</span>
+      </div>
+      <a href="../examples/example3.html" target="_blank" class="sc-btn">View Live Preview</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sc-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
+    gap: 2.5rem; 
+    margin-top: 3rem; 
+  }
+  .sc-card { 
+    background: var(--c-sidebar); 
+    border: 1px solid var(--c-border); 
+    border-radius: 24px; 
+    overflow: hidden; 
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    display: flex;
+    flex-direction: column;
+  }
+  .sc-card:hover { 
+    transform: translateY(-12px); 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12); 
+    border-color: var(--c-primary); 
+  }
+  .sc-img-wrap { 
+    height: 220px; 
+    overflow: hidden; 
+    border-bottom: 1px solid var(--c-border);
+    background: #f1f5f9;
+  }
+  .sc-img-wrap img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: transform 0.6s ease;
+  }
+  .sc-card:hover .sc-img-wrap img { 
+    transform: scale(1.08); 
+  }
+  .sc-info { 
+    padding: 2rem; 
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .sc-info h3 { 
+    margin: 0 0 0.75rem 0 !important; 
+    border: none !important; 
+    color: var(--c-text) !important; 
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+  }
+  .sc-info p { 
+    font-size: 0.95rem !important; 
+    color: var(--c-muted) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 1.5rem !important;
+    min-height: 3rem;
+  }
+  .sc-tags { 
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 0.6rem; 
+    margin-bottom: 2rem; 
+  }
+  .sc-tags span { 
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.8rem; 
+    background: var(--c-primary-soft); 
+    color: var(--c-primary); 
+    border-radius: 50px; 
+  }
+  .sc-btn { 
+    margin-top: auto;
+    display: block; 
+    text-align: center; 
+    background: var(--c-primary); 
+    color: #fff !important; 
+    text-decoration: none !important; 
+    padding: 1rem; 
+    border-radius: 12px; 
+    font-weight: 700; 
+    font-size: 0.9rem; 
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px var(--c-primary-soft);
+  }
+  .sc-btn:hover { 
+    filter: brightness(1.1); 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--c-primary-soft);
+  }
+</style>
